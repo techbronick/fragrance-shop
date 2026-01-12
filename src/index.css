@@ -1,0 +1,524 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 15% 97%;
+    --foreground: 24 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 24 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 15% 15%;
+
+    --primary: 24 25% 25%;
+    --primary-foreground: 45 15% 97%;
+
+    --secondary: 35 10% 90%;
+    --secondary-foreground: 24 15% 15%;
+
+    --muted: 35 10% 95%;
+    --muted-foreground: 24 10% 50%;
+
+    --accent: 35 20% 85%;
+    --accent-foreground: 24 15% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 35 10% 88%;
+    --input: 35 10% 88%;
+    --ring: 24 25% 25%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-light;
+    font-family: 'Inter', sans-serif;
+    /* Only prevent horizontal scrolling, preserve vertical */
+    overflow-x: hidden;
+  }
+
+  html {
+    /* Only prevent horizontal scrolling, preserve vertical */
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-medium;
+  }
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow on mobile while keeping vertical scroll */
+  body, html {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  
+  /* Prevent image zoom on mobile */
+  img {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  
+  /* Prevent text selection and callouts on mobile */
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Allow text selection for inputs and text areas */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
+  /* Improve touch scrolling */
+  .carousel-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+.animate-fade-in { animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Hide scrollbar ONLY for carousel components */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+/* Brand card fixed height grid */
+.brand-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .brand-card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand-card-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Ensure all brand cards have equal height */
+.brand-card-grid > * {
+  height: 100%;
+}
+
+/* Compact brand view grid */
+.brand-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .brand-compact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .brand-compact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand-compact-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .brand-compact-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Hide scrollbar only on desktop for specific carousel components */
+@media (min-width: 768px) {
+  .hide-scrollbar-desktop {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+
+  .hide-scrollbar-desktop::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}
+/* A-Z Navigation - Letter section anchors */
+.letter-section-anchor {
+  scroll-margin-top: 180px; /* Adjust based on header + search bar height */
+}
+
+@media (min-width: 768px) {
+  .letter-section-anchor {
+    scroll-margin-top: 140px;
+  }
+}
+
+/* ========================================
+   Alphabet Index Strip - Redesigned
+   ======================================== */
+  
+  /* Strip container */
+  .alphabet-index-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 920px;
+    margin: 0 auto;
+    background: hsl(var(--muted));
+    border-radius: 9999px; /* Pill shape */
+    padding: 0.25rem 0.5rem;
+    gap: 0;
+  }
+  
+  /* Individual letter buttons - NO borders */
+  .alphabet-index-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: hsl(var(--foreground));
+    background: transparent;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  
+  /* Enabled state */
+  .alphabet-index-letter--enabled:hover,
+  .alphabet-index-letter--enabled:focus-visible {
+    background: hsl(var(--background));
+    box-shadow: 0 1px 3px hsl(var(--foreground) / 0.1);
+  }
+  
+  .alphabet-index-letter--enabled:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 1px;
+  }
+  
+  /* Active state - currently selected/in view */
+  .alphabet-index-letter--active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+  }
+  
+  .alphabet-index-letter--active:hover {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  
+  /* Disabled state */
+  .alphabet-index-letter--disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  /* Mobile: horizontal scroll */
+  @media (max-width: 767px) {
+    .alphabet-index {
+      padding: 0.5rem 0;
+      margin: 0 -1rem;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  
+    .alphabet-index-strip {
+      justify-content: flex-start;
+      max-width: none;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+      padding: 0.25rem 1rem;
+      margin: 0;
+      border-radius: 0;
+      background: hsl(var(--muted) / 0.5);
+    }
+  
+    .alphabet-index-strip::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+  
+    .alphabet-index-letter {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Desktop: centered strip */
+  @media (min-width: 768px) {
+    .alphabet-index-letter {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .alphabet-index-letter {
+      min-width: 2.25rem;
+      height: 2.25rem;
+      font-size: 0.875rem;
+    }
+  }
+
+
+
+/* ========================================
+   CSS Variables for Sticky Heights
+   ======================================== */
+   :root {
+    --controls-bar-height: 56px;
+    --alphabet-index-height: 48px;
+    --brands-sticky-offset: 116px; /* controls + alphabet + 12px gap */
+  }
+  
+  @media (min-width: 768px) {
+    :root {
+      --controls-bar-height: 48px;
+      --alphabet-index-height: 52px;
+      --brands-sticky-offset: 112px;
+    }
+  }
+  
+  /* ========================================
+     Brands Controls Bar - Sticky + Simplified
+     ======================================== */
+     .brands-controls-bar {
+      /* position: sticky;  */
+      /* top: 0;            */
+      /* z-index: 40;       */
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      margin: 0 -1rem;
+      background: hsl(var(--background) / 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid hsl(var(--border));
+      transition: box-shadow 0.2s ease;
+    }
+  
+  /* Shadow when scrolled */
+  .brands-controls-bar.is-sticky {
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.08);
+  }
+  
+  .brands-controls-search {
+    width: 100%;
+  }
+  
+  .brands-controls-right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  
+  /* Tablet and up: single row */
+  @media (min-width: 768px) {
+    .brands-controls-bar {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+    }
+  
+    .brands-controls-search {
+      flex: 1;
+      max-width: 480px;
+    }
+  
+    .brands-controls-right {
+      width: auto;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  }
+  
+  /* Desktop: wider search */
+  @media (min-width: 1024px) {
+    .brands-controls-search {
+      max-width: 560px;
+    }
+  }
+  
+  /* ========================================
+     Alphabet Index Strip - Sticky Below Controls
+     ======================================== */
+     .alphabet-index {
+      /* position: sticky;               */
+      /* top: var(--controls-bar-height); */
+      /* z-index: 35;                    */
+      padding: 0.5rem 0;
+      margin: 0 -1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background: hsl(var(--background) / 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid hsl(var(--border));
+    }
+  
+  .alphabet-index-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 920px;
+    margin: 0 auto;
+    background: hsl(var(--muted));
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
+    gap: 0;
+  }
+  
+  .alphabet-index-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    background: transparent;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+  
+  .alphabet-index-letter--enabled:hover,
+  .alphabet-index-letter--enabled:focus-visible {
+    background: hsl(var(--background));
+    box-shadow: 0 1px 3px hsl(var(--foreground) / 0.1);
+  }
+  
+  .alphabet-index-letter--active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+  }
+  
+  .alphabet-index-letter--disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  /* Mobile: horizontal scroll */
+  @media (max-width: 767px) {
+    .alphabet-index {
+      padding: 0.5rem 0;
+    }
+  
+    .alphabet-index-strip {
+      justify-content: flex-start;
+      max-width: none;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0.25rem 1rem;
+      border-radius: 0;
+      background: hsl(var(--muted) / 0.5);
+    }
+  
+    .alphabet-index-strip::-webkit-scrollbar {
+      display: none;
+    }
+  
+    .alphabet-index-letter {
+      min-width: 2rem;
+      height: 2rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .alphabet-index-letter {
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* ========================================
+     Letter Section Anchors - Respect Sticky Height
+     ======================================== */
+  .letter-section-anchor {
+    scroll-margin-top: var(--brands-sticky-offset);
+  }
+  
+  /* Letter headers - sticky below alphabet index */
+  .letter-section-anchor h2 {
+    top: calc(var(--controls-bar-height) + var(--alphabet-index-height));
+    z-index: 20;
+    background: hsl(var(--background) / 0.95);
+    backdrop-filter: blur(8px);
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Brands page container - allows sticky children */
+.brands-page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
