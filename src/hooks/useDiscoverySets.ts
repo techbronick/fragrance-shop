@@ -70,6 +70,7 @@ export const useDiscoverySetConfigsWithItems = () => {
         throw error;
       }
       
+      console.log('Fetched configs with items:', JSON.stringify(data, null, 2)); // Debug log
       return data;
     }
   });

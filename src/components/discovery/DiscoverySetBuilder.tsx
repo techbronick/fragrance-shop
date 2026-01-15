@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
-import { Package, Palette, Moon } from "lucide-react";
+import { Package, Palette, Clock, Sparkles, ShoppingCart, Check, Droplets, X } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { DiscoverySetConfig, Product } from "@/types/database";
 import { useButtonAnimation } from "@/hooks/useButtonAnimation";
 import { useToast } from "@/hooks/use-toast";
 import { DiscoveryConfigSelector } from "./DiscoveryConfigSelector";
-import { DiscoverySetNameEditor } from "./DiscoverySetNameEditor";
-import { DiscoverySlotsManager } from "./DiscoverySlotsManager";
 import { DiscoveryProductSelector } from "./DiscoveryProductSelector";
-import { DiscoverySetActions } from "./DiscoverySetActions";
 import { useCart } from "@/hooks/useCart";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/utils/formatPrice";
-import { supabase } from "@/utils/supabase-admin";
 
 interface PredefinedSet {
   id: string;
@@ -52,7 +49,7 @@ export const DiscoverySetBuilder = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [brandFilter, setBrandFilter] = useState<string>("all");
   const [familyFilter, setFamilyFilter] = useState<string>("all");
-  const [setName, setSetName] = useState("");
+  const [imageError, setImageError] = useState(false);
 
   const selectedConfig = configs.find(c => c.id === selectedConfigId);
   
@@ -63,7 +60,7 @@ export const DiscoverySetBuilder = ({
     description: selectedPredefinedSet.description,
     base_price: selectedPredefinedSet.price,
     total_slots: selectedPredefinedSet.samples,
-    volume_ml: parseInt(selectedPredefinedSet.configuration.split('×')[1]) || 1,  // Extract from "3×5ml" -> 5
+    volume_ml: parseInt(selectedPredefinedSet.configuration.split('×')[1]) || 1,
     image_url: selectedPredefinedSet.image,
     is_active: true,
     is_customizable: true,
@@ -76,50 +73,37 @@ export const DiscoverySetBuilder = ({
   useEffect(() => {
     if (activeConfig) {
       setSelectedProducts([]);
-      setSetName(`${activeConfig.name} Personalizat`);
     }
   }, [selectedConfigId, selectedPredefinedSet]);
 
   if (!activeConfig) {
-    // Available customizable configurations
-    const customizableConfigs = [
-      {
-        id: "trixter",
-        name: "Trixter",
-        description: "Set special cu parfumuri surprinzătoare și unice",
+    // Filter only customizable configs from database
+    const customizableConfigs = configs
+      .filter(c => c.is_customizable && c.is_active)
+      .map((config) => ({
+        id: config.id,
+        name: config.name,
+        description: config.description || '',
         icon: Palette,
-        image: "/Discoverybox2.png",
-        price: 18000, // 180 Lei for 3x2ml
-        samples: 3,
-        configuration: "3×2ml",
+        image: config.image_url || '/Discoverybox.png',
+        price: config.base_price,
+        samples: config.total_slots,
+        configuration: `${config.total_slots}×${config.volume_ml}ml`,
         fragrances: [],
         isCustomizable: true
-      },
-      {
-        id: "premium",
-        name: "Premium",
-        description: "Combinație ideală pentru testare aprofundată",
-        icon: Palette,
-        image: "/Discoverybox3.png",
-        price: 37500, // 375 Lei for 3x5ml
-        samples: 3,
-        configuration: "3×5ml",
-        fragrances: [],
-        isCustomizable: true
-      },
-      {
-        id: "intensiv-custom",
-        name: "Intensiv Custom",
-        description: "Alege-ți propriile parfumuri intense",
-        icon: Moon,
-        image: "/Discoverybox4.png",
-        price: 75000, // 750 Lei for 3x10ml
-        samples: 3,
-        configuration: "3×10ml",
-        fragrances: [],
-        isCustomizable: true
-      }
-    ];
+      }));
+
+    if (customizableConfigs.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <Package className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+          <h3 className="text-2xl font-playfair font-semibold mb-2">Nu există seturi customizabile</h3>
+          <p className="text-muted-foreground">
+            Momentan nu sunt disponibile seturi pentru personalizare.
+          </p>
+        </div>
+      );
+    }
 
     return (
       <div className="space-y-6">
@@ -191,15 +175,11 @@ export const DiscoverySetBuilder = ({
   }
 
   const addProductToSlot = (product: Product, slotIndex: number) => {
-    console.log('DiscoverySetBuilder addProductToSlot called:', product.name, 'slot:', slotIndex);
     setSelectedProducts(prev => {
-      console.log('Current selectedProducts:', prev);
       // Remove any existing product from this slot
       const filtered = prev.filter(p => p.slotIndex !== slotIndex);
       // Add the new product to this slot
-      const newProducts = [...filtered, { product, slotIndex }];
-      console.log('New selectedProducts:', newProducts);
-      return newProducts;
+      return [...filtered, { product, slotIndex }];
     });
   };
 
@@ -215,8 +195,6 @@ export const DiscoverySetBuilder = ({
     return activeConfig.base_price;
   };
 
-
-
   const handleAddToCart = () => {
     if (!isSetComplete()) {
       toast({
@@ -226,54 +204,265 @@ export const DiscoverySetBuilder = ({
       });
       return;
     }
-    // Map selectedProducts to the format needed for cart
+    
     const selectedItems = selectedProducts.map(sp => ({
       slot_index: sp.slotIndex,
-      sku_id: sp.product.id  // Note: This should be the SKU ID, not product ID
+      sku_id: sp.product.id
     }));
 
-    // Add custom bundle to cart (CLIENT-SIDE ONLY - no DB write)
     addItem({
-      id: crypto.randomUUID(),  // Temporary client ID
+      id: crypto.randomUUID(),
       type: 'custom-bundle',
       configId: activeConfig.id,
       selectedItems: selectedItems,
-      name: setName || activeConfig.name,
+      name: activeConfig.name,
       quantity: 1,
       price: Math.round(calculateTotalPrice() / 100),
       sizeLabel: `${activeConfig.total_slots} mostre`,
-      image: selectedProducts[0]?.product.image_url || activeConfig.image_url
+      image: activeConfig.image_url || '/placeholder-product.png'
     });
 
     triggerAnimation();
     
     toast({
       title: "Adăugat în coș!",
-      description: `${setName || activeConfig.name} a fost adăugat în coș.`
+      description: `${activeConfig.name} a fost adăugat în coș.`
     });
 
     // Reset builder
     setSelectedProducts([]);
-  
-  
-};
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  // Generate all slots (empty or filled)
+  const generateAllSlots = () => {
+    const slots: Array<{ slotIndex: number; product?: Product }> = [];
+    for (let i = 0; i < activeConfig.total_slots; i++) {
+      const productInSlot = selectedProducts.find(p => p.slotIndex === i)?.product;
+      slots.push({
+        slotIndex: i,
+        product: productInSlot
+      });
+    }
+    return slots;
+  };
+
+  const IconComponent = Package;
+  const priceInBani = activeConfig.base_price;
+  const allSlots = generateAllSlots();
 
   return (
-    <div className="space-y-6">
-      <DiscoveryConfigSelector 
-        selectedConfig={activeConfig}
-        onConfigChange={() => {
-          onConfigSelect("");
-          onPredefinedSetSelect(null);
-        }}
-      />
+    <div className="space-y-8">
+      {/* Layout similar cu DiscoverySetProduct - 2 coloane */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        {/* Product Image - Stânga */}
+        <div className="space-y-4">
+          <div className="aspect-square rounded-xl overflow-hidden bg-accent/20">
+            <img
+              src={imageError ? "/Discoverybox.png" : (activeConfig.image_url || '/Discoverybox.png')}
+              alt={activeConfig.name}
+              className="w-full h-full object-cover"
+              onError={handleImageError}
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-      <DiscoverySlotsManager 
-        selectedConfig={activeConfig}
-        selectedProducts={selectedProducts}
-        onRemoveProduct={removeProductFromSlot}
-      />
+        {/* Product Info - Dreapta */}
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <IconComponent className="h-6 w-6 text-primary" />
+              <Badge variant="secondary" className="text-sm">
+                {activeConfig.total_slots}×{activeConfig.volume_ml}ml
+              </Badge>
+            </div>
+            <h1 className="text-3xl md:text-4xl font-playfair font-bold mb-3">
+              {activeConfig.name}
+            </h1>
+            <p className="text-lg text-muted-foreground mb-4">
+              {activeConfig.description}
+            </p>
+            
+            {/* Parfumurile incluse - Carduri goale sau populate */}
+            <div className="mb-6">
+              <h3 className="text-xl font-playfair font-semibold mb-4">
+                Parfumurile incluse
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {allSlots.map((slot) => {
+                  const product = slot.product;
+                  
+                  // Card gol - design modern
+                  if (!product) {
+                    return (
+                      <Card 
+                        key={slot.slotIndex} 
+                        className="group hover:shadow-md transition-all duration-200 border-2 border-dashed border-muted-foreground/30 hover:border-primary/50 overflow-hidden bg-muted/20"
+                      >
+                        <div className="flex gap-3 p-3">
+                          {/* Placeholder Image */}
+                          <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0 flex items-center justify-center">
+                            <Droplets className="h-6 w-6 text-muted-foreground/40" />
+                          </div>
+                          
+                          {/* Placeholder Info */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                    <span className="text-xs font-bold text-primary">{slot.slotIndex + 1}</span>
+                                  </div>
+                                  <h4 className="text-sm font-semibold font-playfair text-muted-foreground">
+                                    Slot {slot.slotIndex + 1}
+                                  </h4>
+                                </div>
+                                <p className="text-xs text-muted-foreground/60 font-medium mb-2">
+                                  Selectează un parfum
+                                </p>
+                              </div>
+                              <Droplets className="h-4 w-4 text-muted-foreground/40 flex-shrink-0" />
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    );
+                  }
+                  
+                  // Card populat - exact ca în imagine
+                  const notes = [
+                    ...(product.notes_top || []),
+                    ...(product.notes_mid || []),
+                    ...(product.notes_base || [])
+                  ].slice(0, 3).join(', ');
+                  
+                  return (
+                    <Card 
+                      key={slot.slotIndex} 
+                      className="group hover:shadow-md transition-all duration-200 border hover:border-primary/30 overflow-hidden"
+                    >
+                      <div className="flex gap-3 p-3">
+                        {/* Product Image */}
+                        <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                          <img
+                            src={product.image_url || '/placeholder-product.png'}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = '/placeholder-product.png';
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Product Info */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                  <span className="text-xs font-bold text-primary">{slot.slotIndex + 1}</span>
+                                </div>
+                                <h4 className="text-sm font-semibold font-playfair truncate">
+                                  {product.name}
+                                </h4>
+                              </div>
+                              <p className="text-xs text-primary/80 font-medium mb-2">
+                                {product.brand}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Droplets className="h-4 w-4 text-primary/60 flex-shrink-0" />
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-6 w-6 p-0 hover:bg-destructive/10 hover:text-destructive"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeProductFromSlot(slot.slotIndex);
+                                }}
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                          
+                          {/* Notes */}
+                          {notes && (
+                            <div className="flex flex-wrap gap-1">
+                              {notes.split(', ').slice(0, 3).map((note: string, i: number) => (
+                                <Badge 
+                                  key={i} 
+                                  variant="secondary" 
+                                  className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20"
+                                >
+                                  {note.trim()}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4 mb-6">
+              <span className="text-3xl font-bold text-primary">
+                {formatPrice(priceInBani)}
+              </span>
+              <Badge variant="outline" className="text-sm">
+                {activeConfig.total_slots} mostre incluse
+              </Badge>
+            </div>
+          </div>
 
+          {/* Add to Cart Button */}
+          <div className="space-y-4">
+            <Button
+              onClick={handleAddToCart}
+              className={`w-full flex items-center gap-2 ${isAnimating ? "bg-green-500 text-white animate-pulse" : ""}`}
+              size="lg"
+              disabled={!isSetComplete() || isAnimating}
+            >
+              {isAnimating ? (
+                <>
+                  <Check className="h-4 w-4" />
+                  Adăugat în coș!
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="h-4 w-4" />
+                  Adaugă în coș - {formatPrice(priceInBani)}
+                </>
+              )}
+            </Button>
+          </div>
+
+          {/* Features */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t">
+            <div className="flex items-center gap-2">
+              <Package className="h-5 w-5 text-primary" />
+              <span className="text-sm">Livrare gratuită</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              <span className="text-sm">Livrare în 24h</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <span className="text-sm">Parfumuri originale</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Selectorul de parfumuri - în locul secțiunii "Despre acest Discovery Set" */}
       <DiscoveryProductSelector 
         products={products || []}
         selectedConfig={activeConfig}
@@ -285,15 +474,6 @@ export const DiscoverySetBuilder = ({
         onBrandFilterChange={setBrandFilter}
         onFamilyFilterChange={setFamilyFilter}
         onAddProduct={addProductToSlot}
-      />
-
-      <DiscoverySetActions 
-        totalPrice={calculateTotalPrice()}
-        selectedCount={selectedProducts.length}
-        totalSlots={activeConfig.total_slots}
-        isSetComplete={isSetComplete()}
-        isAnimating={isAnimating}
-        onAddToCart={handleAddToCart}
       />
     </div>
   );

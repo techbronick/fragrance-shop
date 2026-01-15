@@ -7,16 +7,21 @@ import SalesCarousel from "@/components/SalesCarousel";
 import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
 import ClientReviews from "@/components/ClientReviews";
 import { useProducts } from "@/hooks/useProducts";
+import { useDiscoverySetConfigs, useDiscoverySetConfigsWithItems } from "@/hooks/useDiscoverySets";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Sparkles, Gift, Award, Star, Users, Trophy, Package, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Seo from "@/components/Seo";
+import { formatPrice } from "@/utils/formatPrice";
 
 const Index = () => {
   const navigate = useNavigate();
   const { data: products, isLoading, error } = useProducts();
+  const { data: allConfigs, isLoading: isLoadingAllConfigs } = useDiscoverySetConfigs();
+  const { data: configsWithItems, isLoading: isLoadingConfigsWithItems } = useDiscoverySetConfigsWithItems();
+  const isLoadingDiscoverySets = isLoadingAllConfigs || isLoadingConfigsWithItems;
   
   // Select featured products from different brands for diversity
   const featuredProducts = (() => {
@@ -76,6 +81,76 @@ const Index = () => {
   const handleStartBuilding = () => {
     navigate('/discovery-sets');
   };
+
+  // Filter discovery sets by IDs: Pentru El, Pentru Ea, Esential, Explorer
+  const featuredDiscoverySets = (() => {
+    if (!allConfigs) return [];
+    
+    // Create a map of configs with items for quick lookup
+    const configsWithItemsMap = new Map();
+    if (configsWithItems) {
+      configsWithItems.forEach((config: any) => {
+        configsWithItemsMap.set(config.id, config);
+      });
+    }
+    
+    // Target IDs for featured discovery sets
+    const targetIds = [
+      '3f7ccaf3-c200-4256-95c5-6db0e5fb782e',
+      'c6258e67-e266-4dd3-9a4f-dd6a5e8b183d',
+      'd0e8dabf-63bc-48f0-b8c8-5bf9da90e65c',
+      '5fa4207d-3ba8-49ea-8ae9-cc9cd506584d'
+    ];
+    
+    // Debug: Log all discovery sets to see what we have
+    console.log('All discovery sets from DB:', allConfigs.map((c: any) => ({
+      id: c.id,
+      name: c.name,
+      is_active: c.is_active,
+      is_customizable: c.is_customizable
+    })));
+    
+    const filtered = allConfigs
+      .filter((config: any) => targetIds.includes(config.id))
+      .map((config: any) => {
+        // Get items from configsWithItemsMap if available, otherwise use empty array
+        const configWithItems = configsWithItemsMap.get(config.id);
+        const items = configWithItems?.items || [];
+        
+        return {
+          id: config.id,
+          name: config.name,
+          description: config.description || '',
+          price: config.base_price,
+          samples: config.total_slots,
+          volume: config.volume_ml,
+          configuration: `${config.total_slots}×${config.volume_ml}ml`,
+          image: config.image_url || '/Discoverybox.png',
+          isCustomizable: config.is_customizable,
+          fragrances: items.map((item: any) => {
+            const sku = item.sku || item.skus;
+            const product = sku?.product || sku?.products;
+            return product?.name || 'Unknown';
+          }).filter(Boolean)
+        };
+      })
+      .sort((a, b) => {
+        // Sort by the order of IDs in targetIds array
+        const indexA = targetIds.indexOf(a.id);
+        const indexB = targetIds.indexOf(b.id);
+        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+      });
+    
+    // Debug: Log filtered sets
+    console.log('Filtered discovery sets:', filtered.map((s: any) => ({
+      id: s.id,
+      name: s.name,
+      isCustomizable: s.isCustomizable,
+      hasItems: s.fragrances.length > 0
+    })));
+    
+    return filtered;
+  })();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -146,147 +221,100 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Pre-filled Discovery Boxes */}
-              <Card className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                <CardContent className="p-4">
-                  <div className="aspect-square rounded-lg overflow-hidden mb-4 relative">
-                    <img 
-                      src="/pentrueadiscoveryset.png"
-                      alt="Pentru Ea Discovery Set"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Badge className="absolute top-2 right-2 bg-pink-500 hover:bg-pink-600">
-                      Pre-filled
-                    </Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-playfair font-medium text-lg">Pentru Ea</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Parfumuri feminine elegante și sofisticate
-                      </p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-muted-foreground">5×1ml mostre</span>
-                        <span className="font-semibold text-primary">250 Lei</span>
+            {isLoadingDiscoverySets ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <Card key={i} className="animate-pulse">
+                    <CardContent className="p-4">
+                      <div className="aspect-square rounded-lg bg-muted mb-4"></div>
+                      <div className="space-y-2">
+                        <div className="h-4 bg-muted rounded w-3/4"></div>
+                        <div className="h-3 bg-muted rounded w-full"></div>
+                        <div className="h-3 bg-muted rounded w-1/2"></div>
                       </div>
-                    </div>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => navigate('/discovery-set/for-her')}
-                    >
-                      <Gift className="h-4 w-4 mr-2" />
-                      Adaugă în coș
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                <CardContent className="p-4">
-                  <div className="aspect-square rounded-lg overflow-hidden mb-4 relative">
-                    <img 
-                      src="/pentrueldiscoveryset.png"
-                      alt="Pentru El Discovery Set"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Badge className="absolute top-2 right-2 bg-blue-500 hover:bg-blue-600">
-                      Pre-filled
-                    </Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-playfair font-medium text-lg">Pentru El</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Parfumuri masculine puternice și charismatice
-                      </p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-muted-foreground">5×1ml mostre</span>
-                        <span className="font-semibold text-primary">250 Lei</span>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {featuredDiscoverySets.map((set: any) => (
+                  <Card 
+                    key={set.id} 
+                    className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    onClick={() => {
+                      if (set.isCustomizable) {
+                        navigate(`/discovery-sets?set=${set.id}&tab=builder`);
+                      } else {
+                        navigate(`/discovery-set/${set.id}`);
+                      }
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <div className="aspect-square rounded-lg overflow-hidden mb-4 relative">
+                        <img 
+                          src={set.image}
+                          alt={`${set.name} Discovery Set`}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/Discoverybox.png';
+                          }}
+                        />
+                        <Badge 
+                          className={`absolute top-2 right-2 ${
+                            set.isCustomizable 
+                              ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+                              : set.name === 'Pentru Ea'
+                              ? 'bg-pink-500 hover:bg-pink-600'
+                              : set.name === 'Pentru El'
+                              ? 'bg-blue-500 hover:bg-blue-600'
+                              : 'bg-primary hover:bg-primary/90'
+                          }`}
+                        >
+                          {set.isCustomizable ? 'Customizable' : 'Pre-filled'}
+                        </Badge>
                       </div>
-                    </div>
-                    <Button 
-                      className="w-full" 
-                      onClick={() => navigate('/discovery-set/for-him')}
-                    >
-                      <Gift className="h-4 w-4 mr-2" />
-                      Adaugă în coș
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Customizable Discovery Boxes */}
-              <Card className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                <CardContent className="p-4">
-                  <div className="aspect-square rounded-lg overflow-hidden mb-4 relative">
-                    <img 
-                      src="/Discoverybox2.png"
-                      alt="Trixter Discovery Set"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Badge className="absolute top-2 right-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-                      Customizable
-                    </Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-playfair font-medium text-lg">Trixter</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Set special cu parfumuri surprinzătoare și unice
-                      </p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-muted-foreground">3×2ml mostre</span>
-                        <span className="font-semibold text-primary">180 Lei</span>
+                      <div className="space-y-3">
+                        <div>
+                          <h3 className="font-playfair font-medium text-lg group-hover:text-primary transition-colors">{set.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {set.description || 'Descoperă parfumuri noi și unice'}
+                          </p>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs text-muted-foreground">{set.configuration} mostre</span>
+                            <span className="font-semibold text-primary">{formatPrice(set.price)}</span>
+                          </div>
+                        </div>
+                        {set.isCustomizable ? (
+                          <Button 
+                            variant="outline" 
+                            className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/discovery-sets?set=${set.id}&tab=builder`);
+                            }}
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Personalizează
+                          </Button>
+                        ) : (
+                          <Button 
+                            className="w-full" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/discovery-set/${set.id}`);
+                            }}
+                          >
+                            <Gift className="h-4 w-4 mr-2" />
+                            Adaugă în coș
+                          </Button>
+                        )}
                       </div>
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground" 
-                      onClick={() => navigate('/discovery-sets?set=trixter&tab=builder')}
-                    >
-                      <Sparkles className="h-4 w-4 mr-2" />
-                      Personalizează
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                <CardContent className="p-4">
-                  <div className="aspect-square rounded-lg overflow-hidden mb-4 relative">
-                    <img 
-                      src="/Discoverybox3.png"
-                      alt="Premium Discovery Set"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <Badge className="absolute top-2 right-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-                      Customizable
-                    </Badge>
-                  </div>
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-playfair font-medium text-lg">Premium</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Combinație ideală pentru testare aprofundată
-                      </p>
-                      <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-muted-foreground">3×5ml mostre</span>
-                        <span className="font-semibold text-primary">375 Lei</span>
-                      </div>
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground" 
-                      onClick={() => navigate('/discovery-sets?set=premium&tab=builder')}
-                    >
-                      <Sparkles className="h-4 w-4 mr-2" />
-                      Personalizează
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
 
             <div className="text-center mt-8">
               <Button 

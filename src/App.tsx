@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import OrderConfirmation from "./pages/OrderConfirmation";
@@ -12,10 +14,18 @@ import Product from "./pages/Product";
 import DiscoverySets from "./pages/DiscoverySets";
 import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
+import About from "./pages/About";
+import Terms from "./pages/Terms";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
+import Careers from "./pages/Careers";
+import FAQ from "./pages/FAQ";
+import Login from "./pages/Login";
 
 // Lazy load heavy components
 const Admin = lazy(() => import("./pages/Admin"));
 const DiscoverySetProduct = lazy(() => import("./pages/DiscoverySetProduct"));
+const OrderDetails = lazy(() => import("./components/admin/OrderDetails"));
 
 // Import Header and Footer for placeholder pages
 import Header from "./components/Header";
@@ -58,38 +68,52 @@ const ScrollToTop = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/discovery-sets" element={<DiscoverySets />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route 
-            path="/discovery-set/:id" 
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <DiscoverySetProduct />
-              </Suspense>
-            } 
-          />
-          <Route 
-            path="/admin" 
-            element={
-              <Suspense fallback={<PageLoader />}>
-                <Admin />
-              </Suspense>
-            } 
-          />
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/discovery-sets" element={<DiscoverySets />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/login" element={<Login />} />
+            <Route 
+              path="/discovery-set/:id" 
+              element={
+                <Suspense fallback={<PageLoader />}>
+                  <DiscoverySetProduct />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<PageLoader />}>
+                    <Admin />
+                  </Suspense>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/orders/:orderId" 
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<PageLoader />}>
+                    <OrderDetails />
+                  </Suspense>
+                </ProtectedRoute>
+              } 
+            />
           
           {/* Static/Information Pages with proper URLs for SEO */}
           <Route 
             path="/about" 
-            element={<PlaceholderPage title="Despre Noi" description="Află mai multe despre misiunea noastră de a aduce cele mai fine parfumuri la tine acasă." />} 
+            element={<About />} 
           />
           <Route 
             path="/blog" 
@@ -97,11 +121,11 @@ const App = () => (
           />
           <Route 
             path="/contact" 
-            element={<PlaceholderPage title="Contactează-ne" description="Suntem aici să te ajutăm cu orice întrebări sau nelămuriri." />} 
+            element={<Contact />} 
           />
           <Route 
             path="/faq" 
-            element={<PlaceholderPage title="Întrebări Frecvente" description="Găsește răspunsuri la cele mai comune întrebări despre produsele și serviciile noastre." />} 
+            element={<FAQ />} 
           />
           <Route 
             path="/shipping" 
@@ -113,15 +137,15 @@ const App = () => (
           />
           <Route 
             path="/careers" 
-            element={<PlaceholderPage title="Cariere" description="Alătură-te echipei noastre și fii parte din lumea parfumurilor de lux." />} 
+            element={<Careers />} 
           />
           <Route 
             path="/privacy" 
-            element={<PlaceholderPage title="Politica de Confidențialitate" description="Informații despre cum protejăm și folosim datele tale personale." />} 
+            element={<Privacy />} 
           />
           <Route 
             path="/terms" 
-            element={<PlaceholderPage title="Termeni și Condiții" description="Condițiile de utilizare a site-ului și serviciilor noastre." />} 
+            element={<Terms />} 
           />
           <Route path="/orders/:orderId" element={<OrderConfirmation />} />
           <Route path="/orders" element={<Orders />} />
@@ -130,6 +154,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from '@/components/ui/pagination';
 import {
   testConnections,
   exploreDatabase,
@@ -13,12 +16,24 @@ import {
   skuUtils,
   discoverySetUtils
 } from '@/utils/supabase-admin';
-import { Database, Activity, Package, Settings, Users, Zap, Plus, Edit, Trash2, Eye, DollarSign, Wine, TestTube } from 'lucide-react';
+import { Database, Activity, Package, Settings, Users, Zap, Plus, Edit, Trash2, Eye, DollarSign, Wine, TestTube, Search, X, LogOut, Image } from 'lucide-react';
 import ProductForm from '@/components/admin/ProductForm';
 import SKUForm from '@/components/admin/SKUForm';
 import DiscoverySetForm from '@/components/admin/DiscoverySetForm';
+import OrdersList from '@/components/admin/OrdersList';
+import BrandImageManager from '@/components/admin/BrandImageManager';
+import { useToast } from '@/hooks/use-toast';
+import { matchesSearch } from '@/utils/stringUtils';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
+  const { toast } = useToast();
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const defaultTab = searchParams.get('tab') || 'overview';
+  const [activeTab, setActiveTab] = useState(defaultTab);
   const [connectionStatus, setConnectionStatus] = useState<any>(null);
   const [dbStats, setDbStats] = useState<any>(null);
   const [dbExploration, setDbExploration] = useState<any>(null);
@@ -32,6 +47,29 @@ const Admin = () => {
   const [showProductForm, setShowProductForm] = useState(false);
   const [showSKUForm, setShowSKUForm] = useState(false);
   const [showDiscoveryForm, setShowDiscoveryForm] = useState(false);
+  const [productSearchQuery, setProductSearchQuery] = useState('');
+  const [bottleSearchQuery, setBottleSearchQuery] = useState('');
+  const [sampleSearchQuery, setSampleSearchQuery] = useState('');
+  const [discoverySearchQuery, setDiscoverySearchQuery] = useState('');
+  
+  // Pagination state
+  const [productsPage, setProductsPage] = useState(1);
+  const [bottlesPage, setBottlesPage] = useState(1);
+  const [samplesPage, setSamplesPage] = useState(1);
+  const [discoveryPage, setDiscoveryPage] = useState(1);
+  
+  const ITEMS_PER_PAGE = 20;
+
+  // Sync tab with URL params
+  useEffect(() => {
+    const tab = searchParams.get('tab') || 'overview';
+    setActiveTab(tab);
+  }, [searchParams]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setSearchParams({ tab: value });
+  };
 
   useEffect(() => {
     handleTestConnection();
@@ -138,8 +176,81 @@ const Admin = () => {
     return (priceInBani / 100).toFixed(2);
   };
 
-  // Group products by brand
-  const productsByBrand = products.reduce((acc, product) => {
+  // Delete handlers
+  const handleDeleteProduct = async (productId: string) => {
+    if (!confirm('Are you sure you want to delete this product? This will also delete all associated SKUs.')) {
+      return;
+    }
+    try {
+      const { error } = await productUtils.deleteProduct(productId);
+      if (error) throw error;
+      toast({
+        title: "Product Deleted",
+        description: "Product has been deleted successfully.",
+      });
+      handleLoadProducts();
+      handleTestConnection();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete product",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteSKU = async (skuId: string) => {
+    if (!confirm('Are you sure you want to delete this SKU?')) {
+      return;
+    }
+    try {
+      const { error } = await skuUtils.deleteSKU(skuId);
+      if (error) throw error;
+      toast({
+        title: "SKU Deleted",
+        description: "SKU has been deleted successfully.",
+      });
+      handleLoadSkus();
+      handleTestConnection();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete SKU",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteConfig = async (configId: string) => {
+    if (!confirm('Are you sure you want to delete this discovery set configuration?')) {
+      return;
+    }
+    try {
+      const { error } = await discoverySetUtils.deleteConfig(configId);
+      if (error) throw error;
+      toast({
+        title: "Config Deleted",
+        description: "Discovery set configuration has been deleted successfully.",
+      });
+      handleLoadDiscoveryConfigs();
+      handleTestConnection();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete configuration",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Filter products
+  const filteredProducts = products.filter(p => 
+    matchesSearch(p.name, productSearchQuery) || 
+    matchesSearch(p.brand, productSearchQuery)
+  );
+
+  // Group products by brand (using filtered products)
+  const productsByBrand = filteredProducts.reduce((acc, product) => {
     const brand = product.brand;
     if (!acc[brand]) {
       acc[brand] = [];
@@ -151,6 +262,24 @@ const Admin = () => {
   // Separate SKUs into bottles and samples
   const bottleSKUs = skus.filter(sku => sku.size_ml >= 10); // 10ml and above are bottles
   const sampleSKUs = skus.filter(sku => sku.size_ml < 10); // Under 10ml are samples
+
+  // Filter functions (after bottleSKUs and sampleSKUs are declared)
+  const filteredBottleSKUs = bottleSKUs.filter(sku => 
+    matchesSearch(sku.products?.name || '', bottleSearchQuery) ||
+    matchesSearch(sku.products?.brand || '', bottleSearchQuery) ||
+    matchesSearch(sku.label || '', bottleSearchQuery)
+  );
+
+  const filteredSampleSKUs = sampleSKUs.filter(sku => 
+    matchesSearch(sku.products?.name || '', sampleSearchQuery) ||
+    matchesSearch(sku.products?.brand || '', sampleSearchQuery) ||
+    matchesSearch(sku.label || '', sampleSearchQuery)
+  );
+
+  const filteredDiscoveryConfigs = discoveryConfigs.filter(config =>
+    matchesSearch(config.name, discoverySearchQuery) ||
+    matchesSearch(config.description || '', discoverySearchQuery)
+  );
 
   // Group bottle SKUs by size
   const bottlesBySize = bottleSKUs.reduce((acc, sku) => {
@@ -164,6 +293,41 @@ const Admin = () => {
 
   // Sort brands alphabetically
   const sortedBrands = Object.keys(productsByBrand).sort();
+  
+  // Pagination for products (by brand)
+  const productsTotalPages = Math.ceil(sortedBrands.length / ITEMS_PER_PAGE);
+  const paginatedBrands = sortedBrands.slice(
+    (productsPage - 1) * ITEMS_PER_PAGE,
+    productsPage * ITEMS_PER_PAGE
+  );
+  
+  // Pagination for bottles
+  const bottlesByBrand = filteredBottleSKUs.reduce((acc, sku) => {
+    const brand = sku.products?.brand || 'Unknown';
+    if (!acc[brand]) acc[brand] = [];
+    acc[brand].push(sku);
+    return acc;
+  }, {} as Record<string, any[]>);
+  const sortedBottleBrands = Object.keys(bottlesByBrand).sort((a, b) => a.localeCompare(b));
+  const bottlesTotalPages = Math.ceil(sortedBottleBrands.length / ITEMS_PER_PAGE);
+  const paginatedBottleBrands = sortedBottleBrands.slice(
+    (bottlesPage - 1) * ITEMS_PER_PAGE,
+    bottlesPage * ITEMS_PER_PAGE
+  );
+  
+  // Pagination for samples
+  const samplesTotalPages = Math.ceil(filteredSampleSKUs.length / ITEMS_PER_PAGE);
+  const paginatedSamples = filteredSampleSKUs.slice(
+    (samplesPage - 1) * ITEMS_PER_PAGE,
+    samplesPage * ITEMS_PER_PAGE
+  );
+  
+  // Pagination for discovery sets
+  const discoveryTotalPages = Math.ceil(filteredDiscoveryConfigs.length / ITEMS_PER_PAGE);
+  const paginatedDiscoveryConfigs = filteredDiscoveryConfigs.slice(
+    (discoveryPage - 1) * ITEMS_PER_PAGE,
+    discoveryPage * ITEMS_PER_PAGE
+  );
 
   // Sort bottle sizes numerically
   const sortedBottleSizes = Object.keys(bottlesBySize).sort((a, b) => {
@@ -171,24 +335,170 @@ const Admin = () => {
     const sizeB = parseInt(b.replace('ml', ''));
     return sizeA - sizeB;
   });
+  
+  // Reset pagination when search changes
+  useEffect(() => {
+    setProductsPage(1);
+  }, [productSearchQuery]);
+  
+  useEffect(() => {
+    setBottlesPage(1);
+  }, [bottleSearchQuery]);
+  
+  useEffect(() => {
+    setSamplesPage(1);
+  }, [sampleSearchQuery]);
+  
+  useEffect(() => {
+    setDiscoveryPage(1);
+  }, [discoverySearchQuery]);
+  
+  // Pagination handlers
+  const handleProductsPageChange = (page: number) => {
+    setProductsPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  const handleBottlesPageChange = (page: number) => {
+    setBottlesPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  const handleSamplesPageChange = (page: number) => {
+    setSamplesPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  const handleDiscoveryPageChange = (page: number) => {
+    setDiscoveryPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  // Pagination component helper
+  const renderPagination = (
+    currentPage: number,
+    totalPages: number,
+    onPageChange: (page: number) => void,
+    showing: number,
+    total: number
+  ) => {
+    if (totalPages <= 1) return null;
+    
+    return (
+      <div className="mt-4">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+
+            {currentPage > 2 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => onPageChange(1)} className="cursor-pointer">
+                  1
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {currentPage > 3 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => onPageChange(currentPage - 1)} className="cursor-pointer">
+                  {currentPage - 1}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationLink isActive className="cursor-default">
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+
+            {currentPage < totalPages && (
+              <PaginationItem>
+                <PaginationLink onClick={() => onPageChange(currentPage + 1)} className="cursor-pointer">
+                  {currentPage + 1}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {currentPage < totalPages - 2 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {currentPage < totalPages - 1 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => onPageChange(totalPages)} className="cursor-pointer">
+                  {totalPages}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+        <p className="text-center text-sm text-muted-foreground mt-2">
+          Showing {showing} of {total} items (Page {currentPage} of {totalPages})
+        </p>
+      </div>
+    );
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/login');
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Scent Discovery Vault Admin</h1>
-          <p className="text-muted-foreground">
-            Complete database management and content creation tools
-          </p>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Scent Discovery Vault Admin</h1>
+            <p className="text-muted-foreground">
+              Complete database management and content creation tools
+            </p>
+            {user && (
+              <p className="text-sm text-muted-foreground mt-1">
+                Logged in as: {user.email}
+              </p>
+            )}
+          </div>
+          <Button
+            variant="outline"
+            onClick={handleLogout}
+            className="flex items-center gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="bottles">Bottles</TabsTrigger>
             <TabsTrigger value="samples">Samples</TabsTrigger>
             <TabsTrigger value="discovery">Discovery Sets</TabsTrigger>
+            <TabsTrigger value="brands">Brands</TabsTrigger>
             <TabsTrigger value="database">Database</TabsTrigger>
           </TabsList>
 
@@ -351,6 +661,10 @@ const Admin = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="orders" className="space-y-6">
+            <OrdersList />
+          </TabsContent>
+
           <TabsContent value="products" className="space-y-6">
             <Card>
               <CardHeader>
@@ -361,12 +675,12 @@ const Admin = () => {
                       Products by Brand
                     </CardTitle>
                     <CardDescription>
-                      {dbStats?.products} products across {sortedBrands.length} brands
+                      {filteredProducts.length} of {products.length} products
                     </CardDescription>
                   </div>
                   <Button
                     onClick={() => {
-                      setSelectedProduct(null);  // ADD THIS
+                      setSelectedProduct(null);
                       setShowProductForm(true);
                     }}
                     className="flex items-center gap-2"
@@ -377,9 +691,29 @@ const Admin = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {sortedBrands.length > 0 ? (
+                {/* Search Bar */}
+                <div className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search products by name or brand..."
+                      value={productSearchQuery}
+                      onChange={(e) => setProductSearchQuery(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    {productSearchQuery && (
+                      <button
+                        onClick={() => setProductSearchQuery('')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                {paginatedBrands.length > 0 ? (
                   <Accordion type="multiple" className="space-y-2">
-                    {sortedBrands.map((brand) => (
+                    {paginatedBrands.map((brand) => (
                       <AccordionItem key={brand} value={brand} className="border rounded-lg px-4">
                         <AccordionTrigger className="hover:no-underline">
                           <div className="flex items-center gap-3">
@@ -429,6 +763,13 @@ const Admin = () => {
                                       <Plus className="h-4 w-4" />
                                       SKU
                                     </Button>
+                                    <Button
+                                      variant="destructive"
+                                      size="sm"
+                                      onClick={() => handleDeleteProduct(product.id)}
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
                                   </div>
                                 </div>
                               </div>
@@ -453,6 +794,14 @@ const Admin = () => {
                       Add First Product
                     </Button>
                   </div>
+                )}
+                
+                {renderPagination(
+                  productsPage,
+                  productsTotalPages,
+                  handleProductsPageChange,
+                  paginatedBrands.length,
+                  sortedBrands.length
                 )}
               </CardContent>
             </Card>
@@ -484,17 +833,33 @@ const Admin = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {bottleSKUs.length > 0 ? (
+                {/* Search Bar */}
+                <div className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search bottles by product, brand, or label..."
+                      value={bottleSearchQuery}
+                      onChange={(e) => setBottleSearchQuery(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    {bottleSearchQuery && (
+                      <button
+                        onClick={() => setBottleSearchQuery('')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {paginatedBottleBrands.length > 0 ? (
                   <div className="space-y-6">
                     {/* Group by Brand first */}
-                    {Object.entries(
-                      bottleSKUs.reduce((acc, sku) => {
-                        const brand = sku.products?.brand || 'Unknown';
-                        if (!acc[brand]) acc[brand] = [];
-                        acc[brand].push(sku);
-                        return acc;
-                      }, {} as Record<string, any[]>)
-                    ).sort(([a], [b]) => a.localeCompare(b)).map(([brand, brandSKUs]: [string, any[]]) => (
+                    {paginatedBottleBrands.map((brand) => {
+                      const brandSKUs = bottlesByBrand[brand];
+                      return (
                       <div key={brand} className="border rounded-lg p-4">
                         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                           {brand}
@@ -647,6 +1012,13 @@ const Admin = () => {
                                     >
                                       <Package className="h-4 w-4" />
                                     </Button>
+                                    <Button
+                                      variant="destructive"
+                                      size="sm"
+                                      onClick={() => handleDeleteSKU(sku.id)}
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
                                   </div>
                                 </div>
 
@@ -667,23 +1039,44 @@ const Admin = () => {
                           })}
                         </div>
                       </div>
-                    ))}
+                    );
+                  })}
                   </div>
                 ) : (
                   <div className="text-center py-8">
                     <Wine className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">No bottle SKUs found. Create bottle sizes for your products!</p>
-                    <Button
-                      onClick={() => {
-                        setSelectedSKU(null);
-                        setShowSKUForm(true);
-                      }}
-                      className="mt-4"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add First Bottle SKU
-                    </Button>
+                    <p className="text-muted-foreground">
+                      {bottleSearchQuery ? 'No bottle SKUs match your search.' : 'No bottle SKUs found. Create bottle sizes for your products!'}
+                    </p>
+                    {bottleSearchQuery ? (
+                      <Button
+                        onClick={() => setBottleSearchQuery('')}
+                        className="mt-4"
+                        variant="outline"
+                      >
+                        Clear Search
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setSelectedSKU(null);
+                          setShowSKUForm(true);
+                        }}
+                        className="mt-4"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add First Bottle SKU
+                      </Button>
+                    )}
                   </div>
+                )}
+                
+                {renderPagination(
+                  bottlesPage,
+                  bottlesTotalPages,
+                  handleBottlesPageChange,
+                  paginatedBottleBrands.length,
+                  sortedBottleBrands.length
                 )}
               </CardContent>
             </Card>
@@ -715,9 +1108,30 @@ const Admin = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {sampleSKUs.length > 0 ? (
+                {/* Search Bar */}
+                <div className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search samples by product, brand, or label..."
+                      value={sampleSearchQuery}
+                      onChange={(e) => setSampleSearchQuery(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    {sampleSearchQuery && (
+                      <button
+                        onClick={() => setSampleSearchQuery('')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {paginatedSamples.length > 0 ? (
                   <div className="space-y-3">
-                    {sampleSKUs.map((sku) => (
+                    {paginatedSamples.map((sku) => (
                       <div key={sku.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                         <div className="flex justify-between items-center">
                           <div className="flex-1">
@@ -756,6 +1170,13 @@ const Admin = () => {
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleDeleteSKU(sku.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -764,18 +1185,38 @@ const Admin = () => {
                 ) : (
                   <div className="text-center py-8">
                     <TestTube className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">No sample SKUs found. Create samples for discovery sets!</p>
-                    <Button
-                      onClick={() => {
-                        setSelectedSKU(null);
-                        setShowSKUForm(true);
-                      }}
-                      className="mt-4"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add First Sample SKU
-                    </Button>
+                    <p className="text-muted-foreground">
+                      {sampleSearchQuery ? 'No sample SKUs match your search.' : 'No sample SKUs found. Create samples for discovery sets!'}
+                    </p>
+                    {sampleSearchQuery ? (
+                      <Button
+                        onClick={() => setSampleSearchQuery('')}
+                        className="mt-4"
+                        variant="outline"
+                      >
+                        Clear Search
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setSelectedSKU(null);
+                          setShowSKUForm(true);
+                        }}
+                        className="mt-4"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add First Sample SKU
+                      </Button>
+                    )}
                   </div>
+                )}
+                
+                {renderPagination(
+                  samplesPage,
+                  samplesTotalPages,
+                  handleSamplesPageChange,
+                  paginatedSamples.length,
+                  filteredSampleSKUs.length
                 )}
               </CardContent>
             </Card>
@@ -807,9 +1248,30 @@ const Admin = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {discoveryConfigs.length > 0 ? (
+                {/* Search Bar */}
+                <div className="mb-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search discovery sets by name or description..."
+                      value={discoverySearchQuery}
+                      onChange={(e) => setDiscoverySearchQuery(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    {discoverySearchQuery && (
+                      <button
+                        onClick={() => setDiscoverySearchQuery('')}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {paginatedDiscoveryConfigs.length > 0 ? (
                   <div className="space-y-3">
-                    {discoveryConfigs.map((config) => (
+                    {paginatedDiscoveryConfigs.map((config) => (
                       <div key={config.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
@@ -849,6 +1311,13 @@ const Admin = () => {
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => handleDeleteConfig(config.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -857,21 +1326,45 @@ const Admin = () => {
                 ) : (
                   <div className="text-center py-8">
                     <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">No discovery set configurations found.</p>
-                    <Button
-                      onClick={() => {
-                        setSelectedConfig(null);
-                        setShowDiscoveryForm(true);
-                      }}
-                      className="mt-4"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create First Configuration
-                    </Button>
+                    <p className="text-muted-foreground">
+                      {discoverySearchQuery ? 'No discovery sets match your search.' : 'No discovery set configurations found.'}
+                    </p>
+                    {discoverySearchQuery ? (
+                      <Button
+                        onClick={() => setDiscoverySearchQuery('')}
+                        className="mt-4"
+                        variant="outline"
+                      >
+                        Clear Search
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setSelectedConfig(null);
+                          setShowDiscoveryForm(true);
+                        }}
+                        className="mt-4"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create First Configuration
+                      </Button>
+                    )}
                   </div>
+                )}
+                
+                {renderPagination(
+                  discoveryPage,
+                  discoveryTotalPages,
+                  handleDiscoveryPageChange,
+                  paginatedDiscoveryConfigs.length,
+                  filteredDiscoveryConfigs.length
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="brands" className="space-y-6">
+            <BrandImageManager />
           </TabsContent>
 
           <TabsContent value="database" className="space-y-6">

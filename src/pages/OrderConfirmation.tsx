@@ -110,17 +110,25 @@ const OrderConfirmation = () => {
                   {item.snapshot?.image_url && (
                     <img 
                       src={item.snapshot.image_url} 
-                      alt={item.snapshot.product_name || ''} 
+                      alt={item.snapshot?.product_name || item.snapshot?.config?.name || ''} 
                       className="w-16 h-16 object-cover rounded"
                     />
                   )}
                   <div className="flex-1">
-                    <h3 className="font-medium">{item.snapshot?.product_name}</h3>
+                    <h3 className="font-medium">
+                      {item.snapshot?.product_name || item.snapshot?.config?.name || 'Produs'}
+                    </h3>
                     {item.snapshot?.brand && (
                       <p className="text-sm text-muted-foreground">{item.snapshot.brand}</p>
                     )}
                     {item.snapshot?.size_label && (
                       <p className="text-sm">{item.snapshot.size_label}</p>
+                    )}
+                    {/* Show configuration for bundles */}
+                    {item.snapshot?.config && (
+                      <p className="text-sm text-muted-foreground">
+                        {item.snapshot.config.total_slots}×{item.snapshot.config.volume_ml}ml
+                      </p>
                     )}
                     <p className="text-sm">Cantitate: {item.quantity}</p>
                   </div>

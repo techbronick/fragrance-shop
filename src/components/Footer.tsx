@@ -27,10 +27,8 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-medium">Magazin</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/shop" className="hover:text-primary transition-colors">Toate Parfumurile</Link></li>
-              <li><Link to="/shop?family=woody" className="hover:text-primary transition-colors">Lemnos</Link></li>
-              <li><Link to="/shop?family=floral" className="hover:text-primary transition-colors">Floral</Link></li>
-              <li><Link to="/shop?family=citrus" className="hover:text-primary transition-colors">Citrice</Link></li>
+              <li><Link to="/shop" className="hover:text-primary transition-colors">Branduri</Link></li>
+              <li><Link to="/shop?products=all" className="hover:text-primary transition-colors">Toate Produsele</Link></li>
               <li><Link to="/discovery-sets" className="hover:text-primary transition-colors">Seturi Discovery</Link></li>
             </ul>
           </div>

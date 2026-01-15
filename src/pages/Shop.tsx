@@ -104,6 +104,7 @@ const Shop = () => {
   useEffect(() => {
     const brandParam = searchParams.get('brand');
     const searchParam = searchParams.get('search');
+    const productsParam = searchParams.get('products');
     const brandQueryParam = searchParams.get('q'); // Brand search query
 
     if (brandParam) {
@@ -111,6 +112,11 @@ const Shop = () => {
       setShowAllProducts(true);
     } else if (searchParam) {
       setSearchTerm(searchParam);
+      setShowAllProducts(true);
+    } else if (productsParam === 'all') {
+      // Show all products without filters
+      setSelectedBrands([]);
+      setSearchTerm("");
       setShowAllProducts(true);
     } else {
       // If no parameters, show brands view

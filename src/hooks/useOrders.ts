@@ -182,6 +182,9 @@ export const useCreateOrder = () => {
               };
             } else {
               snapshot = {
+                // Add product_name and image_url at root level for display
+                product_name: configData.name,
+                image_url: configData.image_url || null,
                 config: {
                   id: configData.id,
                   name: configData.name,
@@ -238,20 +241,9 @@ export const useCreateOrder = () => {
             } else {
               // item.selectedItems contains the user's selections
               // Format: [{ slot_index: 0, sku_id: "uuid" }, ...]
-              const skuIds = item.selectedItems
-                .map((s: any) => s.sku_id)
-                .filter((id: string) => id); // Filter out any undefined/null ids
+              // NOTE: The sku_id might actually be a product_id from the builder
               
-              // Fetch SKU and product data
-              const { data: skuData, error: skuError } = await supabase
-                .from('skus')
-                .select('*, product:products(*)')
-                .in('id', skuIds);
-              
-              if (skuError) {
-                console.error('Error fetching SKUs for custom bundle:', skuError);
-              }
-              
+              // First, fetch the config to get volume_ml
               const { data: configData, error: configError } = await supabase
                 .from('discovery_set_configs')
                 .select('*')
@@ -262,7 +254,48 @@ export const useCreateOrder = () => {
                 console.error('Error fetching config for custom bundle:', configError);
               }
               
+              const volumeMl = configData?.volume_ml || 5; // Default to 5ml if not found
+              
+              // Try to fetch SKUs directly first (in case they're actual SKU IDs)
+              const potentialSkuIds = item.selectedItems
+                .map((s: any) => s.sku_id)
+                .filter((id: string) => id);
+              
+              let skuData: any[] = [];
+              
+              // First attempt: try as SKU IDs
+              const { data: directSkuData, error: directSkuError } = await supabase
+                .from('skus')
+                .select('*, product:products(*)')
+                .in('id', potentialSkuIds);
+              
+              if (!directSkuError && directSkuData && directSkuData.length > 0) {
+                // Successfully fetched as SKU IDs
+                skuData = directSkuData;
+              } else {
+                // If that failed, they might be product IDs - look up SKUs by product_id and volume_ml
+                const { data: productSkuData, error: productSkuError } = await supabase
+                  .from('skus')
+                  .select('*, product:products(*)')
+                  .in('product_id', potentialSkuIds)
+                  .eq('size_ml', volumeMl);
+                
+                if (!productSkuError && productSkuData) {
+                  // Map product IDs to SKUs
+                  skuData = item.selectedItems.map((selection: any) => {
+                    const sku = productSkuData.find((s: any) => s.product_id === selection.sku_id);
+                    return sku;
+                  }).filter(Boolean);
+                } else {
+                  console.error('Error fetching SKUs for custom bundle:', productSkuError);
+                }
+              }
+              
+              // Build snapshot with items
               snapshot = {
+                // Add product_name and image_url at root level for display
+                product_name: configData ? configData.name : item.name,
+                image_url: configData ? (configData.image_url || null) : (item.image || null),
                 config: configData ? {
                   id: configData.id,
                   name: configData.name,
@@ -271,11 +304,29 @@ export const useCreateOrder = () => {
                 } : undefined,
                 items: item.selectedItems
                   .map((selection: any) => {
-                    const sku = skuData?.find((s: any) => s.id === selection.sku_id);
+                    // Find SKU by matching either:
+                    // 1. Direct SKU ID match
+                    // 2. Product ID match (if sku_id is actually a product_id)
+                    const sku = skuData.find((s: any) => 
+                      s.id === selection.sku_id || s.product_id === selection.sku_id
+                    );
+                    
                     if (!sku) {
-                      console.warn(`SKU not found for id: ${selection.sku_id}`);
+                      console.warn(`SKU not found for selection:`, selection);
+                      // Try to at least get product info if we have a product ID
+                      if (selection.sku_id) {
+                        // This is a fallback - we'll show what we can
+                        return {
+                          slot_index: selection.slot_index,
+                          sku_id: selection.sku_id, // Might be product_id
+                          size_ml: volumeMl,
+                          label: `${volumeMl}ml`,
+                          product: null // Will be null, but structure is preserved
+                        };
+                      }
                       return null;
                     }
+                    
                     return {
                       slot_index: selection.slot_index,
                       sku_id: sku.id,
@@ -290,8 +341,6 @@ export const useCreateOrder = () => {
                     };
                   })
                   .filter(Boolean), // Remove any null entries
-                product_name: item.name,
-                image_url: item.image
               };
             };
           } else {

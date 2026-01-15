@@ -484,6 +484,7 @@ const Product = () => {
                                 <div className="space-y-3">
                                   {uniqueSkus.map((sku) => {
                                     const isFullBottle = sku.size_ml >= 50;
+                                    const stockStatus = sku.stock > 0 ? "In stock" : "La comanda";
                                     return (
                                       <div 
                                         key={sku.id} 
@@ -498,9 +499,11 @@ const Product = () => {
                                         >
                                           <div className="flex flex-col">
                                             <span className="font-medium">{sku.label}</span>
-                                            {isFullBottle && (
-                                              <span className="text-xs text-primary font-medium">Sticlă Completă</span>
-                                            )}
+                                            <span className={`text-xs font-medium ${
+                                              sku.stock > 0 ? 'text-green-600' : 'text-orange-600'
+                                            }`}>
+                                              {stockStatus}
+                                            </span>
                                           </div>
                                           <span className="font-semibold">{formatPrice(sku.price)}</span>
                                         </Label>
@@ -634,6 +637,7 @@ const Product = () => {
                               <div className="space-y-3">
                                 {uniqueSkus.map((sku) => {
                                   const isFullBottle = sku.size_ml >= 50;
+                                  const stockStatus = sku.stock > 0 ? "In stock" : "La comanda";
                                   return (
                                     <div 
                                       key={sku.id} 
@@ -648,9 +652,11 @@ const Product = () => {
                                       >
                                         <div className="flex flex-col">
                                           <span className="font-medium">{sku.label}</span>
-                                          {isFullBottle && (
-                                            <span className="text-xs text-primary font-medium">Sticlă Completă</span>
-                                          )}
+                                          <span className={`text-xs font-medium ${
+                                            sku.stock > 0 ? 'text-green-600' : 'text-orange-600'
+                                          }`}>
+                                            {stockStatus}
+                                          </span>
                                         </div>
                                         <span className="font-semibold">{formatPrice(sku.price)}</span>
                                       </Label>

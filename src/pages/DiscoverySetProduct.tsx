@@ -9,13 +9,13 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/hooks/useCart";
 import { useButtonAnimation } from "@/hooks/useButtonAnimation";
 import { formatPrice } from "@/utils/formatPrice";
-import { 
-  ArrowLeft, 
-  Package, 
-  Heart, 
-  Briefcase, 
-  Sun, 
-  Moon, 
+import {
+  ArrowLeft,
+  Package,
+  Heart,
+  Briefcase,
+  Sun,
+  Moon,
   Palette,
   ShoppingCart,
   Star,
@@ -51,28 +51,52 @@ const DiscoverySetProduct = () => {
 
   // Map DB configs to display format
   const predefinedSets = configs
-    ?.filter((c: any) => c.items && c.items.length > 0 && c.is_active)
-    .map((config: any) => ({
-      id: config.id,
-      name: config.name,
-      description: config.description,
-      price: config.base_price,
-      samples: config.total_slots,
-      configuration: `${config.total_slots}×${config.volume_ml}ml`,
-      image: config.image_url || '/Discoverybox.png',
-      isCustomizable: config.is_customizable,
-      fragrances: config.items?.map((item: any) => ({
-        name: item.sku?.product?.name || 'Unknown',
-        brand: item.sku?.product?.brand || 'Unknown',
-        notes: [
-          ...(item.sku?.product?.notes_top || []),
-          ...(item.sku?.product?.notes_mid || []),
-          ...(item.sku?.product?.notes_base || [])
-        ].slice(0, 3).join(', '),
-        description: item.sku?.product?.description || ''
-      })) || [],
-      _config: config
-    })) || [];
+    ?.filter((c: any) => !c.is_customizable)
+    .map((config: any) => {
+      // Debug: Log to see structure
+      console.log('Config:', config.id, 'Items:', config.items);
+      console.log('Full config structure:', JSON.stringify(config, null, 2));
+      
+      const items = config.items || [];
+      
+      return {
+        id: config.id,
+        name: config.name,
+        description: config.description,
+        price: config.base_price,
+        samples: config.total_slots,
+        configuration: `${config.total_slots}×${config.volume_ml}ml`,
+        image: config.image_url || '/Discoverybox.png',
+        isCustomizable: config.is_customizable,
+        fragrances: items.map((item: any) => {
+          // Try both possible structures (with and without alias)
+          const sku = item.sku || item.skus;
+          const product = sku?.product || sku?.products;
+          
+          console.log('Item:', item);
+          console.log('SKU:', sku);
+          console.log('Product:', product);
+          
+          if (!product) {
+            console.warn('No product found for item:', item);
+          }
+          
+          return {
+            name: product?.name || 'Unknown',
+            brand: product?.brand || 'Unknown',
+            image: product?.image_url || null,
+            productImage: product?.image_url || null,
+            notes: [
+              ...(product?.notes_top || []),
+              ...(product?.notes_mid || []),
+              ...(product?.notes_base || [])
+            ].slice(0, 3).join(', '),
+            description: product?.description || '' // Keep for potential future use, but don't display
+          };
+        }),
+        _config: config
+      };
+    }) || [];
 
   const discoverySet = predefinedSets.find((set: any) => set.id === id);
 
@@ -109,7 +133,8 @@ const DiscoverySetProduct = () => {
 
   // Default icon for sets
   const IconComponent = Package;
-  const priceInLei = Math.round(discoverySet.price / 100);
+  // base_price is already in bani, so pass it directly to formatPrice
+  const priceInBani = discoverySet.price;
 
   const handleAddToCart = () => {
     // Add predefined bundle to cart (CLIENT-SIDE ONLY - no DB write during browsing)
@@ -119,11 +144,11 @@ const DiscoverySetProduct = () => {
       configId: discoverySet.id,
       name: discoverySet.name,
       quantity: quantity,
-      price: priceInLei,
+      price: Math.round(discoverySet.price / 100), // Convert bani to lei for cart
       sizeLabel: `${discoverySet.samples} mostre`,
       image: discoverySet.image
     });
-    
+
     triggerAnimation();
   };
 
@@ -134,35 +159,35 @@ const DiscoverySetProduct = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-accent/20">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8">
         {/* Compact Breadcrumb Navigation */}
         <div className="mb-6">
           <div className="py-2 px-4 bg-muted/30 rounded-lg border">
             <nav className="flex items-center space-x-2 min-w-0">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => navigate('/')}
                 className="flex items-center gap-1 px-2 py-1 h-7 text-xs text-muted-foreground hover:text-primary"
               >
                 <Home className="h-3 w-3" />
                 <span className="hidden sm:inline">Acasă</span>
               </Button>
-              
+
               <span className="text-muted-foreground/60 text-xs">›</span>
-              
-              <Button 
-                variant="ghost" 
-                size="sm" 
+
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => navigate('/discovery-sets')}
                 className="flex items-center gap-1 px-2 py-1 h-7 text-xs text-muted-foreground hover:text-primary"
               >
                 <span className="truncate">Discovery Sets</span>
               </Button>
-              
+
               <span className="text-muted-foreground/60 text-xs">›</span>
-              
+
               <span className="text-xs font-medium text-primary px-1 truncate">
                 {discoverySet.name}
               </span>
@@ -199,9 +224,87 @@ const DiscoverySetProduct = () => {
               <p className="text-lg text-muted-foreground mb-4">
                 {discoverySet.description}
               </p>
+              
+              {/* Fragrances Section - Moved here, under description */}
+              {!discoverySet.isCustomizable && (
+                <div className="mb-6">
+                  <h3 className="text-xl font-playfair font-semibold mb-4">
+                    Parfumurile incluse
+                  </h3>
+                  {discoverySet.fragrances && discoverySet.fragrances.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {discoverySet.fragrances.map((fragrance: any, index: number) => (
+                        <Card 
+                          key={index} 
+                          className="group hover:shadow-md transition-all duration-200 border hover:border-primary/30 overflow-hidden"
+                        >
+                          <div className="flex gap-3 p-3">
+                            {/* Product Image */}
+                            <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                              <img
+                                src={fragrance.image || fragrance.productImage || '/placeholder-product.png'}
+                                alt={fragrance.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.src = '/placeholder-product.png';
+                                }}
+                              />
+                            </div>
+                            
+                            {/* Product Info */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2 mb-1">
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                      <span className="text-xs font-bold text-primary">{index + 1}</span>
+                                    </div>
+                                    <h4 className="text-sm font-semibold font-playfair truncate">
+                                      {fragrance.name}
+                                    </h4>
+                                  </div>
+                                  <p className="text-xs text-primary/80 font-medium mb-2">
+                                    {fragrance.brand}
+                                  </p>
+                                </div>
+                                <Droplets className="h-4 w-4 text-primary/60 flex-shrink-0" />
+                              </div>
+                              
+                              {/* Notes */}
+                              {fragrance.notes && (
+                                <div className="flex flex-wrap gap-1">
+                                  {fragrance.notes.split(', ').slice(0, 3).map((note: string, i: number) => (
+                                    <Badge 
+                                      key={i} 
+                                      variant="secondary" 
+                                      className="text-[10px] px-1.5 py-0 bg-primary/10 text-primary border-primary/20"
+                                    >
+                                      {note.trim()}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <Card className="border-dashed border-2">
+                      <CardContent className="py-6 text-center">
+                        <Droplets className="h-8 w-8 mx-auto text-muted-foreground/50 mb-2" />
+                        <p className="text-sm text-muted-foreground">
+                          Acest set nu are parfumuri asignate încă.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              )}
+              
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl font-bold text-primary">
-                  {formatPrice(priceInLei)}
+                  {formatPrice(priceInBani)}
                 </span>
                 <Badge variant="outline" className="text-sm">
                   {discoverySet.samples} mostre incluse
@@ -234,9 +337,9 @@ const DiscoverySetProduct = () => {
                   </div>
                 </div>
               )}
-              
+
               {!discoverySet.isCustomizable ? (
-                <Button 
+                <Button
                   onClick={handleAddToCart}
                   className={`w-full flex items-center gap-2 ${isAnimating ? "bg-green-500 text-white animate-pulse" : ""}`}
                   size="lg"
@@ -250,12 +353,12 @@ const DiscoverySetProduct = () => {
                   ) : (
                     <>
                       <ShoppingCart className="h-4 w-4" />
-                      Adaugă în coș - {formatPrice(priceInLei * quantity)}
+                      Adaugă în coș - {formatPrice(priceInBani * quantity)}
                     </>
                   )}
                 </Button>
               ) : (
-                <Button 
+                <Button
                   onClick={() => navigate('/discovery-sets?tab=builder')}
                   className="w-full flex items-center gap-2"
                   size="lg"
@@ -284,52 +387,6 @@ const DiscoverySetProduct = () => {
           </div>
         </div>
 
-        {/* Fragrances Section */}
-        {discoverySet.fragrances && discoverySet.fragrances.length > 0 && (
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-playfair font-bold mb-3">
-                Parfumurile incluse
-              </h2>
-              <p className="text-muted-foreground">
-                Descoperă fiecare parfum din acest set special
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {discoverySet.fragrances.map((fragrance: any, index: number) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-lg font-playfair">
-                          {fragrance.name}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {fragrance.brand}
-                        </p>
-                      </div>
-                      <Droplets className="h-5 w-5 text-primary" />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    {fragrance.notes && (
-                      <div className="mb-3">
-                        <p className="text-sm font-medium mb-1">Note principale:</p>
-                        <p className="text-sm text-muted-foreground">{fragrance.notes}</p>
-                      </div>
-                    )}
-                    {fragrance.description && (
-                      <p className="text-sm text-muted-foreground">
-                        {fragrance.description}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Discovery Set Info */}
         <Card className="mb-12">
@@ -360,14 +417,14 @@ const DiscoverySetProduct = () => {
                 </ul>
               </div>
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <h4 className="font-semibold mb-2">Cum să folosești mostrele:</h4>
               <p className="text-sm text-muted-foreground">
-                Aplică parfumul pe punctele de puls (încheieturi, gât, după urechi) și lasă-l să se dezvolte 
-                pe pielea ta timp de câteva ore. Fiecare parfum evoluează diferit pe fiecare persoană, 
+                Aplică parfumul pe punctele de puls (încheieturi, gât, după urechi) și lasă-l să se dezvolte
+                pe pielea ta timp de câteva ore. Fiecare parfum evoluează diferit pe fiecare persoană,
                 așa că testează-le în diferite momente ale zilei pentru a-ți forma o opinie completă.
               </p>
             </div>
@@ -384,21 +441,21 @@ const DiscoverySetProduct = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+        <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
           {predefinedSets
             .filter((set: any) => set.id !== discoverySet.id)
             .slice(0, 4)
             .map((set: any) => {
               return (
-                <Card 
-                  key={set.id} 
-                  className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                <Card
+                  key={set.id}
+                  className="group hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] min-w-[200px] max-w-[280px]"
                   onClick={() => navigate(`/discovery-set/${set.id}`)}
                 >
                   <CardContent className="p-4">
                     <div className="aspect-square rounded-lg overflow-hidden mb-3">
-                      <img 
-                        src={set.image} 
+                      <img
+                        src={set.image}
                         alt={set.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

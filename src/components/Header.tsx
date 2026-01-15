@@ -164,14 +164,24 @@ const Header = () => {
                           {recommendations.map((p) => (
                             <li
                               key={p.id}
-                              className="px-3 py-2 cursor-pointer hover:bg-accent/30 text-sm flex flex-col"
+                              className="px-3 py-2 cursor-pointer hover:bg-accent/30 text-sm flex items-center gap-3"
                               onMouseDown={() => {
                                 navigate(`/product/${p.id}`);
                                 setSearchOpen(false);
                                 setSearchTerm("");
                               }}
                             >
-                              <span>
+                              {p.image_url && (
+                                <img 
+                                  src={p.image_url} 
+                                  alt={`${p.brand} ${p.name}`}
+                                  className="w-12 h-12 object-cover rounded flex-shrink-0"
+                                  onError={(e) => {
+                                    e.currentTarget.src = "/placeholder.svg";
+                                  }}
+                                />
+                              )}
+                              <span className="flex-1 min-w-0">
                                 <b>{p.brand}</b> - {highlightMatch(p.name, searchTerm)}
                               </span>
                             </li>

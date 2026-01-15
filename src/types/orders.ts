@@ -1,7 +1,7 @@
-export interface Order {
+  export interface Order {
     id: string;
     user_id: string | null;
-    status: 'draft' | 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+    status: 'draft' | 'placed' | 'paid' | 'shipped' | 'delivered' | 'canceled' | 'refunded' | 'pending' | 'confirmed' | 'processing' | 'cancelled';
     currency: string;
     customer_email: string | null;
     customer_phone: string | null;

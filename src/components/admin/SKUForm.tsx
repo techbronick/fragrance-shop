@@ -3,11 +3,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Badge } from '@/components/ui/badge';
-import { Save, Loader2, DollarSign, Package2 } from 'lucide-react';
+import { Save, Loader2, DollarSign, Package2, Check, ChevronsUpDown } from 'lucide-react';
 import { skuUtils, productUtils } from '@/utils/supabase-admin';
 import { useToast } from '@/hooks/use-toast';
+import { matchesSearch } from '@/utils/stringUtils';
+import { cn } from '@/lib/utils';
 
 interface SKUFormProps {
   sku?: any;
@@ -20,6 +23,8 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [productSearchQuery, setProductSearchQuery] = useState('');
+  const [productPopoverOpen, setProductPopoverOpen] = useState(false);
   const [formData, setFormData] = useState({
     product_id: sku?.product_id || productId || '',
     size_ml: sku?.size_ml || 50,
@@ -120,6 +125,12 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
 
   const selectedProduct = products.find((p: any) => p.id === formData.product_id);
 
+  // Filter products based on search
+  const filteredProducts = products.filter((p: any) =>
+    matchesSearch(p.name, productSearchQuery) ||
+    matchesSearch(p.brand, productSearchQuery)
+  );
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -137,22 +148,54 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
           {!productId && (
             <div className="space-y-2">
               <Label htmlFor="product_id">Product *</Label>
-              <Select
-                value={formData.product_id}
-                onValueChange={(value) => handleInputChange('product_id', value)}
-                required
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a product" />
-                </SelectTrigger>
-                <SelectContent>
-                  {products.map((product: any) => (
-                    <SelectItem key={product.id} value={product.id}>
-                      {product.name} - {product.brand}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover open={productPopoverOpen} onOpenChange={setProductPopoverOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={productPopoverOpen}
+                    className="w-full justify-between"
+                  >
+                    {selectedProduct
+                      ? `${selectedProduct.name} - ${selectedProduct.brand}`
+                      : "Select a product..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0" align="start">
+                  <Command>
+                    <CommandInput 
+                      placeholder="Search products..." 
+                      value={productSearchQuery}
+                      onValueChange={setProductSearchQuery}
+                    />
+                    <CommandList>
+                      <CommandEmpty>No products found.</CommandEmpty>
+                      <CommandGroup>
+                        {filteredProducts.map((product: any) => (
+                          <CommandItem
+                            key={product.id}
+                            value={product.id}
+                            onSelect={() => {
+                              handleInputChange('product_id', product.id);
+                              setProductPopoverOpen(false);
+                              setProductSearchQuery('');
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                formData.product_id === product.id ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {product.name} - {product.brand}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
           )}
 

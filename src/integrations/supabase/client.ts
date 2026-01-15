@@ -17,7 +17,9 @@ export const supabase = createClient<Database>(
   supabaseAnonKey,
   {
     auth: {
-      persistSession: false, // Reduce auth bundle size if not using auth
+      persistSession: true, // Enable auth persistence
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
     },
     realtime: {
       params: {

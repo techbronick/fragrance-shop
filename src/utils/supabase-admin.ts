@@ -65,23 +65,33 @@ export const exploreDatabase = async () => {
 export const productUtils = {
   // Get all products with detailed info
   getAllProducts: async () => {
-    const { data, error } = await supabaseAdmin
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: false });
+    let allProducts: any[] = [];
+    let from = 0;
+    const pageSize = 1000;
+    let hasMore = true; 
 
-    return { data, error };
-  },
-
-  // Get product with SKUs
-  getProductWithSKUs: async (productId: string) => {
-    const { data, error } = await supabaseAdmin
-      .from('products')
-      .select('*, skus(*)')
-      .eq('id', productId)
-      .single();
-
-    return { data, error };
+    while (hasMore) {
+      const { data, error } = await supabaseAdmin
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .range(from, from + pageSize - 1);
+      
+      if (error) {
+        console.error('Error fetching products:', error);
+        return { data: null, error };
+      }
+      
+      if (data && data.length > 0) {
+        allProducts = [...allProducts, ...data];
+        from += pageSize;
+        hasMore = data.length === pageSize;
+      } else {
+        hasMore = false;
+      }
+    }
+    
+    return { data: allProducts, error: null };
   },
 
   // Create a new product
@@ -95,7 +105,7 @@ export const productUtils = {
     return { data, error };
   },
 
-  // Update product
+  // Update an existing product
   updateProduct: async (productId: string, updates: any) => {
     const { data, error } = await supabaseAdmin
       .from('products')
@@ -107,7 +117,7 @@ export const productUtils = {
     return { data, error };
   },
 
-  // Delete product
+  // Delete a product
   deleteProduct: async (productId: string) => {
     const { error } = await supabaseAdmin
       .from('products')
@@ -116,42 +126,42 @@ export const productUtils = {
 
     return { error };
   }
+
 };
 
 // SKU management utilities
 export const skuUtils = {
-  // Get all SKUs
+  // Get all SKUs with pagination to fetch all records
   getAllSKUs: async () => {
-    const { data, error } = await supabaseAdmin
-      .from('skus')
-      .select('*, products(name, brand)')
-      .order('created_at', { ascending: false });
+    let allSKUs: any[] = [];
+    let from = 0;
+    const pageSize = 1000;
+    let hasMore = true;
 
-    return { data, error };
+    while (hasMore) {
+      const { data, error } = await supabaseAdmin
+        .from('skus')
+        .select('*, products(name, brand)')
+        .order('created_at', { ascending: false })
+        .range(from, from + pageSize - 1);
+      
+      if (error) {
+        console.error('Error fetching SKUs:', error);
+        return { data: null, error };
+      }
+      
+      if (data && data.length > 0) {
+        allSKUs = [...allSKUs, ...data];
+        from += pageSize;
+        hasMore = data.length === pageSize;
+      } else {
+        hasMore = false;
+      }
+    }
+    
+    return { data: allSKUs, error: null };
   },
 
-  // Create SKU
-  createSKU: async (skuData: any) => {
-    const { data, error } = await supabaseAdmin
-      .from('skus')
-      .insert(skuData)
-      .select()
-      .single();
-
-    return { data, error };
-  },
-
-  // Update SKU
-  updateSKU: async (skuId: string, updates: any) => {
-    const { data, error } = await supabaseAdmin
-      .from('skus')
-      .update(updates)
-      .eq('id', skuId)
-      .select()
-      .single();
-
-    return { data, error };
-  }
 };
 
 // Discovery Set utilities
@@ -220,6 +230,25 @@ export const discoverySetUtils = {
 
     return { error };
   },
+
+  // Delete discovery set config
+  deleteConfig: async (configId: string) => {
+    // First delete all config items
+    const { data: items } = await discoverySetUtils.getConfigItems(configId);
+    if (items) {
+      for (const item of items) {
+        await discoverySetUtils.removeConfigItem(item.id);
+      }
+    }
+    
+    // Then delete the config
+    const { error } = await supabaseAdmin
+      .from('discovery_set_configs')
+      .delete()
+      .eq('id', configId);
+
+    return { error };
+  }
 
 };
 

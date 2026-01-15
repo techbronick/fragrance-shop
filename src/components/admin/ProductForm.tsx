@@ -12,6 +12,7 @@ import { productUtils } from '@/utils/supabase-admin';
 import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from "@/components/ui/checkbox";
 import { Product } from "@/types/database";
+import ImageUpload from '@/components/admin/ImageUpload';
 
 interface ProductFormProps {
   product?: Product;
@@ -172,13 +173,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image_url">Image URL</Label>
-            <Input
-              id="image_url"
+            <ImageUpload
               value={formData.image_url}
-              onChange={(e) => handleInputChange('image_url', e.target.value)}
-              placeholder="https://example.com/product-image.jpg"
-              type="url"
+              onChange={(url) => handleInputChange('image_url', url)}
+              bucket="product-images"
+              label="Product Image"
+              fileName={formData.name ? formData.name.toLowerCase().replace(/\s+/g, '-') : undefined}
             />
           </div>
 

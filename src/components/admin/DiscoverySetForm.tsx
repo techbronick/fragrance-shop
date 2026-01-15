@@ -6,10 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Save, Loader2, Gift, Package, AlertCircle, Check } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Save, Loader2, Gift, Package, AlertCircle, Check, ChevronsUpDown } from 'lucide-react';
 import { discoverySetUtils, skuUtils } from '@/utils/supabase-admin';
 import { useToast } from '@/hooks/use-toast';
+import { matchesSearch } from '@/utils/stringUtils';
+import { cn } from '@/lib/utils';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 interface DiscoverySetFormProps {
   config?: any;
@@ -41,6 +45,8 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
   const [selectedItems, setSelectedItems] = useState<SlotSelection[]>([]);
   const [availableSKUs, setAvailableSKUs] = useState<any[]>([]);
   const [allSKUs, setAllSKUs] = useState<any[]>([]);
+  const [skuSearchQueries, setSkuSearchQueries] = useState<Record<number, string>>({});
+  const [popoverOpen, setPopoverOpen] = useState<Record<number, boolean>>({});
 
   const predefinedConfigs = [
     { name: "Trixter", description: "3 mostre de 2ml", total_slots: 3, volume_ml: 2, base_price: 18000, is_customizable: true },
@@ -155,8 +161,32 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
 
   const filledSlotsCount = selectedItems.filter(item => item.skuId).length;
 
+  // Filter SKUs based on search for each slot
+  const getFilteredSKUs = (slotIndex: number) => {
+    const query = skuSearchQueries[slotIndex] || '';
+    return availableSKUs.filter(sku =>
+      matchesSearch(sku.products?.name || '', query) ||
+      matchesSearch(sku.products?.brand || '', query) ||
+      matchesSearch(sku.label || '', query)
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation: Check if all slots are filled for non-customizable sets
+    if (!formData.is_customizable) {
+      const allSlotsFilled = selectedItems.every(item => item.skuId !== null);
+      if (!allSlotsFilled) {
+        toast({
+          title: "Incomplete Configuration",
+          description: `Please fill all ${formData.total_slots} slots before submitting.`,
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
     setLoading(true);
 
     try {
@@ -291,12 +321,12 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image_url">Image URL</Label>
-            <Input
-              id="image_url"
+            <ImageUpload
               value={formData.image_url}
-              onChange={(e) => handleInputChange('image_url', e.target.value)}
-              type="url"
+              onChange={(url) => handleInputChange('image_url', url)}
+              bucket="discovery-sets-images"
+              label="Discovery Set Image"
+              fileName={formData.name ? formData.name.toLowerCase().replace(/\s+/g, '-') : undefined}
             />
           </div>
 
@@ -403,39 +433,80 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
                           Slot {item.slotIndex + 1}
                         </Badge>
                         
-                        <Select
-                          value={item.skuId || "__none__"}
-                          onValueChange={(value) => handleSlotSelect(item.slotIndex, value)}
+                        <Popover 
+                          open={popoverOpen[item.slotIndex] || false}
+                          onOpenChange={(open) => setPopoverOpen(prev => ({ ...prev, [item.slotIndex]: open }))}
                         >
-                          <SelectTrigger className="flex-1">
-                            <SelectValue placeholder="Selectează un parfum...">
-                              {selectedSku ? (
-                                <span>
-                                  {selectedSku.products?.brand} - {selectedSku.products?.name}
-                                </span>
-                              ) : (
-                                "Selectează un parfum..."
-                              )}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__none__">
-                              <span className="text-muted-foreground">-- Slot gol --</span>
-                            </SelectItem>
-                            {availableSKUs.map(sku => (
-                              <SelectItem key={sku.id} value={sku.id}>
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium">{sku.products?.brand}</span>
-                                  <span className="text-muted-foreground">-</span>
-                                  <span>{sku.products?.name}</span>
-                                  <Badge variant="outline" className="ml-2 text-xs">
-                                    {sku.size_ml}ml
-                                  </Badge>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={popoverOpen[item.slotIndex]}
+                              className="flex-1 justify-between"
+                            >
+                              {selectedSku
+                                ? `${selectedSku.products?.brand} - ${selectedSku.products?.name}`
+                                : "Selectează un parfum..."}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-full p-0" align="start">
+                            <Command>
+                              <CommandInput 
+                                placeholder="Caută parfum..." 
+                                value={skuSearchQueries[item.slotIndex] || ''}
+                                onValueChange={(value) => setSkuSearchQueries(prev => ({ ...prev, [item.slotIndex]: value }))}
+                              />
+                              <CommandList>
+                                <CommandEmpty>Nu s-au găsit parfumuri.</CommandEmpty>
+                                <CommandGroup>
+                                  <CommandItem
+                                    value="__none__"
+                                    onSelect={() => {
+                                      handleSlotSelect(item.slotIndex, "__none__");
+                                      setPopoverOpen(prev => ({ ...prev, [item.slotIndex]: false }));
+                                      setSkuSearchQueries(prev => ({ ...prev, [item.slotIndex]: '' }));
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        !item.skuId ? "opacity-100" : "opacity-0"
+                                      )}
+                                    />
+                                    <span className="text-muted-foreground">-- Slot gol --</span>
+                                  </CommandItem>
+                                  {getFilteredSKUs(item.slotIndex).map(sku => (
+                                    <CommandItem
+                                      key={sku.id}
+                                      value={sku.id}
+                                      onSelect={() => {
+                                        handleSlotSelect(item.slotIndex, sku.id);
+                                        setPopoverOpen(prev => ({ ...prev, [item.slotIndex]: false }));
+                                        setSkuSearchQueries(prev => ({ ...prev, [item.slotIndex]: '' }));
+                                      }}
+                                    >
+                                      <Check
+                                        className={cn(
+                                          "mr-2 h-4 w-4",
+                                          item.skuId === sku.id ? "opacity-100" : "opacity-0"
+                                        )}
+                                      />
+                                      <div className="flex items-center gap-2">
+                                        <span className="font-medium">{sku.products?.brand}</span>
+                                        <span className="text-muted-foreground">-</span>
+                                        <span>{sku.products?.name}</span>
+                                        <Badge variant="outline" className="ml-2 text-xs">
+                                          {sku.size_ml}ml
+                                        </Badge>
+                                      </div>
+                                    </CommandItem>
+                                  ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
 
                         {selectedSku && (
                           <Badge variant="secondary" className="shrink-0">
@@ -472,7 +543,10 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
                 Cancel
               </Button>
             )}
-            <Button type="submit" disabled={loading}>
+            <Button 
+              type="submit" 
+              disabled={loading || (!formData.is_customizable && filledSlotsCount < formData.total_slots)}
+            >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               <Save className="mr-2 h-4 w-4" />
               {config?.id ? 'Update Config' : 'Create Config'}

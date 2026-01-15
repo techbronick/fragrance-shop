@@ -28,7 +28,7 @@ const DiscoverySets = () => {
 
   // Map DB configs WITH items to display format for predefined sets
   const predefinedSets = configsWithItems
-    ?.filter((c: any) => c.items && c.items.length > 0 && c.is_active && !c.is_customizable)
+    ?.filter((c: any) => !c.is_customizable)
     .map((config: any) => ({
       id: config.id,
       name: config.name,
@@ -46,7 +46,7 @@ const DiscoverySets = () => {
 
   // Map customizable configs (no fixed items)
   const customizableConfigs = configs
-    ?.filter((c: any) => c.is_customizable && c.is_active)
+    ?.filter((c: any) => c.is_customizable)
     .map((config: any) => ({
       id: config.id,
       name: config.name,
@@ -399,7 +399,7 @@ const DiscoverySets = () => {
             </div>
             
             <DiscoverySetBuilder 
-              configs={configs || []}
+              configs={configs?.filter((c: any) => c.is_customizable) || []}
               selectedConfigId={selectedConfig}
               selectedPredefinedSet={selectedPredefinedSet}
               onConfigSelect={setSelectedConfig}
