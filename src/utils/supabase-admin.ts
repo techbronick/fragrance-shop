@@ -1,39 +1,22 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 import type { Database } from '@/integrations/supabase/types';
 
-function getEnv(key: string): string | undefined {
-  if (typeof import.meta !== 'undefined' && import.meta.env && key in import.meta.env) {
-    return import.meta.env[key];
-  }
-  if (typeof process !== 'undefined' && process.env && key in process.env) {
-    return process.env[key];
-  }
-  return undefined;
-}
-
-// Regular client for frontend operations
-export const supabase = createClient<Database>(
-  getEnv('VITE_SUPABASE_URL')!,
-  getEnv('VITE_SUPABASE_ANON_KEY')!
-);
-
-// Admin client with service role key (bypasses RLS - use carefully!)
-export const supabaseAdmin = createClient<Database>(
-  getEnv('VITE_SUPABASE_URL')!,
-  getEnv('VITE_SUPABASE_SERVICE_ROLE_KEY')!
-);
+// Note: We now use only the regular supabase client with RLS
+// Service role key is no longer exposed in frontend
+// All admin operations are protected by Row Level Security policies
 
 // Database exploration utilities
+// Note: Now uses RLS - only admins can access these counts
 export const exploreDatabase = async () => {
   try {
     console.log('🔍 Exploring Supabase database...');
 
     // Get row counts for known tables
-    const tableCounts = {};
+    const tableCounts: Record<string, number | string> = {};
     const knownTables = ['products', 'skus', 'discovery_set_configs', 'discovery_set_config_items', 'discovery_recommendations', 'orders', 'order_items'];
     for (const tableName of knownTables) {
       try {
-        const { count } = await supabaseAdmin
+        const { count } = await supabase
           .from(tableName as any)
           .select('*', { count: 'exact', head: true });
 
@@ -64,6 +47,7 @@ export const exploreDatabase = async () => {
 // Product management utilities
 export const productUtils = {
   // Get all products with detailed info (deduplicated by ID)
+  // Note: Now uses RLS - only admins can access all products
   getAllProducts: async () => {
     let allProducts: any[] = [];
     let from = 0;
@@ -72,7 +56,7 @@ export const productUtils = {
     const seenIds = new Set<string>();
 
     while (hasMore) {
-      const { data, error } = await supabaseAdmin
+      const { data, error } = await supabase
         .from('products')
         .select('*')
         .order('created_at', { ascending: false })
@@ -106,13 +90,13 @@ export const productUtils = {
 // ... existing code ...
 
   // Create a new product
+  // Note: Now uses RLS - only admins can create products
   createProduct: async (productData: any) => {
-    console.log('🔍 Creating product with supabaseAdmin...', {
-      hasServiceRoleKey: !!getEnv('VITE_SUPABASE_SERVICE_ROLE_KEY'),
+    console.log('🔍 Creating product with RLS...', {
       productData: { ...productData, notes_top: productData.notes_top?.length }
     });
     
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('products')
       .insert(productData)
       .select()
@@ -133,14 +117,14 @@ export const productUtils = {
   },
 
   // Update an existing product
+  // Note: Now uses RLS - only admins can update products
   updateProduct: async (productId: string, updates: any) => {
-    console.log('🔍 Updating product with supabaseAdmin...', {
+    console.log('🔍 Updating product with RLS...', {
       productId,
-      hasServiceRoleKey: !!getEnv('VITE_SUPABASE_SERVICE_ROLE_KEY'),
       updates: { ...updates, notes_top: updates.notes_top?.length }
     });
     
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('products')
       .update(updates)
       .eq('id', productId)
@@ -162,13 +146,13 @@ export const productUtils = {
   },
 
   // Delete a product
+  // Note: Now uses RLS - only admins can delete products
   deleteProduct: async (productId: string) => {
-    console.log('🔍 Deleting product with supabaseAdmin...', {
-      productId,
-      hasServiceRoleKey: !!getEnv('VITE_SUPABASE_SERVICE_ROLE_KEY')
+    console.log('🔍 Deleting product with RLS...', {
+      productId
     });
     
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('products')
       .delete()
       .eq('id', productId);
@@ -192,6 +176,7 @@ export const productUtils = {
 // SKU management utilities
 export const skuUtils = {
   // Get all SKUs with pagination to fetch all records (deduplicated by ID)
+  // Note: Now uses RLS - only admins can access all SKUs
   getAllSKUs: async () => {
     let allSKUs: any[] = [];
     let from = 0;
@@ -200,7 +185,7 @@ export const skuUtils = {
     const seenIds = new Set<string>();
 
     while (hasMore) {
-      const { data, error } = await supabaseAdmin
+      const { data, error } = await supabase
         .from('skus')
         .select('*, products(name, brand)')
         .order('created_at', { ascending: false })
@@ -233,6 +218,7 @@ export const skuUtils = {
   },
 
   // Get SKUs for specific product IDs (optimized for pagination)
+  // Note: Public can read SKUs, but this is typically used by admins
   getSKUsByProductIds: async (productIds: string[]) => {
     if (!productIds || productIds.length === 0) {
       return { data: [], error: null };
@@ -240,7 +226,7 @@ export const skuUtils = {
 
     try {
       // Supabase supports filtering by array using .in()
-      const { data, error } = await supabaseAdmin
+      const { data, error } = await supabase
         .from('skus')
         .select('*, products(name, brand)')
         .in('product_id', productIds)
@@ -271,8 +257,9 @@ export const skuUtils = {
   },
 
   // Create a new SKU
+  // Note: Now uses RLS - only admins can create SKUs
   createSKU: async (skuData: any) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('skus')
       .insert(skuData)
       .select()
@@ -288,8 +275,9 @@ export const skuUtils = {
   },
 
   // Update an existing SKU
+  // Note: Now uses RLS - only admins can update SKUs
   updateSKU: async (skuId: string, updates: any) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('skus')
       .update(updates)
       .eq('id', skuId)
@@ -306,8 +294,9 @@ export const skuUtils = {
   },
 
   // Delete a SKU
+  // Note: Now uses RLS - only admins can delete SKUs
   deleteSKU: async (skuId: string) => {
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('skus')
       .delete()
       .eq('id', skuId);
@@ -323,10 +312,12 @@ export const skuUtils = {
 };
 
 // Discovery Set utilities
+// Note: All operations now use RLS - only admins can manage discovery sets
 export const discoverySetUtils = {
   // Get all discovery set configs
+  // Note: Admins see all, public sees only active ones
   getConfigs: async () => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('discovery_set_configs')
       .select('*')
       .order('total_slots', { ascending: true });
@@ -334,10 +325,9 @@ export const discoverySetUtils = {
     return { data, error };
   },
 
-
   // Create discovery set config
   createConfig: async (configData: any) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('discovery_set_configs')
       .insert(configData)
       .select()
@@ -346,10 +336,9 @@ export const discoverySetUtils = {
     return { data, error };
   },
 
-
-  // In discoverySetUtils object, add:
+  // Update discovery set config
   updateConfig: async (configId: string, updates: any) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('discovery_set_configs')
       .update(updates)
       .eq('id', configId)
@@ -359,9 +348,9 @@ export const discoverySetUtils = {
     return { data, error };
   },
 
-  // Also add config items management:
+  // Get config items
   getConfigItems: async (configId: string) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('discovery_set_config_items')
       .select('*, sku:skus(*, product:products(*))')
       .eq('config_id', configId)
@@ -370,8 +359,9 @@ export const discoverySetUtils = {
     return { data, error };
   },
 
+  // Add config item
   addConfigItem: async (itemData: { config_id: string; sku_id: string; slot_index: number; quantity?: number }) => {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await supabase
       .from('discovery_set_config_items')
       .insert({ ...itemData, quantity: itemData.quantity || 1 })
       .select()
@@ -380,8 +370,9 @@ export const discoverySetUtils = {
     return { data, error };
   },
 
+  // Remove config item
   removeConfigItem: async (itemId: string) => {
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('discovery_set_config_items')
       .delete()
       .eq('id', itemId);
@@ -400,7 +391,7 @@ export const discoverySetUtils = {
     }
     
     // Then delete the config
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('discovery_set_configs')
       .delete()
       .eq('id', configId);
@@ -412,15 +403,16 @@ export const discoverySetUtils = {
 
 
 // Database statistics
+// Note: Now uses RLS - only admins can access these stats
 export const getStats = async () => {
   try {
     const [products, skus, configs, configItems, recommendations, orders] = await Promise.all([
-      supabaseAdmin.from('products').select('*', { count: 'exact', head: true }),
-      supabaseAdmin.from('skus').select('*', { count: 'exact', head: true }),
-      supabaseAdmin.from('discovery_set_configs').select('*', { count: 'exact', head: true }),
-      supabaseAdmin.from('discovery_set_config_items').select('*', { count: 'exact', head: true }),
-      supabaseAdmin.from('discovery_recommendations').select('*', { count: 'exact', head: true }),
-      supabaseAdmin.from('orders').select('*', { count: 'exact', head: true })
+      supabase.from('products').select('*', { count: 'exact', head: true }),
+      supabase.from('skus').select('*', { count: 'exact', head: true }),
+      supabase.from('discovery_set_configs').select('*', { count: 'exact', head: true }),
+      supabase.from('discovery_set_config_items').select('*', { count: 'exact', head: true }),
+      supabase.from('discovery_recommendations').select('*', { count: 'exact', head: true }),
+      supabase.from('orders').select('*', { count: 'exact', head: true })
     ]);
 
     return {
@@ -438,10 +430,11 @@ export const getStats = async () => {
 };
 
 // Get order statistics
+// Note: Now uses RLS - only admins can access order stats
 export const getOrderStats = async () => {
   try {
     // Get all orders with their status and totals
-    const { data: orders, error } = await supabaseAdmin
+    const { data: orders, error } = await supabase
       .from('orders')
       .select('status, total_bani, created_at');
 
@@ -505,36 +498,36 @@ export const getOrderStats = async () => {
   }
 };
 
-// Test connection with both clients
+// Test connection
+// Note: Now uses RLS - tests if admin can access admin operations
 export const testConnections = async () => {
-  console.log('🧪 Testing Supabase connections...');
+  console.log('🧪 Testing Supabase connection with RLS...');
 
   try {
-    // Test anon client
-    const { data: anonTest, error: anonError } = await supabase
+    // Test read access (should work for admins)
+    const { data: readTest, error: readError } = await supabase
       .from('products')
       .select('count')
       .limit(1);
 
-    // Test admin client
-    const { data: adminTest, error: adminError } = await supabaseAdmin
+    // Test admin operations (should work only for admins)
+    const { data: adminTest, error: adminError } = await supabase
       .from('products')
-      .select('count')
-      .limit(1);
+      .select('*', { count: 'exact', head: true });
 
     const stats = await getStats();
 
     console.log('✅ Connection test results:');
-    console.log('- Anon client:', anonError ? '❌ Failed' : '✅ Success');
-    console.log('- Admin client:', adminError ? '❌ Failed' : '✅ Success');
+    console.log('- Read access:', readError ? '❌ Failed' : '✅ Success');
+    console.log('- Admin access:', adminError ? '❌ Failed (not admin or RLS issue)' : '✅ Success');
     console.log('- Database stats:', stats);
 
     return {
-      anonSuccess: !anonError,
+      anonSuccess: !readError,
       adminSuccess: !adminError,
       stats,
       errors: {
-        anon: anonError?.message,
+        anon: readError?.message,
         admin: adminError?.message
       }
     };

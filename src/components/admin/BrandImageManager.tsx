@@ -4,51 +4,119 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ImageUpload from '@/components/admin/ImageUpload';
-import { supabaseAdmin } from '@/utils/supabase-admin';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { Save, Loader2, Plus, X } from 'lucide-react';
+import { Loader2, X, Image as ImageIcon, Search } from 'lucide-react';
+import OptimizedImage from '@/components/ui/optimized-image';
+import { matchesSearch } from '@/utils/stringUtils';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from '@/components/ui/pagination';
 
-// Store brand images in a simple JSON structure
-// We'll use a storage file or a simple config approach
-// For now, using localStorage as a simple solution - you can migrate to a table later
-const BRAND_IMAGES_STORAGE_KEY = 'brand_images_config';
-
-interface BrandImageConfig {
-  [brandName: string]: string;
+interface BrandWithImage {
+  name: string;
+  imageUrl: string | null;
+  productCount: number;
 }
 
 const BrandImageManager: React.FC = () => {
   const { toast } = useToast();
-  const [brands, setBrands] = useState<string[]>([]);
-  const [brandImages, setBrandImages] = useState<BrandImageConfig>({});
-  const [newBrand, setNewBrand] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [brands, setBrands] = useState<BrandWithImage[]>([]);
+  const [brandImages, setBrandImages] = useState<Record<string, string>>({});
+  const [searchQuery, setSearchQuery] = useState('');
   const [fetching, setFetching] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const ITEMS_PER_PAGE = 20;
 
-  // Fetch unique brands from products
+  // Fetch unique brands from products and their images from storage
   useEffect(() => {
     const fetchBrands = async () => {
       setFetching(true);
       try {
-        const { data, error } = await supabaseAdmin
-          .from('products')
-          .select('brand')
-          .order('brand');
+        // Fetch ALL products with pagination to get unique brands
+        let allProducts: any[] = [];
+        let from = 0;
+        const pageSize = 1000;
+        let hasMore = true;
 
-        if (!error && data) {
-          const uniqueBrands = Array.from(new Set(data.map(p => p.brand).filter(Boolean)));
-          setBrands(uniqueBrands);
+        while (hasMore) {
+          const { data, error } = await supabase
+            .from('products')
+            .select('brand')
+            .order('brand')
+            .range(from, from + pageSize - 1);
+
+          if (error) {
+            throw error;
+          }
+
+          if (data && data.length > 0) {
+            allProducts = [...allProducts, ...data];
+            from += pageSize;
+            hasMore = data.length === pageSize;
+          } else {
+            hasMore = false;
+          }
         }
 
-        // Load saved brand images from localStorage
-        const savedImages = localStorage.getItem(BRAND_IMAGES_STORAGE_KEY);
-        if (savedImages) {
-          try {
-            const parsed = JSON.parse(savedImages);
-            setBrandImages(parsed);
-          } catch (e) {
-            console.error('Error parsing saved brand images:', e);
-          }
+        if (allProducts.length > 0) {
+          // Get unique brands with product counts
+          const brandMap = new Map<string, number>();
+          allProducts.forEach(p => {
+            if (p.brand) {
+              brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
+            }
+          });
+
+          const uniqueBrands = Array.from(brandMap.entries())
+            .map(([name, count]) => ({ name, productCount: count }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+          // Fetch existing images from storage for each brand
+          const brandsWithImages: BrandWithImage[] = await Promise.all(
+            uniqueBrands.map(async (brand) => {
+              // Try to get image from storage using the expected naming pattern
+              const fileName = `${brand.name}.webp`;
+              const { data: urlData } = supabase.storage
+                .from('brand-images')
+                .getPublicUrl(fileName);
+
+              // Check if file actually exists by trying to fetch it
+              let imageUrl: string | null = null;
+              try {
+                const response = await fetch(urlData.publicUrl, { method: 'HEAD' });
+                if (response.ok) {
+                  imageUrl = urlData.publicUrl;
+                }
+              } catch (e) {
+                // File doesn't exist, imageUrl stays null
+              }
+
+              return {
+                name: brand.name,
+                imageUrl,
+                productCount: brand.productCount
+              };
+            })
+          );
+
+          setBrands(brandsWithImages);
+          
+          // Initialize brandImages state with existing URLs
+          const imagesMap: Record<string, string> = {};
+          brandsWithImages.forEach(brand => {
+            if (brand.imageUrl) {
+              imagesMap[brand.name] = brand.imageUrl;
+            }
+          });
+          setBrandImages(imagesMap);
         }
       } catch (error) {
         console.error('Error fetching brands:', error);
@@ -71,42 +139,106 @@ const BrandImageManager: React.FC = () => {
     }));
   };
 
-  const handleAddBrand = () => {
-    const trimmedBrand = newBrand.trim();
-    if (trimmedBrand && !brands.includes(trimmedBrand)) {
-      setBrands(prev => [...prev, trimmedBrand].sort());
-      setNewBrand('');
-    }
+  // Filter brands based on search query
+  const filteredBrands = brands.filter(brand =>
+    matchesSearch(brand.name, searchQuery)
+  );
+
+  // Pagination
+  const totalPages = Math.ceil(filteredBrands.length / ITEMS_PER_PAGE);
+  const paginatedBrands = filteredBrands.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleRemoveBrand = (brandName: string) => {
-    setBrands(prev => prev.filter(b => b !== brandName));
-    setBrandImages(prev => {
-      const updated = { ...prev };
-      delete updated[brandName];
-      return updated;
-    });
-  };
+  // Pagination component helper
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+    
+    return (
+      <div className="mt-4">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
 
-  const handleSave = async () => {
-    setLoading(true);
-    try {
-      // Save to localStorage (you can migrate this to a database table later)
-      localStorage.setItem(BRAND_IMAGES_STORAGE_KEY, JSON.stringify(brandImages));
-      
-      toast({
-        title: 'Brand images saved',
-        description: 'Brand image configurations have been saved successfully'
-      });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to save brand images',
-        variant: 'destructive'
-      });
-    } finally {
-      setLoading(false);
-    }
+            {currentPage > 2 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(1)} className="cursor-pointer">
+                  1
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {currentPage > 3 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {currentPage > 1 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(currentPage - 1)} className="cursor-pointer">
+                  {currentPage - 1}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationLink isActive className="cursor-default">
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+
+            {currentPage < totalPages && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(currentPage + 1)} className="cursor-pointer">
+                  {currentPage + 1}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            {currentPage < totalPages - 2 && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            {currentPage < totalPages - 1 && (
+              <PaginationItem>
+                <PaginationLink onClick={() => handlePageChange(totalPages)} className="cursor-pointer">
+                  {totalPages}
+                </PaginationLink>
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+        <p className="text-center text-sm text-muted-foreground mt-2">
+          Showing {paginatedBrands.length} of {filteredBrands.length} brands (Page {currentPage} of {totalPages})
+        </p>
+      </div>
+    );
   };
 
   if (fetching) {
@@ -130,78 +262,91 @@ const BrandImageManager: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Add new brand */}
-        <div className="flex gap-2 p-4 border rounded-lg bg-muted/50">
-          <Input
-            placeholder="Add new brand name..."
-            value={newBrand}
-            onChange={(e) => setNewBrand(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleAddBrand()}
-          />
-          <Button onClick={handleAddBrand} variant="outline">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Brand
-          </Button>
+        {/* Search Bar */}
+        <div className="mb-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search brands by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-10"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2"
+              >
+                <X className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Brand list */}
-        <div className="space-y-4 max-h-[600px] overflow-y-auto">
-          {brands.length === 0 ? (
+        {/* Brand list with images */}
+        <div className="space-y-4">
+          {filteredBrands.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No brands found. Add a brand above or create products first.
+              {searchQuery ? 'No brands match your search.' : 'No brands found. Create products first.'}
             </div>
           ) : (
-            brands.map(brand => (
-              <div key={brand} className="space-y-2 p-4 border rounded-lg bg-background">
-                <div className="flex items-center justify-between">
-                  <Label className="text-base font-medium">{brand}</Label>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleRemoveBrand(brand)}
-                    className="text-destructive hover:text-destructive"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+            paginatedBrands.map(brand => {
+              const currentImageUrl = brandImages[brand.name] || brand.imageUrl;
+              
+              return (
+                <div key={brand.name} className="p-4 border rounded-lg bg-background space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Label className="text-base font-medium">{brand.name}</Label>
+                      <span className="text-sm text-muted-foreground">
+                        ({brand.productCount} {brand.productCount === 1 ? 'product' : 'products'})
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Display current image */}
+                  <div className="flex items-start gap-4">
+                    {currentImageUrl ? (
+                      <div className="relative w-32 h-32 border rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                        <OptimizedImage
+                          src={currentImageUrl}
+                          alt={brand.name}
+                          className="w-full h-full object-cover"
+                          width={128}
+                          height={128}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-32 h-32 border rounded-lg flex items-center justify-center bg-muted flex-shrink-0">
+                        <ImageIcon className="h-8 w-8 text-muted-foreground" />
+                      </div>
+                    )}
+
+                    {/* Upload component */}
+                    <div className="flex-1">
+                      <ImageUpload
+                        value={currentImageUrl || ''}
+                        onChange={(url) => handleBrandImageChange(brand.name, url)}
+                        bucket="brand-images"
+                        label="Brand Logo"
+                        fileName={brand.name}
+                      />
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Image will be saved as: <code className="text-xs bg-muted px-1 py-0.5 rounded">{brand.name}.webp</code>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <ImageUpload
-                  value={brandImages[brand] || ''}
-                  onChange={(url) => handleBrandImageChange(brand, url)}
-                  bucket="brand-images"
-                  label="Brand Logo"
-                  fileName={brand.toLowerCase().replace(/\s+/g, '-')}
-                />
-              </div>
-            ))
+              );
+            })
           )}
         </div>
 
-        {/* Save button */}
-        <div className="flex justify-end pt-4 border-t">
-          <Button onClick={handleSave} disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            <Save className="mr-2 h-4 w-4" />
-            Save Brand Images
-          </Button>
-        </div>
+        {/* Pagination */}
+        {renderPagination()}
       </CardContent>
     </Card>
   );
 };
 
 export default BrandImageManager;
-
-// Export utility function to get brand image URL
-export const getBrandImageUrl = (brandName: string): string | null => {
-  try {
-    const savedImages = localStorage.getItem(BRAND_IMAGES_STORAGE_KEY);
-    if (savedImages) {
-      const parsed = JSON.parse(savedImages);
-      return parsed[brandName] || null;
-    }
-  } catch (e) {
-    console.error('Error getting brand image:', e);
-  }
-  return null;
-};

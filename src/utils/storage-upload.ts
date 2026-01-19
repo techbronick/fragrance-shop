@@ -1,4 +1,4 @@
-import { supabaseAdmin } from './supabase-admin';
+import { supabase } from '@/integrations/supabase/client';
 
 export type StorageBucket = 'product-images' | 'discovery-sets-images' | 'brand-images';
 
@@ -37,20 +37,30 @@ export const uploadImageToStorage = async (
       };
     }
 
-    // Generate file name if not provided
-    const fileExt = file.name.split('.').pop();
-    const timestamp = Date.now();
-    const randomString = Math.random().toString(36).substring(2, 15);
-    const finalFileName = fileName 
-      ? `${fileName}-${timestamp}-${randomString}.${fileExt}`
-      : `${timestamp}-${randomString}.${fileExt}`;
+    // Generate file name
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'webp';
+    
+    // For brand-images bucket, use the fileName directly as-is (for consistent naming)
+    // For other buckets, add timestamp and random string for uniqueness
+    let finalFileName: string;
+    if (bucket === 'brand-images' && fileName) {
+      // Ensure .webp extension for brand images
+      finalFileName = `${fileName}.webp`;
+    } else {
+      const timestamp = Date.now();
+      const randomString = Math.random().toString(36).substring(2, 15);
+      finalFileName = fileName 
+        ? `${fileName}-${timestamp}-${randomString}.${fileExt}`
+        : `${timestamp}-${randomString}.${fileExt}`;
+    }
 
     // Upload file to storage
-    const { data, error } = await supabaseAdmin.storage
+    // Note: Now uses RLS - only admins can upload (via Storage policies)
+    const { data, error } = await supabase.storage
       .from(bucket)
       .upload(finalFileName, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: bucket === 'brand-images' // Allow overwriting for brand images
       });
 
     if (error) {
@@ -61,7 +71,7 @@ export const uploadImageToStorage = async (
     }
 
     // Get public URL
-    const { data: urlData } = supabaseAdmin.storage
+    const { data: urlData } = supabase.storage
       .from(bucket)
       .getPublicUrl(data.path);
 
@@ -91,7 +101,8 @@ export const deleteImageFromStorage = async (
     const urlParts = url.split('/');
     const fileName = urlParts[urlParts.length - 1].split('?')[0];
 
-    const { error } = await supabaseAdmin.storage
+    // Note: Now uses RLS - only admins can delete (via Storage policies)
+    const { error } = await supabase.storage
       .from(bucket)
       .remove([fileName]);
 

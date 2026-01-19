@@ -473,7 +473,8 @@ const Checkout = () => {
 
                 <Alert className="bg-muted border-muted-foreground/20">
                   <AlertDescription className="text-center py-4">
-                    Momentan, acest magazin nu poate accepta plăți.
+                    Momentan, acest magazin nu poate accepta plăți online.
+                    Un reprezentant al magazinului va contacta in scurt timp.
                   </AlertDescription>
                 </Alert>
 
@@ -492,10 +493,7 @@ const Checkout = () => {
             {/* Footer Links */}
             <div className="mt-8 pt-6 border-t">
               <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-                <a href="/refund-policy" className="hover:text-primary transition-colors">
-                  Politica de rambursare
-                </a>
-                <span>·</span>
+               
                 <a href="/privacy" className="hover:text-primary transition-colors">
                   Politica de confidențialitate
                 </a>

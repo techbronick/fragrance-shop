@@ -29,7 +29,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   const { toast } = useToast();
-  const { signOut, user } = useAuth();
+  const { signOut, user, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const defaultTab = searchParams.get('tab') || 'overview';
@@ -38,6 +38,20 @@ const Admin = () => {
   const [dbStats, setDbStats] = useState<any>(null);
   const [orderStats, setOrderStats] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+
+  // Verify admin access on mount
+  useEffect(() => {
+    if (!authLoading) {
+      if (!user || !isAdmin) {
+        toast({
+          title: "Access Denied",
+          description: "You don't have admin privileges",
+          variant: "destructive"
+        });
+        navigate('/');
+      }
+    }
+  }, [user, isAdmin, authLoading, navigate, toast]);
   const [products, setProducts] = useState<any[]>([]);
   const [skus, setSkus] = useState<any[]>([]);
   const [skusLoading, setSkusLoading] = useState(false);
