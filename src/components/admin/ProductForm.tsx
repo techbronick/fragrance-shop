@@ -7,12 +7,20 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { X, Plus, Save, Loader2 } from 'lucide-react';
-import { productUtils } from '@/utils/supabase-admin';
+import { Separator } from '@/components/ui/separator';
+import { X, Plus, Save, Loader2, Package, Wine, TestTube, DollarSign, Trash2 } from 'lucide-react';
+import { productUtils, skuUtils } from '@/utils/supabase-admin';
 import { useToast } from '@/hooks/use-toast';
 import { Checkbox } from "@/components/ui/checkbox";
 import { Product } from "@/types/database";
 import ImageUpload from '@/components/admin/ImageUpload';
+
+interface SKUFormData {
+  size_ml: number;
+  price: number; // in bani
+  stock: number;
+  label: string;
+}
 
 interface ProductFormProps {
   product?: Product;
@@ -42,6 +50,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
   const [newNote, setNewNote] = useState({ top: '', mid: '', base: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // SKU management state
+  const [skus, setSkus] = useState<SKUFormData[]>([]);
+  const [showSKUForm, setShowSKUForm] = useState(false);
+  const [currentSKU, setCurrentSKU] = useState<SKUFormData>({
+    size_ml: 50,
+    price: 10000, // 100 Lei in bani
+    stock: 0,
+    label: ''
+  });
 
   const concentrations = [
     'Parfum',
@@ -62,6 +80,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
     'Aquatic',
     'Green',
     'Fruity'
+  ];
+
+  const predefinedSizes = [
+    { ml: 1, label: 'Sample 1ml', type: 'sample' },
+    { ml: 2, label: 'Sample 2ml', type: 'sample' },
+    { ml: 5, label: 'Sample 5ml', type: 'sample' },
+    { ml: 10, label: 'Travel 10ml', type: 'bottle' },
+    { ml: 30, label: 'Small 30ml', type: 'bottle' },
+    { ml: 50, label: 'Standard 50ml', type: 'bottle' },
+    { ml: 75, label: 'Large 75ml', type: 'bottle' },
+    { ml: 100, label: 'Full Size 100ml', type: 'bottle' },
+    { ml: 125, label: 'XL 125ml', type: 'bottle' }
   ];
 
   const handleInputChange = (field: string, value: any) => {
@@ -94,44 +124,144 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
     setFormData(prev => ({ ...prev, [field]: notes }));
   };
 
+  // SKU Management Functions
+  const handleSKUInputChange = (field: keyof SKUFormData, value: any) => {
+    setCurrentSKU(prev => {
+      const updated = { ...prev, [field]: value };
+      
+      // Auto-generate label when size changes
+      if (field === 'size_ml' && !updated.label) {
+        const predefined = predefinedSizes.find(s => s.ml === value);
+        updated.label = predefined ? predefined.label : `${value}ml`;
+      }
+      
+      return updated;
+    });
+  };
+
+  const handlePriceChange = (priceInLei: string) => {
+    const priceInBani = Math.round(parseFloat(priceInLei || '0') * 100);
+    handleSKUInputChange('price', priceInBani);
+  };
+
+  const addSKU = () => {
+    if (!currentSKU.size_ml || !currentSKU.label) {
+      toast({
+        title: "Validation Error",
+        description: "Please provide size and label for the SKU",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check for duplicate sizes
+    if (skus.some(sku => sku.size_ml === currentSKU.size_ml)) {
+      toast({
+        title: "Duplicate Size",
+        description: `A SKU with ${currentSKU.size_ml}ml already exists`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSkus(prev => [...prev, { ...currentSKU }]);
+    setCurrentSKU({
+      size_ml: 50,
+      price: 10000,
+      stock: 0,
+      label: ''
+    });
+    setShowSKUForm(false);
+    
+    toast({
+      title: "SKU Added",
+      description: `${currentSKU.label} has been added to the list`,
+    });
+  };
+
+  const removeSKU = (index: number) => {
+    setSkus(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const formatPrice = (priceInBani: number) => {
+    return (priceInBani / 100).toFixed(2);
+  };
+
+  const isBottle = (sizeMl: number) => sizeMl >= 10;
+  const isSample = (sizeMl: number) => sizeMl < 10;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
     try {
-      let result;
+      let productResult;
       if (product?.id) {
         // Update existing product
-        result = await productUtils.updateProduct(product.id, formData);
+        productResult = await productUtils.updateProduct(product.id, formData);
       } else {
         // Create new product
-        result = await productUtils.createProduct(formData);
+        productResult = await productUtils.createProduct(formData);
       }
 
-      if (result.error) {
-        throw new Error(result.error.message);
+      if (productResult.error) {
+        throw new Error(productResult.error.message);
       }
 
-      toast({
-        title: product?.id ? "Product Updated" : "Product Created",
-        description: `${formData.name} has been ${product?.id ? 'updated' : 'created'} successfully.`,
-      });
+      const productId = product?.id || productResult.data?.id;
+
+      // Create SKUs if any were added (only for new products or if explicitly adding)
+      if (productId && skus.length > 0) {
+        const skuPromises = skus.map(sku => 
+          skuUtils.createSKU({
+            ...sku,
+            product_id: productId
+          })
+        );
+
+        const skuResults = await Promise.all(skuPromises);
+        const failedSKUs = skuResults.filter(r => r.error);
+        
+        if (failedSKUs.length > 0) {
+          console.error('Some SKUs failed to create:', failedSKUs);
+          toast({
+            title: "Product Created",
+            description: `Product created, but ${failedSKUs.length} SKU(s) failed to create`,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: product?.id ? "Product Updated" : "Product Created",
+            description: `${formData.name} and ${skus.length} SKU(s) have been ${product?.id ? 'updated' : 'created'} successfully.`,
+          });
+        }
+      } else {
+        toast({
+          title: product?.id ? "Product Updated" : "Product Created",
+          description: `${formData.name} has been ${product?.id ? 'updated' : 'created'} successfully.`,
+        });
+      }
 
       onSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
+      toast({
+        title: "Error",
+        description: err instanceof Error ? err.message : "An error occurred",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-5xl mx-auto">
       <CardHeader>
         <CardTitle>{product?.id ? 'Edit Product' : 'Add New Product'}</CardTitle>
         <CardDescription>
-          {product?.id ? 'Update product information' : 'Create a new luxury perfume product'}
+          {product?.id ? 'Update product information' : 'Create a new luxury perfume product with SKUs'}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -310,15 +440,250 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
             </div>
           ))}
 
+          <Separator />
+
+          {/* SKU Management Section */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <Package className="h-5 w-5" />
+                  Product SKUs
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Add size variants, pricing, and stock levels for this product
+                </p>
+              </div>
+              {!showSKUForm && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowSKUForm(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add SKU
+                </Button>
+              )}
+            </div>
+
+            {/* SKU Form */}
+            {showSKUForm && (
+              <Card className="border-2 border-dashed">
+                <CardContent className="pt-6">
+                  <div className="space-y-4">
+                    {/* Quick Size Selection */}
+                    <div className="space-y-2">
+                      <Label>Quick Select Size</Label>
+                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                        {predefinedSizes.map(size => (
+                          <Button
+                            key={size.ml}
+                            type="button"
+                            variant={currentSKU.size_ml === size.ml ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => {
+                              handleSKUInputChange('size_ml', size.ml);
+                              handleSKUInputChange('label', size.label);
+                            }}
+                            className="flex flex-col items-center gap-1 h-auto py-2"
+                          >
+                            {size.type === 'bottle' ? (
+                              <Wine className="h-4 w-4" />
+                            ) : (
+                              <TestTube className="h-4 w-4" />
+                            )}
+                            <span className="text-xs font-medium">{size.ml}ml</span>
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Custom Size Input */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="sku_size">Volume (ml) *</Label>
+                        <Input
+                          id="sku_size"
+                          type="number"
+                          min="1"
+                          max="1000"
+                          value={currentSKU.size_ml}
+                          onChange={(e) => handleSKUInputChange('size_ml', parseInt(e.target.value) || 0)}
+                          placeholder="e.g., 50"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="sku_label">Label *</Label>
+                        <Input
+                          id="sku_label"
+                          value={currentSKU.label}
+                          onChange={(e) => handleSKUInputChange('label', e.target.value)}
+                          placeholder="e.g., Standard 50ml"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Price and Stock */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="sku_price" className="flex items-center gap-2">
+                          <DollarSign className="h-4 w-4" />
+                          Price (Lei) *
+                        </Label>
+                        <Input
+                          id="sku_price"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={formatPrice(currentSKU.price)}
+                          onChange={(e) => handlePriceChange(e.target.value)}
+                          placeholder="0.00"
+                          required
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          {currentSKU.size_ml > 0 && currentSKU.price > 0 && (
+                            <>{(currentSKU.price / 100 / currentSKU.size_ml).toFixed(2)} Lei/ml</>
+                          )}
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="sku_stock">Stock Quantity</Label>
+                        <Input
+                          id="sku_stock"
+                          type="number"
+                          min="0"
+                          value={currentSKU.stock}
+                          onChange={(e) => handleSKUInputChange('stock', parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                        />
+                      </div>
+                    </div>
+
+                    {/* SKU Form Actions */}
+                    <div className="flex justify-end gap-2 pt-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => {
+                          setShowSKUForm(false);
+                          setCurrentSKU({
+                            size_ml: 50,
+                            price: 10000,
+                            stock: 0,
+                            label: ''
+                          });
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={addSKU}
+                        className="flex items-center gap-2"
+                      >
+                        <Plus className="h-4 w-4" />
+                        Add to List
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* SKU List */}
+            {skus.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-medium">
+                    Added SKUs ({skus.length})
+                  </Label>
+                  <Badge variant="secondary">
+                    {skus.filter(s => isBottle(s.size_ml)).length} bottles, {skus.filter(s => isSample(s.size_ml)).length} samples
+                  </Badge>
+                </div>
+                <div className="space-y-2">
+                  {skus.map((sku, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-muted rounded-lg border"
+                    >
+                      <div className="flex items-center gap-3 flex-1">
+                        {isBottle(sku.size_ml) ? (
+                          <Wine className="h-5 w-5 text-blue-600" />
+                        ) : (
+                          <TestTube className="h-5 w-5 text-amber-600" />
+                        )}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{sku.label}</span>
+                            <Badge variant="outline">{sku.size_ml}ml</Badge>
+                            {isBottle(sku.size_ml) ? (
+                              <Badge variant="secondary">Bottle</Badge>
+                            ) : (
+                              <Badge variant="secondary">Sample</Badge>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+                            <span className="flex items-center gap-1">
+                              <DollarSign className="h-3 w-3" />
+                              {formatPrice(sku.price)} Lei
+                            </span>
+                            <span>Stock: {sku.stock}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeSKU(index)}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {skus.length === 0 && !showSKUForm && (
+              <div className="text-center py-8 border-2 border-dashed rounded-lg">
+                <Package className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+                <p className="text-sm text-muted-foreground mb-4">
+                  No SKUs added yet. Add your first SKU to get started.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowSKUForm(true)}
+                  className="flex items-center gap-2 mx-auto"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add First SKU
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {error && (
+            <div className="p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Action Buttons */}
-          <div className="flex justify-end space-x-2 pt-4">
+          <div className="flex justify-end space-x-2 pt-4 border-t">
             {onCancel && (
               <Button type="button" variant="outline" onClick={onCancel}>
                 Cancel
               </Button>
             )}
-            <Button type="submit" disabled={loading}>
-              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button type="submit" disabled={isSubmitting || loading}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               <Save className="mr-2 h-4 w-4" />
               {product?.id ? 'Update Product' : 'Create Product'}
             </Button>

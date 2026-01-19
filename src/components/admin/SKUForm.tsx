@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -56,7 +56,11 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
     try {
       const { data, error } = await productUtils.getAllProducts();
       if (!error && data) {
-        setProducts(data);
+        // Additional deduplication as safety measure (products already deduplicated in getAllProducts)
+        const uniqueProducts = Array.from(
+          new Map(data.map((p: any) => [p.id, p])).values()
+        );
+        setProducts(uniqueProducts);
       }
     } catch (error) {
       console.error('Failed to load products:', error);
@@ -123,13 +127,21 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
     }
   };
 
-  const selectedProduct = products.find((p: any) => p.id === formData.product_id);
+  // Memoize selected product to avoid recalculation
+  const selectedProduct = useMemo(() => {
+    return products.find((p: any) => p.id === formData.product_id);
+  }, [products, formData.product_id]);
 
-  // Filter products based on search
-  const filteredProducts = products.filter((p: any) =>
-    matchesSearch(p.name, productSearchQuery) ||
-    matchesSearch(p.brand, productSearchQuery)
-  );
+  // Memoize filtered products to optimize search performance
+  const filteredProducts = useMemo(() => {
+    if (!productSearchQuery.trim()) {
+      return products;
+    }
+    return products.filter((p: any) =>
+      matchesSearch(p.name, productSearchQuery) ||
+      matchesSearch(p.brand, productSearchQuery)
+    );
+  }, [products, productSearchQuery]);
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -163,7 +175,10 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0" align="start">
-                  <Command>
+                  <Command filter={(value, search) => {
+                    // Disable built-in filtering, we handle it manually via filteredProducts
+                    return 1;
+                  }}>
                     <CommandInput 
                       placeholder="Search products..." 
                       value={productSearchQuery}
@@ -172,25 +187,29 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel }
                     <CommandList>
                       <CommandEmpty>No products found.</CommandEmpty>
                       <CommandGroup>
-                        {filteredProducts.map((product: any) => (
-                          <CommandItem
-                            key={product.id}
-                            value={product.id}
-                            onSelect={() => {
-                              handleInputChange('product_id', product.id);
-                              setProductPopoverOpen(false);
-                              setProductSearchQuery('');
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                formData.product_id === product.id ? "opacity-100" : "opacity-0"
-                              )}
-                            />
-                            {product.name} - {product.brand}
-                          </CommandItem>
-                        ))}
+                        {filteredProducts.map((product: any, index: number) => {
+                          // Create searchable value for Command component
+                          const searchableValue = `${product.name} ${product.brand}`.trim();
+                          return (
+                            <CommandItem
+                              key={`${product.id}-${index}`}
+                              value={searchableValue}
+                              onSelect={() => {
+                                handleInputChange('product_id', product.id);
+                                setProductPopoverOpen(false);
+                                setProductSearchQuery('');
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  formData.product_id === product.id ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {product.name} - {product.brand}
+                            </CommandItem>
+                          );
+                        })}
                       </CommandGroup>
                     </CommandList>
                   </Command>

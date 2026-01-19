@@ -496,10 +496,6 @@ const Checkout = () => {
                   Politica de rambursare
                 </a>
                 <span>·</span>
-                <a href="/shipping" className="hover:text-primary transition-colors">
-                  Transport
-                </a>
-                <span>·</span>
                 <a href="/privacy" className="hover:text-primary transition-colors">
                   Politica de confidențialitate
                 </a>

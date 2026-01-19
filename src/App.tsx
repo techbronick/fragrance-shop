@@ -128,14 +128,6 @@ const App = () => (
             element={<FAQ />} 
           />
           <Route 
-            path="/shipping" 
-            element={<PlaceholderPage title="Informații Livrare" description="Detalii despre opțiunile de livrare și politicile noastre de transport." />} 
-          />
-          <Route 
-            path="/size-guide" 
-            element={<PlaceholderPage title="Ghid Dimensiuni" description="Ghid pentru a alege dimensiunea perfectă a parfumului pentru nevoile tale." />} 
-          />
-          <Route 
             path="/careers" 
             element={<Careers />} 
           />

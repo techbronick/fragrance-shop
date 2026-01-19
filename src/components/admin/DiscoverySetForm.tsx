@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -61,16 +61,24 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
     const fetchAllSKUs = async () => {
       const { data, error } = await skuUtils.getAllSKUs();
       if (!error && data) {
-        setAllSKUs(data);
+        // Additional deduplication as safety measure (SKUs already deduplicated in getAllSKUs)
+        const uniqueSKUs = Array.from(
+          new Map(data.map((sku: any) => [sku.id, sku])).values()
+        );
+        setAllSKUs(uniqueSKUs);
       }
     };
     fetchAllSKUs();
   }, []);
 
-  // Filter SKUs when volume changes
+  // Filter SKUs when volume changes (memoized for performance)
   useEffect(() => {
     const matching = allSKUs.filter(sku => sku.size_ml === formData.volume_ml);
-    setAvailableSKUs(matching);
+    // Deduplicate by ID
+    const uniqueMatching = Array.from(
+      new Map(matching.map((sku: any) => [sku.id, sku])).values()
+    );
+    setAvailableSKUs(uniqueMatching);
   }, [allSKUs, formData.volume_ml]);
 
   // Initialize slots when total_slots changes or when not customizable
@@ -161,13 +169,27 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
 
   const filledSlotsCount = selectedItems.filter(item => item.skuId).length;
 
-  // Filter SKUs based on search for each slot
+  // Filter SKUs based on search for each slot (memoized for performance)
   const getFilteredSKUs = (slotIndex: number) => {
     const query = skuSearchQueries[slotIndex] || '';
-    return availableSKUs.filter(sku =>
-      matchesSearch(sku.products?.name || '', query) ||
-      matchesSearch(sku.products?.brand || '', query) ||
-      matchesSearch(sku.label || '', query)
+    if (!query.trim()) {
+      return availableSKUs;
+    }
+    
+    const filtered = availableSKUs.filter(sku => {
+      const productName = sku.products?.name || '';
+      const productBrand = sku.products?.brand || '';
+      const skuLabel = sku.label || '';
+      return (
+        matchesSearch(productName, query) ||
+        matchesSearch(productBrand, query) ||
+        matchesSearch(skuLabel, query)
+      );
+    });
+    
+    // Deduplicate by ID
+    return Array.from(
+      new Map(filtered.map((sku: any) => [sku.id, sku])).values()
     );
   };
 
@@ -451,7 +473,10 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent className="w-full p-0" align="start">
-                            <Command>
+                            <Command filter={(value, search) => {
+                              // Disable built-in filtering, we handle it manually
+                              return 1;
+                            }}>
                               <CommandInput 
                                 placeholder="Caută parfum..." 
                                 value={skuSearchQueries[item.slotIndex] || ''}
@@ -476,32 +501,36 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
                                     />
                                     <span className="text-muted-foreground">-- Slot gol --</span>
                                   </CommandItem>
-                                  {getFilteredSKUs(item.slotIndex).map(sku => (
-                                    <CommandItem
-                                      key={sku.id}
-                                      value={sku.id}
-                                      onSelect={() => {
-                                        handleSlotSelect(item.slotIndex, sku.id);
-                                        setPopoverOpen(prev => ({ ...prev, [item.slotIndex]: false }));
-                                        setSkuSearchQueries(prev => ({ ...prev, [item.slotIndex]: '' }));
-                                      }}
-                                    >
-                                      <Check
-                                        className={cn(
-                                          "mr-2 h-4 w-4",
-                                          item.skuId === sku.id ? "opacity-100" : "opacity-0"
-                                        )}
-                                      />
-                                      <div className="flex items-center gap-2">
-                                        <span className="font-medium">{sku.products?.brand}</span>
-                                        <span className="text-muted-foreground">-</span>
-                                        <span>{sku.products?.name}</span>
-                                        <Badge variant="outline" className="ml-2 text-xs">
-                                          {sku.size_ml}ml
-                                        </Badge>
-                                      </div>
-                                    </CommandItem>
-                                  ))}
+                                  {getFilteredSKUs(item.slotIndex).map((sku, skuIndex) => {
+                                    // Create searchable value for Command component filtering
+                                    const searchableValue = `${sku.products?.brand || ''} ${sku.products?.name || ''} ${sku.label || ''} ${sku.size_ml}ml`.trim();
+                                    return (
+                                      <CommandItem
+                                        key={`${sku.id}-${item.slotIndex}-${skuIndex}`}
+                                        value={searchableValue}
+                                        onSelect={() => {
+                                          handleSlotSelect(item.slotIndex, sku.id);
+                                          setPopoverOpen(prev => ({ ...prev, [item.slotIndex]: false }));
+                                          setSkuSearchQueries(prev => ({ ...prev, [item.slotIndex]: '' }));
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            item.skuId === sku.id ? "opacity-100" : "opacity-0"
+                                          )}
+                                        />
+                                        <div className="flex items-center gap-2">
+                                          <span className="font-medium">{sku.products?.brand}</span>
+                                          <span className="text-muted-foreground">-</span>
+                                          <span>{sku.products?.name}</span>
+                                          <Badge variant="outline" className="ml-2 text-xs">
+                                            {sku.size_ml}ml
+                                          </Badge>
+                                        </div>
+                                      </CommandItem>
+                                    );
+                                  })}
                                 </CommandGroup>
                               </CommandList>
                             </Command>

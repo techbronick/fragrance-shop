@@ -45,33 +45,61 @@ export const useCreateRecommendation = () => {
     }
   });
 };
-// Adaugă acest hook în useDiscoverySets.ts
+
+
+// ... existing code ...
+
 export const useDiscoverySetConfigsWithItems = () => {
   return useQuery({
     queryKey: ['discovery-set-configs-with-items'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // Pasul 1: Fetch configs
+      const { data: configs, error: configsError } = await supabase
         .from('discovery_set_configs')
-        .select(`
-          *,
-          items:discovery_set_config_items(
-            *,
-            sku:skus(
-              *,
-              product:products(*)
-            )
-          )
-        `)
+        .select('*')
         .eq('is_active', true)
         .order('total_slots', { ascending: true });
       
-      if (error) {
-        console.error('Error fetching discovery set configs with items:', error);
-        throw error;
+      if (configsError) {
+        console.error('Error fetching discovery set configs:', configsError);
+        throw configsError;
       }
       
-      console.log('Fetched configs with items:', JSON.stringify(data, null, 2)); // Debug log
-      return data;
+      if (!configs || configs.length === 0) {
+        return [];
+      }
+      
+      // Pasul 2: Fetch items pentru fiecare config separat
+      // Acest lucru evită problemele cu RLS în nested queries
+      const configsWithItems = await Promise.all(
+        configs.map(async (config: any) => {
+          // Query separat pentru items - acest lucru funcționează mai bine cu RLS
+          const { data: items, error: itemsError } = await supabase
+            .from('discovery_set_config_items')
+            .select(`
+              *,
+              sku:skus(
+                *,
+                product:products(*)
+              )
+            `)
+            .eq('config_id', config.id)
+            .order('slot_index', { ascending: true });
+          
+          if (itemsError) {
+            console.error(`Error fetching items for config ${config.id}:`, itemsError);
+            // Return config cu items gol în loc să aruncăm eroare
+            return { ...config, items: [] };
+          }
+          
+          return { ...config, items: items || [] };
+        })
+      );
+      
+      console.log('Fetched configs with items:', JSON.stringify(configsWithItems, null, 2));
+      return configsWithItems;
     }
   });
 };
+
+

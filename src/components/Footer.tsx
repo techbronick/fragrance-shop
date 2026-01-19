@@ -39,8 +39,6 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link to="/contact" className="hover:text-primary transition-colors">Contactează-ne</Link></li>
               <li><Link to="/faq" className="hover:text-primary transition-colors">Întrebări Frecvente</Link></li>
-              <li><Link to="/shipping" className="hover:text-primary transition-colors">Livrare</Link></li>
-              <li><Link to="/size-guide" className="hover:text-primary transition-colors">Ghid Dimensiuni</Link></li>
             </ul>
           </div>
 

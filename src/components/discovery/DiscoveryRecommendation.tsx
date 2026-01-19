@@ -10,6 +10,7 @@ import { useCreateRecommendation } from "@/hooks/useDiscoverySets";
 import { Product } from "@/types/database";
 import { Sparkles, RefreshCw, ChevronRight, ChevronLeft, Flower2, Calendar, Zap, Heart, Sun } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 interface QuestionnaireData {
   currentStyle: string;
@@ -220,11 +221,14 @@ export const DiscoveryRecommendation = () => {
                     <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-primary/10">
                       <CardContent className="p-0">
                         <div className="relative">
-                          <div className="aspect-square rounded-t-lg overflow-hidden">
-                            <img 
-                              src={product.image_url} 
+                          <div className="aspect-square rounded-t-lg overflow-hidden bg-muted">
+                            <OptimizedImage 
+                              src={product.image_url || "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=300&h=300&q=75&fm=webp"} 
                               alt={product.name}
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                              fallbackSrc="https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=300&h=300&q=75&fm=webp"
+                              width={300}
+                              height={300}
                             />
                           </div>
                           <div className="absolute top-3 left-3">
@@ -254,14 +258,10 @@ export const DiscoveryRecommendation = () => {
                   ))}
                 </div>
                 
-                <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6 border-t">
+                <div className="flex justify-center pt-6 border-t">
                   <Button variant="outline" onClick={resetQuestionnaire} className="flex items-center gap-2">
                     <RefreshCw className="h-4 w-4" />
                     Încearcă din Nou
-                  </Button>
-                  <Button className="flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80">
-                    <Sparkles className="h-4 w-4" />
-                    Creează Set cu Aceste Parfumuri
                   </Button>
                 </div>
               </div>
