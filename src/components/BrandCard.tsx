@@ -78,8 +78,8 @@ export const BrandCard = ({
             }}
           />
           
-          {/* Desktop: CTA on hover | Mobile: always visible */}
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity duration-300">
+          {/* Desktop: CTA on hover | Mobile: no hover overlay */}
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity duration-300">
             <Button 
               variant="secondary" 
               size="sm"

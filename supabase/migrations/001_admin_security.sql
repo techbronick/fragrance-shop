@@ -142,6 +142,9 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 -- Drop existing policies if they exist
 DROP POLICY IF EXISTS "Users can view own orders" ON orders;
 DROP POLICY IF EXISTS "Admins can manage orders" ON orders;
+DROP POLICY IF EXISTS "Anyone can create orders" ON orders;
+DROP POLICY IF EXISTS "Admins can update orders" ON orders;
+DROP POLICY IF EXISTS "Admins can delete orders" ON orders;
 
 -- Users can view their own orders
 CREATE POLICY "Users can view own orders"
@@ -149,12 +152,24 @@ ON orders
 FOR SELECT
 USING (auth.uid() = user_id OR is_admin());
 
--- Only admins can insert/update/delete orders
-CREATE POLICY "Admins can manage orders"
+-- Anyone can create orders (for checkout)
+CREATE POLICY "Anyone can create orders"
 ON orders
-FOR ALL
+FOR INSERT
+WITH CHECK (true);
+
+-- Only admins can update orders
+CREATE POLICY "Admins can update orders"
+ON orders
+FOR UPDATE
 USING (is_admin())
 WITH CHECK (is_admin());
+
+-- Only admins can delete orders
+CREATE POLICY "Admins can delete orders"
+ON orders
+FOR DELETE
+USING (is_admin());
 
 -- ============================================
 -- 8. Enable RLS on order_items table
@@ -164,6 +179,9 @@ ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
 -- Drop existing policies if they exist
 DROP POLICY IF EXISTS "Users can view own order items" ON order_items;
 DROP POLICY IF EXISTS "Admins can manage order items" ON order_items;
+DROP POLICY IF EXISTS "Anyone can create order items" ON order_items;
+DROP POLICY IF EXISTS "Admins can update order items" ON order_items;
+DROP POLICY IF EXISTS "Admins can delete order items" ON order_items;
 
 -- Users can view items for their own orders
 CREATE POLICY "Users can view own order items"
@@ -177,12 +195,29 @@ USING (
   )
 );
 
--- Only admins can insert/update/delete order items
-CREATE POLICY "Admins can manage order items"
+-- Anyone can create order items (when creating an order)
+CREATE POLICY "Anyone can create order items"
 ON order_items
-FOR ALL
+FOR INSERT
+WITH CHECK (
+  EXISTS (
+    SELECT 1 FROM orders
+    WHERE orders.id = order_items.order_id
+  )
+);
+
+-- Only admins can update order items
+CREATE POLICY "Admins can update order items"
+ON order_items
+FOR UPDATE
 USING (is_admin())
 WITH CHECK (is_admin());
+
+-- Only admins can delete order items
+CREATE POLICY "Admins can delete order items"
+ON order_items
+FOR DELETE
+USING (is_admin());
 
 -- ============================================
 -- 9. Enable RLS on discovery_recommendations table

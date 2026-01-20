@@ -23,6 +23,25 @@ import {
 } from "lucide-react";
 
 const FAQ = () => {
+  const handleAccordionChange = (value: string) => {
+    // Scroll to the expanded accordion item
+    if (value) {
+      setTimeout(() => {
+        // Find the accordion item by data attribute
+        const accordionElement = document.querySelector(`[data-accordion-item="${value}"]`);
+        if (accordionElement) {
+          const headerOffset = 80; // Header height + some padding
+          const elementPosition = accordionElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 150); // Wait for accordion animation to start
+    }
+  };
+  
   const faqSections = [
     {
       id: "about",
@@ -299,21 +318,31 @@ const FAQ = () => {
                           {section.title}
                         </h2>
                       </div>
-                      <Accordion type="single" collapsible className="w-full">
-                        {section.items.map((item, index) => (
-                          <AccordionItem key={index} value={`item-${section.id}-${index}`}>
-                            <AccordionTrigger className="text-left font-medium">
-                              {item.question}
-                            </AccordionTrigger>
-                            <AccordionContent className="text-muted-foreground leading-relaxed">
-                              {typeof item.answer === 'string' ? (
-                                <p>{item.answer}</p>
-                              ) : (
-                                item.answer
-                              )}
-                            </AccordionContent>
-                          </AccordionItem>
-                        ))}
+                      <Accordion 
+                        type="single" 
+                        collapsible 
+                        className="w-full"
+                        onValueChange={handleAccordionChange}
+                      >
+                        {section.items.map((item, index) => {
+                          const itemValue = `item-${section.id}-${index}`;
+                          return (
+                            <div key={index} data-accordion-item={itemValue} className="scroll-mt-20">
+                              <AccordionItem value={itemValue}>
+                                <AccordionTrigger className="text-left font-medium">
+                                  {item.question}
+                                </AccordionTrigger>
+                                <AccordionContent className="text-muted-foreground leading-relaxed">
+                                  {typeof item.answer === 'string' ? (
+                                    <p>{item.answer}</p>
+                                  ) : (
+                                    item.answer
+                                  )}
+                                </AccordionContent>
+                              </AccordionItem>
+                            </div>
+                          );
+                        })}
                       </Accordion>
                     </CardContent>
                   </Card>

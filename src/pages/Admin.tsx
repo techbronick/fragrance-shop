@@ -80,6 +80,19 @@ const Admin = () => {
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     setSearchParams({ tab: value });
+    // Scroll to tabs section after tab change
+    setTimeout(() => {
+      const tabsElement = document.querySelector('[role="tablist"]')?.parentElement;
+      if (tabsElement) {
+        const headerOffset = 80; // Header height + some padding
+        const elementPosition = tabsElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   useEffect(() => {
@@ -535,7 +548,7 @@ const Admin = () => {
           </Button>
         </div>
 
-        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6 scroll-mt-20">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>

@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import OptimizedImage from "@/components/ui/optimized-image";
 import { Button } from "@/components/ui/button";
@@ -117,6 +117,23 @@ const BrandsCarousel = () => {
     });
   };
 
+  // Keep pagination in sync with scroll position on mobile
+  const updateCurrentIndexFromScroll = useCallback(() => {
+    const container = carouselRef.current;
+    if (!container) return;
+
+    const card = container.querySelector('.brand-carousel-card') as HTMLElement | null;
+    if (!card) return;
+
+    const cardWidth = card.clientWidth;
+    if (!cardWidth) return;
+
+    const index = Math.round(container.scrollLeft / cardWidth);
+    if (index !== currentIndex && index >= 0 && index < brands.length) {
+      setCurrentIndex(index);
+    }
+  }, [currentIndex]);
+
   // Auto-scroll logic for mobile only
   useEffect(() => {
     if (!isMobile || !isAutoScrolling) return;
@@ -148,6 +165,22 @@ const BrandsCarousel = () => {
     };
   }, [isMobile]);
 
+  // Update currentIndex when the user swipes manually (mobile)
+  useEffect(() => {
+    if (!isMobile || !carouselRef.current) return;
+
+    const container = carouselRef.current;
+    const handleScroll = () => {
+      updateCurrentIndexFromScroll();
+    };
+
+    container.addEventListener('scroll', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile, updateCurrentIndexFromScroll]);
+
   if (isMobile) {
     return (
       <div className="w-full max-w-full overflow-hidden">
@@ -166,7 +199,7 @@ const BrandsCarousel = () => {
             {brands.map((brand, index) => (
               <div 
                 key={index} 
-                className="brand-carousel-card flex-shrink-0 w-80 snap-start"
+                className="brand-carousel-card flex-shrink-0 w-[85vw] max-w-sm snap-start"
                 style={{ touchAction: 'pan-x' }}
               >
                 <Card 

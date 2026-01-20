@@ -40,6 +40,16 @@ export const DiscoverySetBuilder = ({
   onConfigSelect, 
   onPredefinedSetSelect 
 }: DiscoverySetBuilderProps) => {
+  // Generate a cross-browser-safe unique ID for custom bundles
+  const generateBundleId = () => {
+    // Prefer secure randomUUID where available (modern browsers)
+    if (typeof window !== "undefined" && window.crypto && "randomUUID" in window.crypto) {
+      return window.crypto.randomUUID();
+    }
+    // Fallback for older/mobile browsers
+    return `bundle_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+  };
+
   const { data: products } = useProducts();
   const { isAnimating, triggerAnimation } = useButtonAnimation();
   const { toast } = useToast();
@@ -211,7 +221,7 @@ export const DiscoverySetBuilder = ({
     }));
 
     addItem({
-      id: crypto.randomUUID(),
+      id: generateBundleId(),
       type: 'custom-bundle',
       configId: activeConfig.id,
       selectedItems: selectedItems,

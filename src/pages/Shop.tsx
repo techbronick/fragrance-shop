@@ -33,7 +33,7 @@ import {
 
 const Shop = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [showAllProducts, setShowAllProducts] = useState(false);
 
@@ -51,10 +51,20 @@ const Shop = () => {
   const [brandSearchQuery, setBrandSearchQuery] = useState("");
   const debouncedBrandQuery = useDebounce(brandSearchQuery, 200);
   const brandSearchInputRef = useRef<HTMLInputElement>(null);
+  
+  // Refs for scroll targets
+  const productsSectionRef = useRef<HTMLElement>(null);
 
 
   const { data: products, isLoading, error } = useProducts();
   const isMobile = useIsMobile();
+
+  // Set showFilters based on device type: true on desktop, false on mobile
+  useEffect(() => {
+    if (isMobile !== undefined) {
+      setShowFilters(!isMobile);
+    }
+  }, [isMobile]);
 
   // Brand view mode with localStorage persistence
   const BRAND_VIEW_MODE_KEY = "brandsViewMode";
@@ -189,6 +199,18 @@ const Shop = () => {
     setSelectedBrands([brand]);
     setShowAllProducts(true);
     setSearchParams({ brand });
+    // Scroll to products section after state update
+    setTimeout(() => {
+      if (productsSectionRef.current) {
+        const headerOffset = 80; // Header height + some padding
+        const elementPosition = productsSectionRef.current.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   const handleBrandSearchChange = useCallback((value: string) => {
@@ -215,6 +237,18 @@ const Shop = () => {
     setShowAllProducts(true);
     setSelectedBrands([]);
     setSearchParams({});
+    // Scroll to products section after state update
+    setTimeout(() => {
+      if (productsSectionRef.current) {
+        const headerOffset = 80; // Header height + some padding
+        const elementPosition = productsSectionRef.current.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   };
 
   const handleBrandFilter = (brand: string, checked: boolean) => {
@@ -437,7 +471,7 @@ const Shop = () => {
         ) : (
           // Products View
           <>
-            <section>
+            <section ref={productsSectionRef} className="scroll-mt-20">
               <div className="container mx-auto px-4 py-8">
                 {/* Controls Bar */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -516,7 +550,7 @@ const Shop = () => {
                 </div>
 
                 <div className="flex gap-8">
-                  {/* Filters Sidebar or Overlay */}
+                  {/* Filters Overlay - mobile only */}
                   {showFilters && isMobile ? (
                     <div className="fixed left-0 right-0 top-16 h-[calc(100vh-4rem)] z-50 bg-background flex flex-col overflow-y-auto">
                       {/* Header with back button */}
@@ -546,7 +580,6 @@ const Shop = () => {
 
                       {/* Filter content */}
                       <div className="flex-1 p-4">
-                        {/* Render the same filter content as in the sidebar */}
                         <aside className="space-y-6">
                           {/* Search */}
                           <div className="space-y-4">
@@ -568,12 +601,12 @@ const Shop = () => {
                               {brands.map((brand) => (
                                 <div key={brand} className="flex items-center space-x-2">
                                   <Checkbox
-                                    id={`brand-${brand}`}
+                                    id={`brand-mobile-${brand}`}
                                     checked={selectedBrands.includes(brand)}
                                     onCheckedChange={(checked) => handleBrandFilter(brand, !!checked)}
                                   />
                                   <label
-                                    htmlFor={`brand-${brand}`}
+                                    htmlFor={`brand-mobile-${brand}`}
                                     className="text-sm cursor-pointer"
                                   >
                                     {brand}
@@ -589,12 +622,12 @@ const Shop = () => {
                               {families.map((family) => (
                                 <div key={family} className="flex items-center space-x-2">
                                   <Checkbox
-                                    id={`family-${family}`}
+                                    id={`family-mobile-${family}`}
                                     checked={selectedFamilies.includes(family)}
                                     onCheckedChange={(checked) => handleFamilyFilter(family, !!checked)}
                                   />
                                   <label
-                                    htmlFor={`family-${family}`}
+                                    htmlFor={`family-mobile-${family}`}
                                     className="text-sm cursor-pointer"
                                   >
                                     {family}
@@ -609,31 +642,31 @@ const Shop = () => {
                             <div className="space-y-3">
                               <div className="flex items-center space-x-2">
                                 <Checkbox
-                                  id="unisex"
+                                  id="unisex-mobile"
                                   checked={selectedGenders.includes("unisex")}
                                   onCheckedChange={(checked) => handleGenderFilter("unisex", !!checked)}
                                 />
-                                <label htmlFor="unisex" className="text-sm cursor-pointer">
+                                <label htmlFor="unisex-mobile" className="text-sm cursor-pointer">
                                   Unisex
                                 </label>
                               </div>
                               <div className="flex items-center space-x-2">
                                 <Checkbox
-                                  id="feminine"
+                                  id="feminine-mobile"
                                   checked={selectedGenders.includes("feminine")}
                                   onCheckedChange={(checked) => handleGenderFilter("feminine", !!checked)}
                                 />
-                                <label htmlFor="feminine" className="text-sm cursor-pointer">
+                                <label htmlFor="feminine-mobile" className="text-sm cursor-pointer">
                                   Feminin
                                 </label>
                               </div>
                               <div className="flex items-center space-x-2">
                                 <Checkbox
-                                  id="masculine"
+                                  id="masculine-mobile"
                                   checked={selectedGenders.includes("masculine")}
                                   onCheckedChange={(checked) => handleGenderFilter("masculine", !!checked)}
                                 />
-                                <label htmlFor="masculine" className="text-sm cursor-pointer">
+                                <label htmlFor="masculine-mobile" className="text-sm cursor-pointer">
                                   Masculin
                                 </label>
                               </div>
@@ -642,7 +675,10 @@ const Shop = () => {
                         </aside>
                       </div>
                     </div>
-                  ) : showFilters ? (
+                  ) : null}
+
+                  {/* Filters Sidebar - desktop only */}
+                  {showFilters && !isMobile ? (
                     <aside className="w-64 space-y-6">
                       {/* Search */}
                       <div className="space-y-4">
@@ -742,43 +778,40 @@ const Shop = () => {
                   ) : null}
 
                   {/* Products Grid */}
-                  {(!showFilters || selectedBrands.length > 0 || !isMobile) ? (
-                    <div className="flex-1">
-                      {isLoading ? (
-                        <div className={`grid ${viewMode === "grid"
-                          ? "grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2"
-                          : "grid-cols-1 gap-8"
-                          }`}>
-                          {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="animate-pulse">
-                              <div className="aspect-square bg-muted rounded-lg mb-4"></div>
-                              <div className="space-y-2">
-                                <div className="h-4 bg-muted rounded w-3/4"></div>
-                                <div className="h-6 bg-muted rounded w-full"></div>
-                                <div className="h-4 bg-muted rounded w-1/2"></div>
-                              </div>
+                  <div className="flex-1">
+                    {isLoading ? (
+                      <div className={`grid ${viewMode === "grid"
+                        ? "grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2"
+                        : "grid-cols-1 gap-8"
+                        }`}>
+                        {[1, 2, 3, 4, 5, 6].map((i) => (
+                          <div key={i} className="animate-pulse">
+                            <div className="aspect-square bg-muted rounded-lg mb-4"></div>
+                            <div className="space-y-2">
+                              <div className="h-4 bg-muted rounded w-3/4"></div>
+                              <div className="h-6 bg-muted rounded w-full"></div>
+                              <div className="h-4 bg-muted rounded w-1/2"></div>
                             </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      viewMode === "grid" ? (
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                          {paginatedProducts.map((product) => (
+                            <ProductCard key={product.id} product={product} />
                           ))}
                         </div>
                       ) : (
-                        viewMode === "grid" ? (
-                          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                            {paginatedProducts.map((product) => (
-                              <ProductCard key={product.id} product={product} />
-                            ))}
-                          </div>
-                        ) : (
-                          // LIST VIEW
-                          <div className="flex flex-col gap-4">
-                            {paginatedProducts.map((product) => (
-                              <ProductListCard key={product.id} product={product} />
-                            ))}
-                          </div>
-                        )
-                      )}
-                    </div>
-                    
-                  ) : null}
+                        // LIST VIEW
+                        <div className="flex flex-col gap-4">
+                          {paginatedProducts.map((product) => (
+                            <ProductListCard key={product.id} product={product} />
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </div>
 
                 </div>
                 {/* Pagination */}

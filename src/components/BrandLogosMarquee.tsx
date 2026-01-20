@@ -15,9 +15,9 @@ const BrandLogosMarquee: React.FC = () => {
   // Triple the array for seamless looping
   const logos = [...brands, ...brands, ...brands];
   return (
-    <div className="overflow-hidden py-2 bg-transparent relative w-full max-w-full">
+    <div className="overflow-hidden py-8 md:py-6 bg-transparent relative w-full max-w-full">
       {/* Background layer with opacity effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none z-10" />
       <div className="relative w-full">
         <div className="flex animate-marquee whitespace-nowrap w-full">
           {logos.map((brand, idx) => (
@@ -25,7 +25,7 @@ const BrandLogosMarquee: React.FC = () => {
               key={idx}
               src={brand.logo}
               alt={brand.name}
-              className="h-32 w-auto object-contain inline-block select-none opacity-40 hover:opacity-60 transition-opacity duration-300 touch-manipulation"
+              className="h-24 sm:h-28 md:h-32 w-auto object-contain inline-block select-none opacity-70 hover:opacity-80 transition-opacity duration-300 touch-manipulation"
               draggable={false}
               style={{ 
                 margin: 0, 
@@ -48,13 +48,14 @@ const BrandLogosMarquee: React.FC = () => {
         }
         @media (max-width: 640px) {
           .animate-marquee {
-            animation-duration: 15s;
+            animation-duration: 18s;
           }
         }
         @media (max-width: 768px) {
           .animate-marquee img {
-            height: 24px;
-            max-width: 80px;
+            height: 160px;
+            max-width: 400px;
+            opacity: 1;
             touch-action: none;
             pointer-events: none;
           }

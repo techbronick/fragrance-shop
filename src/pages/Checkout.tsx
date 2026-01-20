@@ -279,7 +279,7 @@ const Checkout = () => {
       <main className="flex-1 container mx-auto px-4 py-8 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Left Column - Form (60%) */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 order-2 lg:order-1">
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Contact Section */}
               <section>
@@ -502,7 +502,7 @@ const Checkout = () => {
           </div>
 
           {/* Right Column - Order Summary (40%) */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-1 lg:order-2">
             <div className="lg:sticky lg:top-8">
               <Card>
                 <CardContent className="p-6">

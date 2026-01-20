@@ -84,7 +84,7 @@ export const BrandsControlsBar = ({
           className="group inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
         >
           <span className="hidden sm:inline">Vezi toate produsele</span>
-          <span className="sm:hidden">Toate</span>
+          <span className="sm:hidden">Toate produsele</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </button>
 
