@@ -4,6 +4,8 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     { "source": "/shop", "destination": "/ro/shop", "permanent": true },
     { "source": "/product/:id", "destination": "/ro/product/:id", "permanent": true },
@@ -20,7 +22,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!.*\\.[^/]*$).*)",
       "destination": "/index.html"
     }
   ],
