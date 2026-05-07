@@ -50,6 +50,9 @@
     "orderFailed": "Order could not be placed",
     "errorGeneric": "An error occurred. Please try again."
   },
+  "price": {
+    "byOrder": "By request"
+  },
   "languageSwitcher": {
     "label": "Language",
     "ro": "RO",

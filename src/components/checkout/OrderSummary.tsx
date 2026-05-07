@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ShippingEstimateForCart } from "@/components/ShippingEstimateForCart";
 import { CartItem } from "@/hooks/useCart";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
-import { formatPrice } from "@/utils/formatPrice";
+import { formatProductPrice } from "@/utils/formatPrice";
 import { formatCheckoutPrice } from "@/utils/formatCheckoutPrice";
 import { getVatRate } from "@/utils/vat";
 
@@ -36,6 +36,8 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
   const navigate = useNavigate();
   const href = useLocalizedHref();
   const { t: tc } = useTranslation("checkout");
+  const { t: tCommon } = useTranslation("common");
+  const byOrder = tCommon("price.byOrder");
 
   if (items.length === 0) {
     return (
@@ -82,7 +84,7 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
               )}
             </div>
             <p className="text-body text-text-strong shrink-0">
-              {formatPrice(item.price * 100 * item.quantity)}
+              {formatProductPrice(item.price * 100 * item.quantity, byOrder)}
             </p>
           </div>
         ))}
@@ -90,7 +92,7 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
 
       {/* Subtotal / Shipping / VAT */}
       <div className="border-t border-border pt-4 space-y-2">
-        <Row label={tc('summary.subtotal')} value={formatCheckoutPrice(totals.subtotal)} />
+        <Row label={tc('summary.subtotal')} value={totals.subtotal > 0 ? formatCheckoutPrice(totals.subtotal) : byOrder} />
         <Row label={tc('summary.shipping')} value={formatCheckoutPrice(totals.shipping)} />
         {country !== 'MD' && vatRate !== null && (
           <Row
@@ -107,13 +109,15 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
           <span className="text-body text-text-strong font-medium">{tc('summary.total')}</span>
           <div className="text-right">
             <p className="text-h2 md:text-h2-md font-normal text-text-strong">
-              {formatCheckoutPrice(totals.total)}
+              {totals.total > 0 ? formatCheckoutPrice(totals.total) : byOrder}
             </p>
-            <p className="text-caption text-text-muted">
-              MDL{country !== 'MD' && (
-                <> · ≈ €{(totals.total / 100 / mdlPerEur).toFixed(2)}</>
-              )}
-            </p>
+            {totals.total > 0 && (
+              <p className="text-caption text-text-muted">
+                MDL{country !== 'MD' && (
+                  <> · ≈ €{(totals.total / 100 / mdlPerEur).toFixed(2)}</>
+                )}
+              </p>
+            )}
           </div>
         </div>
         {totals.taxIncluded > 0 && (

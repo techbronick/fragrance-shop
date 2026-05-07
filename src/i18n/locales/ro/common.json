@@ -51,6 +51,9 @@
     "orderFailed": "Comanda nu a fost plasată",
     "errorGeneric": "A apărut o eroare. Încearcă din nou."
   },
+  "price": {
+    "byOrder": "La comandă"
+  },
   "languageSwitcher": {
     "label": "Limbă",
     "ro": "RO",

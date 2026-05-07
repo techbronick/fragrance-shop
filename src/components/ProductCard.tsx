@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSKUs } from "@/hooks/useSKUs";
-import { formatPrice } from "@/utils/formatPrice";
+import { formatProductPrice } from "@/utils/formatPrice";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { useCart } from "@/hooks/useCart";
@@ -27,6 +27,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
   const navigate = useNavigate();
   const href = useLocalizedHref();
   const { t } = useTranslation("product");
+  const { t: tCommon } = useTranslation("common");
   const { data: fetchedSkus } = useSKUs(skusProp ? "" : product.id);
   const skus = skusProp ?? fetchedSkus;
   const sortedSkus = useMemo(
@@ -112,7 +113,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
 
         <div className="flex items-center justify-between gap-2 pt-1">
           {selectedSKU && (
-            <p className="text-body">{formatPrice(selectedSKU.price)}</p>
+            <p className="text-body">{formatProductPrice(selectedSKU.price, tCommon('price.byOrder'))}</p>
           )}
           <Button
             size={featured ? "default" : "sm"}

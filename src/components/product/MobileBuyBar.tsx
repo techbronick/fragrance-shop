@@ -2,7 +2,7 @@ import { useEffect, useState, RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { SKU } from "@/types/database";
-import { formatPrice } from "@/utils/formatPrice";
+import { formatProductPrice } from "@/utils/formatPrice";
 
 type Props = {
   selectedSku: SKU | null;
@@ -13,6 +13,7 @@ type Props = {
 
 export function MobileBuyBar({ selectedSku, quantity, onAddToCart, watchRef }: Props) {
   const { t } = useTranslation("product");
+  const { t: tCommon } = useTranslation("common");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export function MobileBuyBar({ selectedSku, quantity, onAddToCart, watchRef }: P
         >
           <span className="text-text-muted">{selectedSku.size_ml}{t('size.ml')}</span>
           <span className="mx-2 text-text-faint">·</span>
-          <span>{formatPrice(selectedSku.price * quantity)}</span>
+          <span>{formatProductPrice(selectedSku.price * quantity, tCommon('price.byOrder'))}</span>
         </button>
         <Button variant="primary" size="md" onClick={onAddToCart}>
           {buttonText}

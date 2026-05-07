@@ -56,7 +56,9 @@ export function CartSheet({ children }: Props) {
           <div className="border-t border-border px-6 py-4 space-y-3">
             <div className="flex justify-between text-body">
               <span className="text-text-muted">{t("cart.subtotal")}</span>
-              <span className="text-text-strong">{subtotalLei.toFixed(2)} Lei</span>
+              <span className="text-text-strong">
+                {subtotalLei > 0 ? `${subtotalLei.toFixed(2)} Lei` : t("price.byOrder")}
+              </span>
             </div>
             <ShippingEstimateForCart />
             <SheetClose asChild>
@@ -118,7 +120,9 @@ function CartLine({
           <X />
         </Button>
         <p className="text-body text-text-strong">
-          {(item.price * item.quantity).toFixed(2)} Lei
+          {item.price > 0
+            ? `${(item.price * item.quantity).toFixed(2)} Lei`
+            : t("price.byOrder")}
         </p>
       </div>
     </div>

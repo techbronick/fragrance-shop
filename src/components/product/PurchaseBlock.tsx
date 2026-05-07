@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 import { Product, SKU } from "@/types/database";
-import { formatPrice } from "@/utils/formatPrice";
+import { formatProductPrice } from "@/utils/formatPrice";
 import { ShippingEstimate } from "@/components/ShippingEstimate";
 import { SizeSelector } from "@/components/product/SizeSelector";
 
@@ -26,6 +26,7 @@ export function PurchaseBlock({
   onAddToCart,
 }: Props) {
   const { t } = useTranslation("product");
+  const { t: tCommon } = useTranslation("common");
   const oos = !!selectedSku && selectedSku.stock <= 0;
   const buttonText = oos ? t('purchase.order') : t('purchase.addToCart');
 
@@ -60,7 +61,7 @@ export function PurchaseBlock({
       {selectedSku && (
         <div className="space-y-2">
           <p className="text-h2 md:text-h2-md font-normal text-text-strong">
-            {formatPrice(selectedSku.price * quantity)}
+            {formatProductPrice(selectedSku.price * quantity, tCommon('price.byOrder'))}
           </p>
           <ShippingEstimate stocks={[selectedSku.stock]} />
         </div>

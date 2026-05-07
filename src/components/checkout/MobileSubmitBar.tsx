@@ -20,6 +20,7 @@ export function MobileSubmitBar({
   itemCount,
 }: Props) {
   const { t: tc } = useTranslation("checkout");
+  const { t: tCommon } = useTranslation("common");
 
   if (itemCount === 0) return null;
 
@@ -32,8 +33,8 @@ export function MobileSubmitBar({
         <div className="flex-1 min-w-0">
           <p className="text-caption text-text-muted">{tc('summary.total')}</p>
           <p className="text-body text-text-strong">
-            {formatCheckoutPrice(total)}
-            {country !== 'MD' && (
+            {total > 0 ? formatCheckoutPrice(total) : tCommon('price.byOrder')}
+            {total > 0 && country !== 'MD' && (
               <span className="text-caption text-text-muted ml-2">
                 ≈ €{(total / 100 / mdlPerEur).toFixed(2)}
               </span>

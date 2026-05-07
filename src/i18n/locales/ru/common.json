@@ -54,6 +54,9 @@
     "orderFailed": "Заказ не был оформлен",
     "errorGeneric": "Произошла ошибка. Попробуйте ещё раз."
   },
+  "price": {
+    "byOrder": "Под заказ"
+  },
   "languageSwitcher": {
     "label": "Язык",
     "ro": "RO",
