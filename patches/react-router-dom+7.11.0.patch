@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-router-dom/server.js b/node_modules/react-router-dom/server.js
+new file mode 100644
+index 0000000..bc0c2fc
+--- /dev/null
++++ b/node_modules/react-router-dom/server.js
+@@ -0,0 +1,8 @@
++// Shim for vite-react-ssg compatibility with react-router-dom v7
++// In v7, server-side utilities moved to the main 'react-router' package
++export {
++  StaticRouterProvider,
++  createStaticHandler,
++  createStaticRouter,
++  StaticRouter,
++} from 'react-router';

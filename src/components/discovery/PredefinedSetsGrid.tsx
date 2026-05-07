@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { DiscoverySetConfig } from "@/types/database";
 import { formatPrice } from "@/utils/formatPrice";
+import { setPath } from "@/utils/slugs";
 
 type Props = {
   sets: DiscoverySetConfig[];
@@ -42,7 +43,7 @@ export function PredefinedSetsGrid({ sets, isLoading }: Props) {
       {sets.map(set => (
         <a
           key={set.id}
-          href={href(`/discovery-set/${set.id}`)}
+          href={href(setPath(set))}
           className="group block bg-surface border border-border rounded-lg overflow-hidden transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
         >
           <div className="aspect-square bg-surface-2 overflow-hidden">

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { brandPath } from "@/utils/slugs";
 
 function shuffle<T>(arr: T[]): T[] {
   const out = [...arr];
@@ -62,7 +63,7 @@ export function BrandWall() {
           {loop.map((name, i) => (
             <div key={`${name}-${i}`} className="flex items-center shrink-0">
               <Link
-                to={href(`/shop?brand=${encodeURIComponent(name)}`)}
+                to={href(brandPath(name))}
                 className="px-10 md:px-16 text-h3 md:text-h2-md font-light tracking-[0.22em] text-text-muted hover:text-text-strong transition-colors duration-quick ease-default whitespace-nowrap"
               >
                 {name.toUpperCase()}

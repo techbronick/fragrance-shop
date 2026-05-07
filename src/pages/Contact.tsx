@@ -4,6 +4,8 @@ import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PageMeta } from "@/hooks/usePageMeta";
+import { JsonLd } from "@/components/JsonLd";
+import { localBusinessJsonLd } from "@/utils/jsonLd";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -72,6 +74,7 @@ const Contact = () => {
         titleKey="contact.meta.title"
         descriptionKey="contact.meta.description"
       />
+      <JsonLd payload={localBusinessJsonLd()} />
       <Header />
 
       <main className="flex-1">

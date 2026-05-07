@@ -10,6 +10,8 @@ import { useAllSKUs, buildMinPriceMap, buildInStockMap, buildSkusByProductMap } 
 import { ProductsView, SortKey } from "@/components/shop/ProductsView";
 import { BrandsView } from "@/components/shop/BrandsView";
 import { Filters } from "@/components/shop/FilterSidebar";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbJsonLd, itemListJsonLd } from "@/utils/jsonLd";
 
 const VALID_SORTS: SortKey[] = [
   'featured',
@@ -24,6 +26,7 @@ const VALID_GENDERS: Filters['gender'][] = ['all', 'male', 'female', 'unisex'];
 
 const Shop = () => {
   const { t } = useTranslation('shop');
+  const { t: tCommon, i18n } = useTranslation('common');
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: products = [], isLoading: productsLoading } = usePricedProducts();
   const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
@@ -89,6 +92,11 @@ const Shop = () => {
         titleKey="meta.title"
         descriptionKey="meta.description"
       />
+      <JsonLd payload={breadcrumbJsonLd([
+        { name: tCommon("breadcrumb.home"), url: `https://modestshop.md/${i18n.language}` },
+        { name: tCommon("breadcrumb.shop"), url: `https://modestshop.md/${i18n.language}/shop` },
+      ])} />
+      {products.length > 0 && <JsonLd payload={itemListJsonLd(products, i18n.language)} />}
       <Header />
 
       <main className="flex-1">

@@ -1,21 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
-import { HelmetProvider } from 'react-helmet-async';
 import './i18n';
-import { CartProvider } from './hooks/useCart';
-import { imagePreloader } from './utils/imagePreloader';
+import './index.css';
+import { ViteReactSSG } from 'vite-react-ssg';
+import { routes } from '@/lib/routes';
+import { imagePreloader } from '@/utils/imagePreloader';
 
-// Preload critical images on app startup
-imagePreloader.preloadCriticalImages();
+if (typeof window !== 'undefined') {
+  imagePreloader.preloadCriticalImages();
+}
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </HelmetProvider>
-  </React.StrictMode>
+export const createRoot = ViteReactSSG(
+  // react-router-dom data routes
+  { routes },
 );

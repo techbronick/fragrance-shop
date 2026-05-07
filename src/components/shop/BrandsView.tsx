@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import BrandCard from "@/components/BrandCard";
 import { Product } from "@/types/database";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { brandPath } from "@/utils/slugs";
 
 type Props = {
   products: Product[];
@@ -70,7 +71,7 @@ export function BrandsView({ products }: Props) {
                   key={b}
                   brand={b}
                   productCount={brandProductCounts.get(b) ?? 0}
-                  onClick={() => navigate(localizedHref(`/shop?brand=${encodeURIComponent(b)}`))}
+                  onClick={() => navigate(localizedHref(brandPath(b)))}
                 />
               ))}
             </div>

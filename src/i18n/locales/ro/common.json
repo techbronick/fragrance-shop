@@ -60,6 +60,10 @@
     "ru": "RU",
     "en": "EN"
   },
+  "breadcrumb": {
+    "home": "Acasă",
+    "shop": "Magazin"
+  },
   "countries": {
     "MD": "Moldova",
     "AT": "Austria",

@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import { usePricedProducts } from "@/hooks/usePricedProducts";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { productPath } from "@/utils/slugs";
 
 type Props = {
   open: boolean;
@@ -77,7 +78,7 @@ export function SearchOverlay({ open, onOpenChange }: Props) {
                   type="button"
                   onClick={() => {
                     onOpenChange(false);
-                    navigate(href(`/product/${p.id}`));
+                    navigate(href(productPath(p)));
                   }}
                   className="w-full flex items-center gap-3 px-6 py-3 hover:bg-surface-2 text-left duration-instant ease-default"
                 >

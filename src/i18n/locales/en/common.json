@@ -59,6 +59,10 @@
     "ru": "RU",
     "en": "EN"
   },
+  "breadcrumb": {
+    "home": "Home",
+    "shop": "Shop"
+  },
   "countries": {
     "MD": "Moldova",
     "AT": "Austria",

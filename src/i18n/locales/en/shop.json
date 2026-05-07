@@ -68,6 +68,13 @@
     "empty": "No products match the current filters.",
     "loadMore": "Load more"
   },
+  "brand": {
+    "metaTitle": "{{brand}}",
+    "metaDescription": "Fragrances by {{brand}} at ModestShop.",
+    "eyebrow": "Brand",
+    "notFound": "Brand not found",
+    "back": "Back to shop"
+  },
   "brands": {
     "empty": "No brands found for \"{{query}}\".",
     "searchPlaceholder": "Search brands...",

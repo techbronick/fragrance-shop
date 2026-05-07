@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { BrandLoader } from "@/components/BrandLoader";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
-import { useDiscoverySetConfig } from "@/hooks/useDiscoverySets";
+import { useDiscoverySetConfigsWithItems } from "@/hooks/useDiscoverySets";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
@@ -14,18 +14,19 @@ import { ProductImage } from "@/components/product/ProductImage";
 import { SetPurchaseBlock } from "@/components/discovery/SetPurchaseBlock";
 import { SetMobileBuyBar } from "@/components/discovery/SetMobileBuyBar";
 import { ProductInfoModal } from "@/components/discovery/ProductInfoModal";
+import { findSetBySlug, setPath, UUID_RE } from "@/utils/slugs";
 import type { Product } from "@/types/database";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=600&h=600&q=75&fm=webp";
 
 const DiscoverySetProduct = () => {
-  const { id } = useParams();
+  const { slugOrId } = useParams<{ slugOrId?: string }>();
   const navigate = useNavigate();
   const { t: tCommon } = useTranslation("common");
   const { t } = useTranslation("discovery");
   const href = useLocalizedHref();
-  const { data: config, isLoading } = useDiscoverySetConfig(id || "");
+  const { data: allConfigs = [], isLoading: configsLoading } = useDiscoverySetConfigsWithItems();
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
@@ -33,11 +34,27 @@ const DiscoverySetProduct = () => {
   const { toast } = useToast();
   const inlinePurchaseRef = useRef<HTMLDivElement>(null);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (slugOrId && UUID_RE.test(slugOrId) && allConfigs.length > 0) {
+      const found = allConfigs.find((c) => c.id === slugOrId);
+      if (found) navigate(href(setPath(found)), { replace: true });
+    }
+  }, [slugOrId, allConfigs, navigate, href]);
+
+  const config = slugOrId ? findSetBySlug(allConfigs, slugOrId) : null;
+
+  // Keep the loader up while a UUID-to-slug redirect is pending so users
+  // don't see a one-frame flash of the not-found state.
+  const pendingUuidRedirect =
+    !!slugOrId &&
+    UUID_RE.test(slugOrId) &&
+    allConfigs.some((c) => c.id === slugOrId);
+
+  if (configsLoading || pendingUuidRedirect) {
     return <BrandLoader />;
   }
 
-  if (!id || !config) {
+  if (!config) {
     return (
       <div className="min-h-screen flex flex-col bg-paper">
         <Header />

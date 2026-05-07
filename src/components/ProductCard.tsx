@@ -16,6 +16,7 @@ import { useButtonAnimation } from "@/hooks/useButtonAnimation";
 import OptimizedImage from "@/components/ui/optimized-image";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { productPath } from "@/utils/slugs";
 
 interface ProductCardProps {
   product: Product;
@@ -45,7 +46,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
   const { isAnimating, triggerAnimation } = useButtonAnimation();
 
   const handleProductClick = () => {
-    navigate(href(`/product/${product.id}`));
+    navigate(href(productPath(product)));
   };
 
   const handleQuickAdd = (e: React.MouseEvent) => {

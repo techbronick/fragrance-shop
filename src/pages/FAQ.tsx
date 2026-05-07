@@ -3,6 +3,8 @@ import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PageMeta } from "@/hooks/usePageMeta";
+import { JsonLd } from "@/components/JsonLd";
+import { faqJsonLd } from "@/utils/jsonLd";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Link } from "react-router-dom";
@@ -52,6 +54,16 @@ const sectionIcons: Record<string, React.ComponentType<{ className?: string }>> 
 const FAQ = () => {
   const { t } = useTranslation("static");
   const localizedHref = useLocalizedHref();
+
+  // Top FAQs are emitted as JSON-LD; full list lives in the rendered HTML below.
+  const topFaqSections = ['about', 'products', 'orders'] as const;
+  const faqQas = topFaqSections.flatMap((sectionKey) => {
+    const section = t(`faq.sections.${sectionKey}`, { returnObjects: true }) as FaqSection;
+    return section.items
+      .filter((item) => typeof item.answer === 'string' && item.answer.length > 0)
+      .slice(0, 2)
+      .map((item) => ({ q: item.question, a: item.answer as string }));
+  });
 
   const handleAccordionChange = (value: string) => {
     if (value) {
@@ -170,6 +182,7 @@ const FAQ = () => {
         titleKey="faq.meta.title"
         descriptionKey="faq.meta.description"
       />
+      <JsonLd payload={faqJsonLd(faqQas)} />
       <Header />
 
       <main className="flex-1">

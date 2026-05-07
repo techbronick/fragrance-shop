@@ -72,6 +72,13 @@
     "empty": "Нет продуктов, соответствующих фильтрам.",
     "loadMore": "Загрузить ещё"
   },
+  "brand": {
+    "metaTitle": "{{brand}}",
+    "metaDescription": "Парфюмерия {{brand}} в ModestShop.",
+    "eyebrow": "Бренд",
+    "notFound": "Бренд не найден",
+    "back": "Назад в магазин"
+  },
   "brands": {
     "empty": "Нет брендов для «{{query}}».",
     "searchPlaceholder": "Поиск брендов...",

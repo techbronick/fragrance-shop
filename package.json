@@ -5,12 +5,13 @@
   "description": "A modern e-commerce platform for luxury perfumes and fragrance discovery sets",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite-react-ssg build && ts-node --project tsconfig.scripts.json src/scripts/generate-sitemap.ts",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "add-brands": "ts-node -P tsconfig.scripts.json src/scripts/addNicheBrands.ts",
     "add-skus": "ts-node -P tsconfig.scripts.json src/scripts/addNicheSKUs.ts",
-    "check-price-list": "ts-node -P tsconfig.scripts.json src/scripts/checkPriceListMatches.ts"
+    "check-price-list": "ts-node -P tsconfig.scripts.json src/scripts/checkPriceListMatches.ts",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -77,12 +78,15 @@
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.5.0",
     "eslint": "^8.57.0",
+    "patch-package": "^8.0.1",
     "postcss": "^8.4.47",
+    "postinstall-postinstall": "^2.1.0",
     "tailwindcss": "^3.4.11",
     "terser": "^5.46.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.3",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vite-react-ssg": "^0.9.0"
   }
 }

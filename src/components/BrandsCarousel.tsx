@@ -6,6 +6,7 @@ import OptimizedImage from "@/components/ui/optimized-image";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { brandPath } from "@/utils/slugs";
 
 const brands = [
   {
@@ -70,7 +71,7 @@ const BrandsCarousel = () => {
   };
 
   const handleBrandClick = (brandName: string) => {
-    navigate(href(`/shop?brand=${encodeURIComponent(brandName)}`));
+    navigate(href(brandPath(brandName)));
   };
 
   const getFallbackImage = (index: number) => {

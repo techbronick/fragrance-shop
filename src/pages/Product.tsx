@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { BrandLoader } from "@/components/BrandLoader";
-import { useProduct } from "@/hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 import { useSKUs } from "@/hooks/useSKUs";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
@@ -17,18 +17,45 @@ import { MobileBuyBar } from "@/components/product/MobileBuyBar";
 import { NotesSection } from "@/components/product/NotesSection";
 import { DetailsSection } from "@/components/product/DetailsSection";
 import { SKU } from "@/types/database";
+import { findProductByPath, productPath, UUID_RE, brandSlug, productSlug } from "@/utils/slugs";
+import { JsonLd } from "@/components/JsonLd";
+import { productJsonLd, breadcrumbJsonLd } from "@/utils/jsonLd";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=600&h=600&q=75&fm=webp";
 
 const Product = () => {
-  const { id } = useParams();
+  const { idOrBrandSlug, brandSlugParam, productSlugParam } = useParams<{
+    idOrBrandSlug?: string;
+    brandSlugParam?: string;
+    productSlugParam?: string;
+  }>();
   const navigate = useNavigate();
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const { t: tP } = useTranslation("product");
   const href = useLocalizedHref();
-  const { data: product, isLoading: productLoading } = useProduct(id || "");
-  const { data: skus = [], isLoading: skusLoading } = useSKUs(id || "");
+  const { data: allProducts = [], isLoading: productsLoading } = useProducts();
+
+  useEffect(() => {
+    if (idOrBrandSlug && UUID_RE.test(idOrBrandSlug) && allProducts.length > 0) {
+      const found = allProducts.find((p) => p.id === idOrBrandSlug);
+      if (found) navigate(href(productPath(found)), { replace: true });
+    }
+  }, [idOrBrandSlug, allProducts, navigate, href]);
+
+  const product =
+    brandSlugParam && productSlugParam
+      ? findProductByPath(allProducts, brandSlugParam, productSlugParam)
+      : null;
+
+  // While the UUID redirect is pending (legacy URL → slug URL), keep the loader
+  // visible so the user doesn't see a one-frame flash of PdpNotFound.
+  const pendingUuidRedirect =
+    !!idOrBrandSlug &&
+    UUID_RE.test(idOrBrandSlug) &&
+    allProducts.some((p) => p.id === idOrBrandSlug);
+
+  const { data: skus = [], isLoading: skusLoading } = useSKUs(product?.id || "");
   const [selectedSku, setSelectedSku] = useState<SKU | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
@@ -43,11 +70,11 @@ const Product = () => {
     }
   }, [skus, selectedSku]);
 
-  if (productLoading || skusLoading) {
+  if (productsLoading || skusLoading || pendingUuidRedirect) {
     return <BrandLoader />;
   }
 
-  if (!id || !product) {
+  if (!product) {
     return <PdpNotFound onBack={() => navigate(href('/shop'))} />;
   }
 
@@ -78,6 +105,13 @@ const Product = () => {
         descriptionKey="meta.description"
         values={{ name: product.name, brand: product.brand }}
       />
+      <JsonLd payload={productJsonLd(product, skus, i18n.language)} />
+      <JsonLd payload={breadcrumbJsonLd([
+        { name: t("breadcrumb.home"), url: `https://modestshop.md/${i18n.language}` },
+        { name: t("breadcrumb.shop"), url: `https://modestshop.md/${i18n.language}/shop` },
+        { name: product.brand, url: `https://modestshop.md/${i18n.language}/brand/${brandSlug(product.brand)}` },
+        { name: product.name, url: `https://modestshop.md/${i18n.language}/product/${brandSlug(product.brand)}/${productSlug(product.name)}` },
+      ])} />
       <Header />
 
       <main className="flex-1">

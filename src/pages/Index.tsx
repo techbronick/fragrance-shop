@@ -11,9 +11,11 @@ import { usePricedProducts } from "@/hooks/usePricedProducts";
 import { useAllSKUs, buildSkusByProductMap } from "@/hooks/useAllSKUs";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationJsonLd, websiteJsonLd } from "@/utils/jsonLd";
 
 const Index = () => {
-  const { t } = useTranslation('home');
+  const { t, i18n } = useTranslation('home');
   const localizedHref = useLocalizedHref();
   const { data: products = [] } = usePricedProducts();
   const { data: allSkus = [] } = useAllSKUs();
@@ -31,6 +33,8 @@ const Index = () => {
         titleKey="meta.title"
         descriptionKey="meta.description"
       />
+      <JsonLd payload={organizationJsonLd(i18n.language)} />
+      <JsonLd payload={websiteJsonLd(i18n.language)} />
       <Header />
 
       <main className="flex-1">

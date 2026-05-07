@@ -19,6 +19,7 @@ const HeroSection = () => {
         // Desktop: standard center crop (wide aspect, plenty of room).
         className="absolute inset-0 w-full h-full object-cover object-[65%_75%] md:object-center"
         loading="eager"
+        fetchPriority="high"
         decoding="async"
       />
 

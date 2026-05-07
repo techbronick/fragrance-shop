@@ -70,6 +70,13 @@
     "empty": "Niciun produs nu corespunde filtrelor.",
     "loadMore": "Încarcă mai multe"
   },
+  "brand": {
+    "metaTitle": "{{brand}}",
+    "metaDescription": "Parfumuri {{brand}} la ModestShop.",
+    "eyebrow": "Brand",
+    "notFound": "Brand inexistent",
+    "back": "Înapoi la magazin"
+  },
   "brands": {
     "empty": "Niciun brand pentru \"{{query}}\".",
     "searchPlaceholder": "Caută branduri...",
