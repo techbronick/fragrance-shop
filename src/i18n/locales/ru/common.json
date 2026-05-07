@@ -1,0 +1,93 @@
+{
+  "brandWall": {
+    "eyebrow": "Представленные бренды"
+  },
+  "header": {
+    "home": "Главная",
+    "shop": "Магазин",
+    "discoverySets": "Наборы Discovery",
+    "about": "О нас",
+    "contact": "Контакт",
+    "faq": "FAQ",
+    "search": "Поиск",
+    "cart": "Корзина",
+    "menu": "Меню"
+  },
+  "footer": {
+    "shop": "Магазин",
+    "about": "О нас",
+    "contact": "Контакт",
+    "faq": "FAQ",
+    "tagline": "Элегантность не кричит.",
+    "privacy": "Конфиденциальность",
+    "terms": "Условия"
+  },
+  "cart": {
+    "title": "Ваша корзина",
+    "empty": "Корзина пуста.",
+    "subtotal": "Сумма",
+    "checkout": "Перейти к оформлению",
+    "clear": "Очистить корзину",
+    "decreaseQty": "Уменьшить количество",
+    "increaseQty": "Увеличить количество",
+    "remove": "Удалить из корзины",
+    "customBundleName_one": "Дискавери-сет ({{count}} образец)",
+    "customBundleName_few": "Дискавери-сет ({{count}} образца)",
+    "customBundleName_many": "Дискавери-сет ({{count}} образцов)",
+    "customBundleName_other": "Дискавери-сет ({{count}} образца)"
+  },
+  "search": {
+    "placeholder": "Поиск ароматов или брендов…",
+    "close": "Закрыть",
+    "noResults": "Нет результатов для „{{query}}\"."
+  },
+  "toast": {
+    "addedToCart": "Добавлено в корзину",
+    "setAddedToCart": "Набор добавлен в корзину",
+    "samplesRemoved_one": "{{count}} образец удалён",
+    "samplesRemoved_few": "{{count}} образца удалены",
+    "samplesRemoved_many": "{{count}} образцов удалены",
+    "samplesRemoved_other": "{{count}} образца удалены",
+    "contactMessageSent": "Сообщение успешно отправлено",
+    "contactMessageSentHint": "Мы ответим в кратчайшие сроки.",
+    "orderPlaced": "Заказ успешно оформлен",
+    "orderFailed": "Заказ не был оформлен",
+    "errorGeneric": "Произошла ошибка. Попробуйте ещё раз."
+  },
+  "languageSwitcher": {
+    "label": "Язык",
+    "ro": "RO",
+    "ru": "RU",
+    "en": "EN"
+  },
+  "countries": {
+    "MD": "Молдова",
+    "AT": "Австрия",
+    "BE": "Бельгия",
+    "BG": "Болгария",
+    "HR": "Хорватия",
+    "CY": "Кипр",
+    "CZ": "Чехия",
+    "DK": "Дания",
+    "EE": "Эстония",
+    "FI": "Финляндия",
+    "FR": "Франция",
+    "DE": "Германия",
+    "GR": "Греция",
+    "HU": "Венгрия",
+    "IE": "Ирландия",
+    "IT": "Италия",
+    "LV": "Латвия",
+    "LT": "Литва",
+    "LU": "Люксембург",
+    "MT": "Мальта",
+    "NL": "Нидерланды",
+    "PL": "Польша",
+    "PT": "Португалия",
+    "RO": "Румыния",
+    "SK": "Словакия",
+    "SI": "Словения",
+    "ES": "Испания",
+    "SE": "Швеция"
+  }
+}

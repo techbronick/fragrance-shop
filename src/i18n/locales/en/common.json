@@ -1,0 +1,89 @@
+{
+  "brandWall": {
+    "eyebrow": "Featured brands"
+  },
+  "header": {
+    "home": "Home",
+    "shop": "Shop",
+    "discoverySets": "Discovery Sets",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "search": "Search",
+    "cart": "Cart",
+    "menu": "Menu"
+  },
+  "footer": {
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "tagline": "Elegance doesn't shout.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty.",
+    "subtotal": "Subtotal",
+    "checkout": "Go to checkout",
+    "clear": "Clear cart",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity",
+    "remove": "Remove from cart",
+    "customBundleName_one": "Discovery set ({{count}} sample)",
+    "customBundleName_other": "Discovery set ({{count}} samples)"
+  },
+  "search": {
+    "placeholder": "Search fragrances or brands…",
+    "close": "Close",
+    "noResults": "No results for \"{{query}}\"."
+  },
+  "toast": {
+    "addedToCart": "Added to cart",
+    "setAddedToCart": "Set added to cart",
+    "samplesRemoved_one": "{{count}} sample removed",
+    "samplesRemoved_other": "{{count}} samples removed",
+    "contactMessageSent": "Message sent successfully",
+    "contactMessageSentHint": "We will get back to you as soon as possible.",
+    "orderPlaced": "Order placed successfully",
+    "orderFailed": "Order could not be placed",
+    "errorGeneric": "An error occurred. Please try again."
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "ro": "RO",
+    "ru": "RU",
+    "en": "EN"
+  },
+  "countries": {
+    "MD": "Moldova",
+    "AT": "Austria",
+    "BE": "Belgium",
+    "BG": "Bulgaria",
+    "HR": "Croatia",
+    "CY": "Cyprus",
+    "CZ": "Czech Republic",
+    "DK": "Denmark",
+    "EE": "Estonia",
+    "FI": "Finland",
+    "FR": "France",
+    "DE": "Germany",
+    "GR": "Greece",
+    "HU": "Hungary",
+    "IE": "Ireland",
+    "IT": "Italy",
+    "LV": "Latvia",
+    "LT": "Lithuania",
+    "LU": "Luxembourg",
+    "MT": "Malta",
+    "NL": "Netherlands",
+    "PL": "Poland",
+    "PT": "Portugal",
+    "RO": "Romania",
+    "SK": "Slovakia",
+    "SI": "Slovenia",
+    "ES": "Spain",
+    "SE": "Sweden"
+  }
+}

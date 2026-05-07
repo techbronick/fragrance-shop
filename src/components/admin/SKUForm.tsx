@@ -1,0 +1,441 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Badge } from '@/components/ui/badge';
+import { Save, Loader2, DollarSign, Package2, Check, ChevronsUpDown } from 'lucide-react';
+import { skuUtils, productUtils } from '@/utils/supabase-admin';
+import { useToast } from '@/hooks/use-toast';
+import { matchesSearch } from '@/utils/stringUtils';
+import { cn } from '@/lib/utils';
+
+interface SKUDraft {
+  id?: string;
+  size_ml: number;
+  price: number;
+  stock: number;
+  label: string;
+}
+
+interface SKUFormProps {
+  sku?: any;
+  productId?: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
+  // When provided, the form skips the DB write and emits the draft data
+  // for the parent to stage (used by ProductForm for batch save).
+  onSubmitDraft?: (draft: SKUDraft) => void;
+  // Hide the product picker (used inline in ProductForm where product is implicit).
+  hideProductPicker?: boolean;
+}
+
+const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, onSubmitDraft, hideProductPicker }) => {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productSearchQuery, setProductSearchQuery] = useState('');
+  const [productPopoverOpen, setProductPopoverOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    product_id: sku?.product_id || productId || '',
+    size_ml: sku?.size_ml || 50,
+    price: sku?.price || 10000, // in bani (100 Lei)
+    stock: sku?.stock || 0,
+    label: sku?.label || ''
+  });
+
+  const predefinedSizes = [
+    { ml: 1, label: 'Sample 1ml' },
+    { ml: 2, label: 'Sample 2ml' },
+    { ml: 5, label: 'Sample 5ml' },
+    { ml: 10, label: 'Travel 10ml' },
+    { ml: 30, label: 'Small 30ml' },
+    { ml: 50, label: 'Standard 50ml' },
+    { ml: 75, label: 'Large 75ml' },
+    { ml: 100, label: 'Full Size 100ml' },
+    { ml: 125, label: 'XL 125ml' }
+  ];
+
+  useEffect(() => {
+    loadProducts();
+    if (formData.size_ml && !formData.label) {
+      generateLabel();
+    }
+  }, [formData.size_ml, formData.product_id]);
+
+  const loadProducts = async () => {
+    try {
+      const { data, error } = await productUtils.getAllProducts();
+      if (!error && data) {
+        // Additional deduplication as safety measure (products already deduplicated in getAllProducts)
+        const uniqueProducts = Array.from(
+          new Map(data.map((p: any) => [p.id, p])).values()
+        );
+        setProducts(uniqueProducts);
+      }
+    } catch (error) {
+      console.error('Failed to load products:', error);
+    }
+  };
+
+  const generateLabel = () => {
+    const predefined = predefinedSizes.find(size => size.ml === formData.size_ml);
+    if (predefined) {
+      setFormData(prev => ({ ...prev, label: predefined.label }));
+    } else {
+      setFormData(prev => ({ ...prev, label: `${formData.size_ml}ml` }));
+    }
+  };
+
+  const handleInputChange = (field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const formatPrice = (priceInBani: number) => {
+    if (!priceInBani) return '';
+    return (priceInBani / 100).toFixed(2);
+  };
+
+  // Raw price input string. Keeps "150" as "150" while typing instead of
+  // round-tripping through bani and reformatting to "1.50".
+  const [priceInput, setPriceInput] = useState<string>(() => formatPrice(formData.price));
+
+  useEffect(() => {
+    const inputAsBani =
+      priceInput.trim() === '' ? 0 : Math.round(parseFloat(priceInput) * 100);
+    if (!isNaN(inputAsBani) && inputAsBani === formData.price) return;
+    setPriceInput(formatPrice(formData.price));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.price]);
+
+  const handlePriceChange = (raw: string) => {
+    setPriceInput(raw);
+    if (raw === '') {
+      handleInputChange('price', 0);
+      return;
+    }
+    const lei = parseFloat(raw);
+    if (!isNaN(lei) && lei >= 0) {
+      handleInputChange('price', Math.round(lei * 100));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Inline mode: hand the draft to the parent (ProductForm) and skip the DB write.
+    if (onSubmitDraft) {
+      if (!formData.size_ml || !formData.label) {
+        toast({
+          title: "Validation Error",
+          description: "Provide size and label for the SKU",
+          variant: "destructive",
+        });
+        return;
+      }
+      onSubmitDraft({
+        id: sku?.id,
+        size_ml: formData.size_ml,
+        price: formData.price,
+        stock: formData.stock,
+        label: formData.label,
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      let result;
+      if (sku?.id) {
+        // Update existing SKU
+        result = await skuUtils.updateSKU(sku.id, formData);
+        if (result.error) {
+          console.error('SKU update failed:', result.error);
+          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+        }
+        if (!result.data) {
+          throw new Error('Update returned no row. RLS likely rejected the UPDATE. Verify is_admin() in SQL editor.');
+        }
+      } else {
+        // Create new SKU
+        result = await skuUtils.createSKU(formData);
+        if (result.error) {
+          console.error('SKU insert failed:', result.error);
+          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+        }
+        if (!result.data) {
+          throw new Error('Insert returned no row. RLS likely rejected the INSERT.');
+        }
+      }
+
+      toast({
+        title: sku?.id ? "SKU Updated" : "SKU Created",
+        description: `${formData.label} has been ${sku?.id ? 'updated' : 'created'} successfully.`,
+      });
+
+      onSuccess?.();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "An error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Memoize selected product to avoid recalculation
+  const selectedProduct = useMemo(() => {
+    return products.find((p: any) => p.id === formData.product_id);
+  }, [products, formData.product_id]);
+
+  // Memoize filtered products to optimize search performance
+  const filteredProducts = useMemo(() => {
+    if (!productSearchQuery.trim()) {
+      return products;
+    }
+    return products.filter((p: any) =>
+      matchesSearch(p.name, productSearchQuery) ||
+      matchesSearch(p.brand, productSearchQuery)
+    );
+  }, [products, productSearchQuery]);
+
+  // Inline mode skips the outer Card chrome (we're nested inside ProductForm's Card already).
+  const FormContent = (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Product Selection — hidden when productId or hideProductPicker is set */}
+      {!productId && !hideProductPicker && (
+            <div className="space-y-2">
+              <Label htmlFor="product_id">Product *</Label>
+              <Popover open={productPopoverOpen} onOpenChange={setProductPopoverOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={productPopoverOpen}
+                    className="w-full justify-between"
+                  >
+                    {selectedProduct
+                      ? `${selectedProduct.name} - ${selectedProduct.brand}`
+                      : "Select a product..."}
+                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0" align="start">
+                  <Command filter={(value, search) => {
+                    // Disable built-in filtering, we handle it manually via filteredProducts
+                    return 1;
+                  }}>
+                    <CommandInput 
+                      placeholder="Search products..." 
+                      value={productSearchQuery}
+                      onValueChange={setProductSearchQuery}
+                    />
+                    <CommandList>
+                      <CommandEmpty>No products found.</CommandEmpty>
+                      <CommandGroup>
+                        {filteredProducts.map((product: any, index: number) => {
+                          // Create searchable value for Command component
+                          const searchableValue = `${product.name} ${product.brand}`.trim();
+                          return (
+                            <CommandItem
+                              key={`${product.id}-${index}`}
+                              value={searchableValue}
+                              onSelect={() => {
+                                handleInputChange('product_id', product.id);
+                                setProductPopoverOpen(false);
+                                setProductSearchQuery('');
+                              }}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  formData.product_id === product.id ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {product.name} - {product.brand}
+                            </CommandItem>
+                          );
+                        })}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+          )}
+
+          {/* Selected Product Info */}
+          {selectedProduct && (
+            <div className="p-3 bg-muted rounded-lg">
+              <h4 className="font-medium">{selectedProduct.name}</h4>
+              <p className="text-sm text-muted-foreground">{selectedProduct.brand}</p>
+            </div>
+          )}
+
+          {/* Size Selection */}
+          <div className="space-y-2">
+            <Label>Size (ml) *</Label>
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {predefinedSizes.map(size => (
+                <Button
+                  key={size.ml}
+                  type="button"
+                  variant={formData.size_ml === size.ml ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handleInputChange('size_ml', size.ml)}
+                  className="text-xs"
+                >
+                  {size.ml}ml
+                </Button>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                value={formData.size_ml || ''}
+                onChange={(e) => {
+                  const raw = e.target.value;
+                  if (raw === '') return handleInputChange('size_ml', 0);
+                  const n = parseInt(raw);
+                  if (!isNaN(n)) handleInputChange('size_ml', n);
+                }}
+                placeholder="Custom size"
+                min="1"
+                max="1000"
+                required
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={generateLabel}
+                className="shrink-0"
+              >
+                Generate Label
+              </Button>
+            </div>
+          </div>
+
+          {/* Label */}
+          <div className="space-y-2">
+            <Label htmlFor="label">Label *</Label>
+            <Input
+              id="label"
+              value={formData.label}
+              onChange={(e) => handleInputChange('label', e.target.value)}
+              placeholder="e.g., Sample 1ml, Full Size 100ml"
+              required
+            />
+          </div>
+
+          {/* Pricing */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="price" className="flex items-center gap-2">
+                <DollarSign className="h-4 w-4" />
+                Price (Lei) *
+              </Label>
+              <Input
+                id="price"
+                type="number"
+                step="0.01"
+                min="0"
+                value={priceInput}
+                onChange={(e) => handlePriceChange(e.target.value)}
+                placeholder="0.00"
+                required
+              />
+              <p className="text-xs text-muted-foreground">
+                Stored as: {formData.price} bani
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="stock">Stock Quantity</Label>
+              <Input
+                id="stock"
+                type="number"
+                min="0"
+                value={formData.stock || ''}
+                onChange={(e) => {
+                  const raw = e.target.value;
+                  if (raw === '') return handleInputChange('stock', 0);
+                  const n = parseInt(raw);
+                  if (!isNaN(n)) handleInputChange('stock', n);
+                }}
+                placeholder="0"
+              />
+            </div>
+          </div>
+
+          {/* Price per ml calculation */}
+          {formData.size_ml > 0 && formData.price > 0 && (
+            <div className="p-3 bg-muted rounded-lg">
+              <div className="text-sm">
+                <strong>Price per ml:</strong> {(formData.price / 100 / formData.size_ml).toFixed(2)} Lei/ml
+              </div>
+              {formData.size_ml === 1 && (
+                <div className="text-xs text-muted-foreground mt-1">
+                  Sample pricing - perfect for discovery sets
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Stock Status */}
+          <div className="flex items-center gap-2">
+            <Badge variant={formData.stock > 0 ? "default" : "destructive"}>
+              {formData.stock > 0 ? "In Stock" : "Out of Stock"}
+            </Badge>
+            {formData.stock > 0 && (
+              <span className="text-sm text-muted-foreground">
+                {formData.stock} units available
+              </span>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-2 pt-4">
+            {onCancel && (
+              <Button type="button" variant="outline" onClick={onCancel}>
+                Cancel
+              </Button>
+            )}
+            <Button type="submit" disabled={loading || (!hideProductPicker && !formData.product_id)}>
+              {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Save className="mr-2 h-4 w-4" />
+              {sku?.id ? 'Update SKU' : 'Create SKU'}
+            </Button>
+          </div>
+        </form>
+  );
+
+  if (hideProductPicker) {
+    // Inline mode: just the form fields, no outer Card.
+    return FormContent;
+  }
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Package2 className="h-5 w-5" />
+          {sku?.id ? 'Edit SKU' : 'Add New SKU'}
+        </CardTitle>
+        <CardDescription>
+          {sku?.id ? 'Update SKU information' : 'Create a new size and pricing option'}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>{FormContent}</CardContent>
+    </Card>
+  );
+};
+
+export default SKUForm; 

@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "modestshop , Niche & Oriental Fragrances",
+    "description": "Rare fragrances from curated maisons. Samples first, bottle when you're sure. Delivery to Moldova and the EU."
+  },
+  "hero": {
+    "tagline": "Eleganta nu se striga.",
+    "subhead": "For those who let the fragrance speak.",
+    "ctaShop": "Shop →",
+    "ctaDiscovery": "Discovery sets",
+    "imgAlt": "modestshop , Eleganta nu se striga"
+  },
+  "newArrivals": {
+    "title": "New arrivals",
+    "viewAll": "View all →"
+  },
+  "discoveryCta": {
+    "title": "Build your set",
+    "body": "Choose 5 or 10 samples from the catalogue. Decide which one deserves the bottle , no risk.",
+    "cta": "Build the set →"
+  },
+  "reviews": {
+    "title": "Reviews"
+  }
+}

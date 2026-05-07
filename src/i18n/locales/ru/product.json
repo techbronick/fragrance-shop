@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "title": "{{name}} , {{brand}}",
+    "description": "{{name}} от {{brand}}. Пробники от 2 мл. Доставка в Молдову и ЕС."
+  },
+  "image": {
+    "expand": "Увеличить изображение",
+    "close": "Закрыть"
+  },
+  "size": {
+    "ml": "мл",
+    "noVariants": "Нет доступных вариантов."
+  },
+  "purchase": {
+    "addToCart": "Добавить в корзину",
+    "add": "Добавить",
+    "added": "Добавлено",
+    "order": "Заказать (7–14 дней)",
+    "orderShort": "Заказать",
+    "decreaseQty": "Уменьшить количество",
+    "increaseQty": "Увеличить количество"
+  },
+  "details": {
+    "concentration": "Концентрация",
+    "family": "Семейство",
+    "brand": "Бренд",
+    "year": "Год",
+    "gender": "Пол",
+    "rating": "Рейтинг",
+    "viewOnFragrantica": "Смотреть на Fragrantica"
+  },
+  "gender": {
+    "unisex": "Унисекс",
+    "gendered": "Мужской / Женский"
+  },
+  "notes": {
+    "title": "Ноты",
+    "top": "Верхние",
+    "heart": "Сердце",
+    "base": "База"
+  },
+  "rating": {
+    "review_one": "отзыв",
+    "review_few": "отзыва",
+    "review_many": "отзывов",
+    "review_other": "отзыва"
+  },
+  "notFound": {
+    "title": "Товар недоступен",
+    "description": "Товар временно недоступен.",
+    "back": "Вернуться в магазин"
+  },
+  "details_section": {
+    "title": "Детали"
+  }
+}

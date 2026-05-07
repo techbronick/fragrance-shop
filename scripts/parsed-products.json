@@ -1,0 +1,6062 @@
+[
+  {
+    "brand": "Taariikh",
+    "name": "Gold",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Taariikh",
+    "name": "Black",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Taariikh",
+    "name": "Dubai Musk",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 290000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "Gharam",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "Aghadeer",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Hugo Boss",
+    "name": "Alive",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 120000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 190000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 80,
+        "price_bani": 240000,
+        "label": "80ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "The Pride of Armaf",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 290000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ahmad Al Maghribi",
+    "name": "Pearl oud",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 300000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "Eba",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "My Geisha",
+    "name": "Musk",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Attar Collection",
+    "name": "Floral Musk",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Arabesque Extract Parfum",
+    "name": "Elusive Musk",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 300000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ajmal",
+    "name": "Amber Wood",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ajmal",
+    "name": "Amber Wood Hair Mist",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ajmal",
+    "name": "Amber Musc",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Gucci",
+    "name": "Guilty Absolute",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 220000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 290000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Syed Junaid Alam",
+    "name": "Moattar Dhahab Man",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Syed Junaid Alam",
+    "name": "Moattar Dhahab Woman",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 200000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Attar Collection",
+    "name": "Hayati",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Club de Nuit woman",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Club de Nuit intense Man",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Syed Junaid Alam",
+    "name": "Ateeq",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Just Jack",
+    "name": "Black Tuxedo",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 290000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Just Jack",
+    "name": "Mystery",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 290000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Just Jack",
+    "name": "2ml-150ml",
+    "skus": [
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 290000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Aoud",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Wild One",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Tyrant",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Homme",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Spectra",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Club de Nuit Imperiale",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Club de Nuit Uńtōld",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Yum-Yum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Dubai Chocolat",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Candee",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Armaf",
+    "name": "Mandarin Sky",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "Mint",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 250000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "3ml-300ml",
+    "skus": [
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 280000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Junaid Perfumes",
+    "name": "3ml-300ml",
+    "skus": [
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 280000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 390000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Rehab",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Side Effect",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Atomic Rose",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Paragon",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Narcotic Delight",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Oud For Greatness",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 660000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Musk Therapy",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Initio",
+    "name": "Psychedelic Love",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 490000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 580000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Aqua Celestia",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Aqua Media",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Gentle Fluidity Gold",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "À la Rose",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Aqua Universalis",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Gentle Fluidity Silver",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 450000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Baccarat Rouge 540 extrait",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 800000,
+        "label": "70ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1400000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Maison Francis Kurkdjian Paris",
+    "name": "Baccarat Rouge 540",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 600000,
+        "label": "70ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 950000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Stephane Humbert Lucas",
+    "name": "Sand Dance",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 440000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Stephane Humbert Lucas",
+    "name": "Mortal Skin",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 440000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Matiere Premiere",
+    "name": "Neroli Oranger",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      }
+    ]
+  },
+  {
+    "brand": "Matiere Premiere",
+    "name": "5ml-500ml",
+    "skus": [
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 570000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Matiere Premiere",
+    "name": "Vanilla Power",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 570000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Penhaligon's",
+    "name": "Elisabethan Rose",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 360000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Penhaligon's",
+    "name": "Cairo",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 480000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Penhaligon's",
+    "name": "Babylon",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 480000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Vanille Fatale",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 460000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 760000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Vanilla Sex",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 460000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 760000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Cherry Smoke",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 460000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 760000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Bitter Peach",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 460000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 760000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 960000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tom Ford",
+    "name": "Neroli Portofino",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 360000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 580000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ex Nihilo",
+    "name": "Blue Talisman",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 500000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 730000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ex Nihilo",
+    "name": "Blue Talisman Extrait",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 70000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 950000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ex Nihilo",
+    "name": "The Hedonist Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 760000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 880000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ex Nihilo",
+    "name": "The Hedonist",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 470000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 690000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ex Nihilo",
+    "name": "Generation(s)",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 560000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 660000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Hormone Paris",
+    "name": "This is not GABA",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 590000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Valaya",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 600000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Valaya Exclusif",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 660000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Delina",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 600000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Delina Exclusif",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 660000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Oriana",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 600000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Parfums de Marly",
+    "name": "Delina La Rosée",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 600000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Kilian",
+    "name": "Angels’ Share",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 500000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 760000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Le Labo",
+    "name": "Another 13",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 600000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 770000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Le Labo",
+    "name": "Santal 33",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 600000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 770000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Le Labo",
+    "name": "Labdanum 18",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 600000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 770000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Creed",
+    "name": "Aventus Man",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 570000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 790000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Creed",
+    "name": "Aventus for Her",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 490000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 620000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Aum",
+    "name": "Power is Power Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 88000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 175000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Aum",
+    "name": "Love Yourself Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 88000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 175000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 80,
+        "price_bani": 1620000,
+        "label": "80ml"
+      }
+    ]
+  },
+  {
+    "brand": "Aum",
+    "name": "Forbidden Fruit Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 88000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 175000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 80,
+        "price_bani": 1620000,
+        "label": "80ml"
+      }
+    ]
+  },
+  {
+    "brand": "Bvlgari",
+    "name": "Le Gemme TYGAR",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 60,
+        "price_bani": 880000,
+        "label": "60ml"
+      },
+      {
+        "size_ml": 125,
+        "price_bani": 1120000,
+        "label": "125ml"
+      }
+    ]
+  },
+  {
+    "brand": "Bvlgari",
+    "name": "Le Gemme Yasep",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 60,
+        "price_bani": 880000,
+        "label": "60ml"
+      },
+      {
+        "size_ml": 125,
+        "price_bani": 1050000,
+        "label": "125ml"
+      }
+    ]
+  },
+  {
+    "brand": "Bvlgari",
+    "name": "Le Gemme Falkar",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 60,
+        "price_bani": 880000,
+        "label": "60ml"
+      },
+      {
+        "size_ml": 125,
+        "price_bani": 1050000,
+        "label": "125ml"
+      }
+    ]
+  },
+  {
+    "brand": "Bvlgari",
+    "name": "Le Gemme Garanat",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 60,
+        "price_bani": 880000,
+        "label": "60ml"
+      },
+      {
+        "size_ml": 125,
+        "price_bani": 1050000,
+        "label": "125ml"
+      }
+    ]
+  },
+  {
+    "brand": "Bvlgari",
+    "name": "Le Gemme Amber",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 60,
+        "price_bani": 880000,
+        "label": "60ml"
+      },
+      {
+        "size_ml": 125,
+        "price_bani": 1050000,
+        "label": "125ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Imagination",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 800000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1200000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Pacific Chill",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Ombré Nomade",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 1065000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1540000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Fleur Du Désert",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 1065000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1540000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "California Dream",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Attrape-Rêves",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Orage",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Rose Des Vents",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Lovers",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "City of Strars",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Météore",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Le Jour Se lève",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Spell on You",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Afternoon Swim",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1220000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "Tobacolor",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      }
+    ]
+  },
+  {
+    "brand": "Louis Vuitton",
+    "name": "5ml-500ml",
+    "skus": [
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 400000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 800000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1200000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Christian Dior",
+    "name": "Rose Kabuki",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      }
+    ]
+  },
+  {
+    "brand": "Christian Dior",
+    "name": "5ml-500ml",
+    "skus": [
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 400000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 800000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 200,
+        "price_bani": 1200000,
+        "label": "200ml"
+      }
+    ]
+  },
+  {
+    "brand": "Juliette has a Gun",
+    "name": "Moscow Mule",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 200000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Gritti",
+    "name": "Monica Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 600000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ducci Giardini Di Toscana",
+    "name": "Bianco Latte",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Ducci Giardini Di Toscana",
+    "name": "Chloé Eau De Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 120000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 180000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 240000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Amouage",
+    "name": "Guidance",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Amouage",
+    "name": "Blossom Love",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 820000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Givenchy",
+    "name": "L’interdit Absolu",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 20000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 30000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 35,
+        "price_bani": 250000,
+        "label": "35ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 290000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 80,
+        "price_bani": 340000,
+        "label": "80ml"
+      }
+    ]
+  },
+  {
+    "brand": "Yves Saint Laurent",
+    "name": "Babycat",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 35,
+        "price_bani": 600000,
+        "label": "35ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 820000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "HFC",
+    "name": "Devils Intrigue",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 730000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "HFC",
+    "name": "Wear Love Everywhere",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 730000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "HFC",
+    "name": "Divine Blossom",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 730000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "HFC",
+    "name": "wrap me in dreams",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 35000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 45000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 65000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 120000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 730000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tiziana Terenzi",
+    "name": "Leo",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tiziana Terenzi",
+    "name": "Kirke",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tiziana Terenzi",
+    "name": "Orion",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tiziana Terenzi",
+    "name": "Cassiopea",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Tiziana Terenzi",
+    "name": "Halley",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Red Tabacco",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 350000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Red Tabacco intense",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 450000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Wild Cherry",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 350000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Cedrat Bois",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 350000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Instant Crush",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 350000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Wild Fruits",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 120,
+        "price_bani": 350000,
+        "label": "120ml"
+      }
+    ]
+  },
+  {
+    "brand": "Mancera",
+    "name": "Santal Blanc",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 450000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Van Cleef & Arpels",
+    "name": "Néroli Amara",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 450000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Van Cleef & Arpels",
+    "name": "Bois Doré",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 450000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Van Cleef & Arpels",
+    "name": "Orchidée Vanille",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 75,
+        "price_bani": 450000,
+        "label": "75ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Bal d’Afrique",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Bibliothèque",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Black Saffron",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Blanche",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Desert Dawn",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Gypsy Water",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "La Tulipe",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Mixed Emotions",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Mojave Ghost",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 450000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 550000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Casablanca Lily Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 800000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Rouge Chaotique",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 800000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Bois Obscur",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 30000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 40000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 70,
+        "price_bani": 800000,
+        "label": "70ml"
+      }
+    ]
+  },
+  {
+    "brand": "Byredo",
+    "name": "Soleil de Capri",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 350000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Montale Paris",
+    "name": "Intense Café",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 350000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Montale Paris",
+    "name": "Rose Elexir",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 350000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Montale Paris",
+    "name": "Aoud Legend",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 350000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Montale Paris",
+    "name": "Arabians Tonka",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 350000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Montale Paris",
+    "name": "M03",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 330000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "M01 + Patchouli",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "M01",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "E01",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "M01 + Black Tea",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "E02",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "E01",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      }
+    ]
+  },
+  {
+    "brand": "Escentric Molecules",
+    "name": "No.4 Après l’Amour",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 450000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Marc-Antoine Barrois",
+    "name": "Ganymede",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 520000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Marc-Antoine Barrois",
+    "name": "Tilia",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 520000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Marc-Antoine Barrois",
+    "name": "Aldebaran",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 340000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 520000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Marc-Antoine Barrois",
+    "name": "Scandal Le Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 170000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 250000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 80,
+        "price_bani": 330000,
+        "label": "80ml"
+      }
+    ]
+  },
+  {
+    "brand": "Marc-Antoine Barrois",
+    "name": "Chance",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 220000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 330000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Jo Malone",
+    "name": "Blackberry & Bay Cologne",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 150000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 210000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Jo Malone",
+    "name": "Oud & Bergamot Cologne Intense",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 290000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 400000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Jo Malone",
+    "name": "Scarlet Poppy Cologne Intense",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 40000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 80000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 290000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 400000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Prada",
+    "name": "Paradoxe",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 225000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 280000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 390000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Essential Parfums",
+    "name": "Bois Imperial",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 300000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Gucci",
+    "name": "Gorgeous Gardenia",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 200000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 280000,
+        "label": "100ml"
+      },
+      {
+        "size_ml": 150,
+        "price_bani": 330000,
+        "label": "150ml"
+      }
+    ]
+  },
+  {
+    "brand": "Narciso Rodriguez",
+    "name": "Narciso Poudree",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 250000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 290000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "Nishane",
+    "name": "Paris Extrait de Parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 500000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Yves Saint Laurent",
+    "name": "Mon Paris",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 210000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 280000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 90,
+        "price_bani": 400000,
+        "label": "90ml"
+      }
+    ]
+  },
+  {
+    "brand": "BDK Parfums",
+    "name": "PAS CE SOIR Extrait de parfum",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 540000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Comandante",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 340000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 480000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Shooting Stars La Capitale",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 480000,
+        "label": "50ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Goddess",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 30,
+        "price_bani": 150000,
+        "label": "30ml"
+      },
+      {
+        "size_ml": 50,
+        "price_bani": 200000,
+        "label": "50ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Halley",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 50000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 100000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 780000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "sport",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 15000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 25000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 35000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 70000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 250000,
+        "label": "100ml"
+      }
+    ]
+  },
+  {
+    "brand": "Xerjoff",
+    "name": "Interlude for man",
+    "skus": [
+      {
+        "size_ml": 2,
+        "price_bani": 25000,
+        "label": "2ml"
+      },
+      {
+        "size_ml": 3,
+        "price_bani": 35000,
+        "label": "3ml"
+      },
+      {
+        "size_ml": 5,
+        "price_bani": 45000,
+        "label": "5ml"
+      },
+      {
+        "size_ml": 10,
+        "price_bani": 90000,
+        "label": "10ml"
+      },
+      {
+        "size_ml": 100,
+        "price_bani": 800000,
+        "label": "100ml"
+      }
+    ]
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "title": "Finalizare comandă",
+    "description": "Completează datele de livrare și plasează comanda. Livrare în Moldova și UE."
+  },
+  "title": "Finalizare comandă",
+  "form": {
+    "sectionContact": "Contact",
+    "sectionShipping": "Detalii livrare",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "email": "Email",
+    "phone": "Telefon",
+    "address": "Adresă",
+    "city": "Oraș",
+    "postalCode": "Cod poștal",
+    "country": "Țară"
+  },
+  "validation": {
+    "emailRequired": "E-mail este obligatoriu",
+    "emailInvalid": "E-mail invalid",
+    "phoneRequired": "Telefon este obligatoriu",
+    "phoneInvalid": "Telefon invalid",
+    "firstNameRequired": "Prenume este obligatoriu",
+    "lastNameRequired": "Nume este obligatoriu",
+    "addressRequired": "Adresă este obligatorie",
+    "cityRequired": "Oraș este obligatoriu",
+    "postalCodeRequired": "Cod poștal este obligatoriu"
+  },
+  "summary": {
+    "title": "În coș",
+    "subtotal": "Subtotal",
+    "vat": "TVA ({{rate}}%)",
+    "shipping": "Transport",
+    "total": "Total",
+    "taxIncluded": "Inclusiv {{amount}} din taxe",
+    "empty": "Coșul este gol.",
+    "backToShop": "Înapoi la Magazin",
+    "items_one": "{{count}} produs",
+    "items_few": "{{count}} produse",
+    "items_other": "{{count}} de produse"
+  },
+  "shippingEstimate": {
+    "inStock": "Livrare în {{min}}–{{max}} zile lucrătoare",
+    "backorder": "La comandă: {{min}}–{{max}} zile lucrătoare"
+  },
+  "submit": "Plasează comanda",
+  "submitting": "Se procesează..."
+}

@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Comandă confirmată",
+    "description": "Comanda ta a fost plasată cu succes. Vei fi contactat pe WhatsApp pentru confirmare și plată."
+  },
+  "seo": {
+    "title": "Comanda #{{id}} | modestshop",
+    "description": "Detaliile comenzii #{{id}}"
+  },
+  "celebration": {
+    "title": "Comanda a fost plasată",
+    "subtitle": "Te vom contacta pe WhatsApp pentru confirmare și plată.",
+    "orderMeta": "#{{id}} · {{date}}",
+    "continueShopping": "Continuă cumpărăturile"
+  },
+  "detail": {
+    "eyebrow": "Comanda",
+    "placedAt": "Plasată pe {{date}}",
+    "notFound": "Comanda nu a fost găsită",
+    "backToShop": "Înapoi la Magazin"
+  },
+  "sections": {
+    "items": "Produse comandate",
+    "contact": "Detalii contact",
+    "shipping": "Adresă de livrare"
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Telefon"
+  },
+  "item": {
+    "unknownProduct": "Produs"
+  },
+  "summary": {
+    "subtotal": "Subtotal",
+    "shipping": "Transport",
+    "total": "Total",
+    "taxIncluded": "Inclusiv {{amount}} din taxe",
+    "vatLabel": "TVA {{country}} ({{rate}}%)"
+  },
+  "status": {
+    "draft": "Ciornă",
+    "placed": "Plasată",
+    "pending": "În așteptare",
+    "confirmed": "Confirmată",
+    "processing": "În procesare",
+    "paid": "Achitată",
+    "shipped": "Expediată",
+    "delivered": "Livrată",
+    "canceled": "Anulată",
+    "cancelled": "Anulată",
+    "refunded": "Rambursată"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "{{name}} , {{brand}}",
+    "description": "{{name}} de {{brand}}. Decanturi de la 2 ml. Livrare în Moldova și UE."
+  },
+  "image": {
+    "expand": "Mărește imaginea",
+    "close": "Închide"
+  },
+  "size": {
+    "ml": "ml",
+    "noVariants": "Nu există variante disponibile."
+  },
+  "purchase": {
+    "addToCart": "Adaugă în coș",
+    "add": "Adaugă",
+    "added": "Adăugat",
+    "order": "Comandă (7–14 zile)",
+    "orderShort": "Comandă",
+    "decreaseQty": "Scade cantitatea",
+    "increaseQty": "Crește cantitatea"
+  },
+  "details": {
+    "concentration": "Concentrație",
+    "family": "Familie",
+    "brand": "Brand",
+    "year": "An",
+    "gender": "Gen",
+    "rating": "Rating",
+    "viewOnFragrantica": "Vezi pe Fragrantica"
+  },
+  "gender": {
+    "unisex": "Unisex",
+    "gendered": "Masculin / Feminin"
+  },
+  "notes": {
+    "title": "Note olfactive",
+    "top": "Vârf",
+    "heart": "Inimă",
+    "base": "Bază"
+  },
+  "rating": {
+    "review_one": "recenzie",
+    "review_other": "recenzii"
+  },
+  "notFound": {
+    "title": "Produs indisponibil",
+    "description": "Produsul nu este disponibil momentan.",
+    "back": "Înapoi la Magazin"
+  },
+  "details_section": {
+    "title": "Detalii"
+  }
+}

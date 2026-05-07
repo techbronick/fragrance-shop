@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Наборы Discovery , пробники ароматов",
+    "description": "Составьте собственный набор пробников или выберите готовый набор. Пробники от 2 мл. Доставка в Молдову и ЕС."
+  },
+  "metaSet": {
+    "title": "{{name}} , Набор Discovery",
+    "description": "Набор discovery {{name}}. Оригинальные пробники ароматов от 2 мл. Доставка в Молдову и ЕС."
+  },
+  "title": "Наборы Discovery",
+  "subtitle": "Сначала пробники. Решите, что достойно флакона , без риска.",
+  "tabs": {
+    "predefined": "Готовые",
+    "builder": "Собрать",
+    "recommend": "Помогите выбрать"
+  },
+  "predefined": {
+    "empty": "Готовых наборов пока нет.",
+    "sample_one": "пробник",
+    "sample_few": "пробника",
+    "sample_many": "пробников",
+    "sample_other": "пробника"
+  },
+  "builder": {
+    "title": "Собери набор",
+    "subtitle": "Выберите {{count}} пробников из каталога. Решите, что достойно флакона.",
+    "size": "Размер",
+    "volume": "Объём",
+    "sizeOption_one": "{{count}} пробник",
+    "sizeOption_few": "{{count}} пробника",
+    "sizeOption_many": "{{count}} пробников",
+    "sizeOption_other": "{{count}} пробника",
+    "slotEmpty": "Пустой слот",
+    "slotsLabel": "Ваш набор",
+    "slotsCount": "{{selected}} / {{total}}",
+    "slotsUnit_one": "пробник",
+    "slotsUnit_few": "пробника",
+    "slotsUnit_many": "пробников",
+    "slotsUnit_other": "пробника",
+    "subtotal": "Итого",
+    "viewSet": "Посмотреть набор →",
+    "catalog": {
+      "search": "Поиск продуктов...",
+      "sortFeatured": "Рекомендуемые",
+      "sortPriceAsc": "Цена ↑",
+      "sortPriceDesc": "Цена ↓",
+      "sortName": "Название А-Я",
+      "sortNewest": "Новинки",
+      "filters": "Фильтры",
+      "filtersTitle": "Фильтры",
+      "apply": "Применить",
+      "loadMore": "Загрузить ещё",
+      "empty": "Ничего не найдено."
+    },
+    "addToCart": "Добавить в корзину",
+    "add": "Добавить",
+    "added": "Добавлено!",
+    "noSlots": "Слотов не осталось",
+    "continue": "Далее ({{selected}}/{{total}})",
+    "processing": "Обработка..."
+  },
+  "recommend": {
+    "step": "Шаг {{current}} / {{total}}",
+    "steps": {
+      "occasion": {
+        "prompt": "Для какого случая?",
+        "options": {
+          "day": "День",
+          "evening": "Вечер",
+          "special": "Особый",
+          "any": "Любой"
+        }
+      },
+      "notes": {
+        "prompt": "Какие ноты вам близки?",
+        "hint": "Выберите 1–3.",
+        "maxHint": "Максимум 3 варианта",
+        "options": {
+          "woody": "Дерево",
+          "citrus": "Цитрус",
+          "floral": "Цветочный",
+          "oriental": "Восточный",
+          "gourmand": "Гурман",
+          "aquatic": "Водный",
+          "green": "Зелёный",
+          "musk": "Мускус"
+        }
+      },
+      "favorite": {
+        "prompt": "Любимый аромат?",
+        "hint": "Необязательно. Можно пропустить.",
+        "placeholder": "Напр. Aventus от Creed, Santal 33..."
+      }
+    },
+    "continue": "Далее →",
+    "back": "Назад",
+    "skip": "Пропустить",
+    "submit": "Смотреть рекомендации →",
+    "results": {
+      "label": "Результаты",
+      "title_one": "{{count}} предложение для вас",
+      "title_few": "{{count}} предложения для вас",
+      "title_many": "{{count}} предложений для вас",
+      "title_other": "{{count}} предложения для вас",
+      "basedOn": "На основе ваших ответов: {{summary}}",
+      "buildSet": "Собрать набор из этих →",
+      "backToQuestions": "Назад к вопросам",
+      "noMatch": "Ни один аромат не подходит идеально.",
+      "changeAnswers": "Изменить ответы"
+    }
+  },
+  "set": {
+    "unavailable": "Набор недоступен",
+    "backToSets": "Назад к наборам",
+    "contents": "Ароматы в наборе",
+    "discoverySet": "Набор discovery",
+    "sample_one": "пробник",
+    "sample_few": "пробника",
+    "sample_many": "пробников",
+    "sample_other": "пробника"
+  },
+  "purchase": {
+    "addToCart": "Добавить в корзину",
+    "processing": "Обработка...",
+    "decreaseQty": "Уменьшить количество",
+    "increaseQty": "Увеличить количество"
+  }
+}

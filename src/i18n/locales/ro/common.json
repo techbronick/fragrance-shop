@@ -1,0 +1,90 @@
+{
+  "brandWall": {
+    "eyebrow": "Branduri prezentate"
+  },
+  "header": {
+    "home": "Acasă",
+    "shop": "Magazin",
+    "discoverySets": "Seturi Discovery",
+    "about": "Despre",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "search": "Căutare",
+    "cart": "Coș",
+    "menu": "Meniu"
+  },
+  "footer": {
+    "shop": "Magazin",
+    "about": "Despre",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "tagline": "Eleganta nu se striga.",
+    "privacy": "Privacy",
+    "terms": "Termeni"
+  },
+  "cart": {
+    "title": "Coșul tău",
+    "empty": "Coșul este gol.",
+    "subtotal": "Subtotal",
+    "checkout": "Mergi la checkout",
+    "clear": "Golește coșul",
+    "decreaseQty": "Scade cantitatea",
+    "increaseQty": "Crește cantitatea",
+    "remove": "Elimină din coș",
+    "customBundleName_one": "Set discovery ({{count}} mostră)",
+    "customBundleName_few": "Set discovery ({{count}} mostre)",
+    "customBundleName_other": "Set discovery ({{count}} de mostre)"
+  },
+  "search": {
+    "placeholder": "Caută parfumuri sau branduri…",
+    "close": "Închide",
+    "noResults": "Niciun rezultat pentru „{{query}}\"."
+  },
+  "toast": {
+    "addedToCart": "Adăugat în coș",
+    "setAddedToCart": "Set adăugat în coș",
+    "samplesRemoved_one": "{{count}} mostră eliminată",
+    "samplesRemoved_other": "{{count}} mostre eliminate",
+    "contactMessageSent": "Mesaj trimis cu succes",
+    "contactMessageSentHint": "Vom răspunde în cel mai scurt timp posibil.",
+    "orderPlaced": "Comanda a fost plasată cu succes",
+    "orderFailed": "Comanda nu a fost plasată",
+    "errorGeneric": "A apărut o eroare. Încearcă din nou."
+  },
+  "languageSwitcher": {
+    "label": "Limbă",
+    "ro": "RO",
+    "ru": "RU",
+    "en": "EN"
+  },
+  "countries": {
+    "MD": "Moldova",
+    "AT": "Austria",
+    "BE": "Belgia",
+    "BG": "Bulgaria",
+    "HR": "Croația",
+    "CY": "Cipru",
+    "CZ": "Cehia",
+    "DK": "Danemarca",
+    "EE": "Estonia",
+    "FI": "Finlanda",
+    "FR": "Franța",
+    "DE": "Germania",
+    "GR": "Grecia",
+    "HU": "Ungaria",
+    "IE": "Irlanda",
+    "IT": "Italia",
+    "LV": "Letonia",
+    "LT": "Lituania",
+    "LU": "Luxemburg",
+    "MT": "Malta",
+    "NL": "Olanda",
+    "PL": "Polonia",
+    "PT": "Portugalia",
+    "RO": "România",
+    "SK": "Slovacia",
+    "SI": "Slovenia",
+    "ES": "Spania",
+    "SE": "Suedia"
+  }
+}

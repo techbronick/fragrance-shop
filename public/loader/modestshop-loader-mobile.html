@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ModestShop — Loader</title>
+
+<!--
+  ============================================================
+  HOW TO USE ON YOUR SITE
+  ============================================================
+  1. Copy the <link> below into your <head>.
+  2. Copy the <style id="modestshop-loader-styles"> block into your <head>.
+  3. Copy <div id="modestshop-loader"> as the FIRST child of <body>.
+  4. Copy the <script id="modestshop-loader-script"> block before </body>.
+  5. Make sure your <head> contains:
+     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+     (the viewport-fit=cover part is what enables iPhone notch/safe-area handling)
+
+  Mobile optimizations included:
+  - Responsive icon, ornament, and type scaling at 640px and 380px breakpoints
+  - Compact landscape layout for short viewports (max-height: 500px)
+  - iPhone safe-area-inset for notch and home indicator
+  - Body scroll lock while loader is visible
+  - overscroll-behavior to prevent pull-to-refresh
+  - Animations remain GPU-cheap (transform/opacity only)
+  ============================================================
+-->
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,900&display=swap" rel="stylesheet">
+
+<style id="modestshop-loader-styles">
+  #modestshop-loader {
+    --cream:    #efece6;
+    --ink:      #1a1814;
+    --ink-soft: #1a181499;
+    --gold:     #b08a4a;
+
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    overscroll-behavior: contain;
+    touch-action: none;
+  }
+  #modestshop-loader.done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* paper atmosphere */
+  #modestshop-loader::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(176, 138, 74, 0.06), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(0,0,0,0.025), transparent 50%);
+    pointer-events: none;
+  }
+
+  /* art-deco corner ornaments */
+  #modestshop-loader .ms-ornament {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: ms-fade-in 1.6s ease 1.2s forwards;
+  }
+  #modestshop-loader .ms-ornament.tl { top: max(32px, env(safe-area-inset-top, 32px)); left: max(32px, env(safe-area-inset-left, 32px)); }
+  #modestshop-loader .ms-ornament.tr { top: max(32px, env(safe-area-inset-top, 32px)); right: max(32px, env(safe-area-inset-right, 32px)); transform: scaleX(-1); }
+  #modestshop-loader .ms-ornament.bl { bottom: max(32px, env(safe-area-inset-bottom, 32px)); left: max(32px, env(safe-area-inset-left, 32px)); transform: scaleY(-1); }
+  #modestshop-loader .ms-ornament.br { bottom: max(32px, env(safe-area-inset-bottom, 32px)); right: max(32px, env(safe-area-inset-right, 32px)); transform: scale(-1, -1); }
+
+  /* main icon */
+  #modestshop-loader .ms-icon {
+    width: 220px;
+    height: 280px;
+    color: var(--ink);
+    overflow: visible;
+  }
+
+  #modestshop-loader .ms-icon .ms-stroke {
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: ms-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+  }
+  @keyframes ms-draw { to { stroke-dashoffset: 0; } }
+
+  #modestshop-loader .ms-icon .ms-marker {
+    fill: var(--ink);
+    opacity: 0;
+    animation: ms-fade-in 0.4s ease forwards;
+  }
+  #modestshop-loader .ms-icon .ms-marker:nth-of-type(1) { animation-delay: 1.4s; }
+  #modestshop-loader .ms-icon .ms-marker:nth-of-type(2) { animation-delay: 1.5s; }
+  #modestshop-loader .ms-icon .ms-marker:nth-of-type(3) { animation-delay: 1.6s; }
+  #modestshop-loader .ms-icon .ms-marker:nth-of-type(4) { animation-delay: 1.7s; }
+
+  #modestshop-loader .ms-wm-modest,
+  #modestshop-loader .ms-wm-shop {
+    fill: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    text-anchor: middle;
+    opacity: 0;
+    animation: ms-fade-in 0.8s ease 1.6s forwards;
+  }
+  #modestshop-loader .ms-wm-modest {
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+  #modestshop-loader .ms-wm-shop {
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 6px;
+    fill: var(--ink-soft);
+    animation-delay: 1.8s;
+  }
+
+  #modestshop-loader .ms-hand {
+    stroke: var(--gold);
+    stroke-width: 2;
+    stroke-linecap: round;
+    transform-origin: 110px 175px;
+    opacity: 0;
+    animation:
+      ms-fade-in 0.4s ease 2.0s forwards,
+      ms-tick 2.4s cubic-bezier(0.55, 0.1, 0.4, 1) 2.0s infinite;
+  }
+  @keyframes ms-tick {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  #modestshop-loader .ms-pivot {
+    fill: var(--gold);
+    transform-origin: 110px 175px;
+    opacity: 0;
+    animation: ms-fade-in 0.4s ease 2.0s forwards;
+  }
+
+  /* scent wisps */
+  #modestshop-loader .ms-wisp {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    opacity: 0;
+    transform-origin: center;
+    animation: ms-rise 3.4s ease-out infinite;
+  }
+  #modestshop-loader .ms-wisp.w1 { animation-delay: 1.8s; }
+  #modestshop-loader .ms-wisp.w2 { animation-delay: 2.6s; }
+  #modestshop-loader .ms-wisp.w3 { animation-delay: 3.4s; }
+  #modestshop-loader .ms-wisp.w4 { animation-delay: 2.2s; }
+
+  @keyframes ms-rise {
+    0%   { opacity: 0;   transform: translateY(0)    scale(0.8); }
+    20%  { opacity: 0.7; }
+    60%  { opacity: 0.4; }
+    100% { opacity: 0;   transform: translateY(-60px) scale(1.4); }
+  }
+
+  #modestshop-loader.completing .ms-hand {
+    animation: ms-tick-finish 0.6s cubic-bezier(0.4, 1.6, 0.5, 1) forwards;
+  }
+  @keyframes ms-tick-finish { to { transform: rotate(720deg); } }
+
+  /* caption */
+  #modestshop-loader .ms-caption {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: ms-fade-up 1s ease 2.2s forwards;
+    padding: 0 24px;
+  }
+  #modestshop-loader .ms-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  #modestshop-loader .ms-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  #modestshop-loader .ms-meta {
+    margin-top: 14px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: ms-fade-up 1s ease 2.5s forwards;
+  }
+
+  #modestshop-loader .ms-status {
+    position: absolute;
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: ms-fade-up 1s ease 2.8s forwards;
+    white-space: nowrap;
+  }
+  #modestshop-loader .ms-dots {
+    display: inline-block;
+    width: 1.4em;
+    text-align: left;
+  }
+  #modestshop-loader .ms-dots span {
+    opacity: 0;
+    animation: ms-dot 1.6s ease-in-out infinite;
+  }
+  #modestshop-loader .ms-dots span:nth-child(1) { animation-delay: 0.0s; }
+  #modestshop-loader .ms-dots span:nth-child(2) { animation-delay: 0.2s; }
+  #modestshop-loader .ms-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes ms-dot {
+    0%, 80%, 100% { opacity: 0; }
+    40%           { opacity: 1; }
+  }
+
+  @keyframes ms-fade-in { to { opacity: 1; } }
+  @keyframes ms-fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================================
+     MOBILE — phones, ≤640px wide
+     ============================================================ */
+  @media (max-width: 640px) {
+    #modestshop-loader .ms-ornament {
+      width: 48px;
+      height: 48px;
+    }
+    #modestshop-loader .ms-ornament.tl { top: max(20px, env(safe-area-inset-top, 20px)); left: max(20px, env(safe-area-inset-left, 20px)); }
+    #modestshop-loader .ms-ornament.tr { top: max(20px, env(safe-area-inset-top, 20px)); right: max(20px, env(safe-area-inset-right, 20px)); }
+    #modestshop-loader .ms-ornament.bl { bottom: max(20px, env(safe-area-inset-bottom, 20px)); left: max(20px, env(safe-area-inset-left, 20px)); }
+    #modestshop-loader .ms-ornament.br { bottom: max(20px, env(safe-area-inset-bottom, 20px)); right: max(20px, env(safe-area-inset-right, 20px)); }
+
+    #modestshop-loader .ms-icon {
+      width: 168px;
+      height: 214px;
+    }
+
+    #modestshop-loader .ms-rule { width: 36px; }
+    #modestshop-loader .ms-label { font-size: 0.85rem; letter-spacing: 0.16em; }
+
+    #modestshop-loader .ms-meta {
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+    }
+
+    #modestshop-loader .ms-status {
+      bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+    }
+  }
+
+  /* ============================================================
+     NARROW PHONES — ≤380px wide (older iPhone SE, etc.)
+     ============================================================ */
+  @media (max-width: 380px) {
+    #modestshop-loader .ms-icon {
+      width: 144px;
+      height: 184px;
+    }
+    #modestshop-loader .ms-rule { width: 28px; }
+    #modestshop-loader .ms-caption { gap: 12px; margin-top: 22px; }
+    #modestshop-loader .ms-label { font-size: 0.78rem; }
+  }
+
+  /* ============================================================
+     LANDSCAPE — short viewports (phone in landscape, ≤500px tall)
+     Hide ornaments to free up vertical space, compact layout.
+     ============================================================ */
+  @media (max-height: 500px) {
+    #modestshop-loader .ms-ornament { display: none; }
+    #modestshop-loader .ms-icon {
+      width: 140px;
+      height: 178px;
+    }
+    #modestshop-loader .ms-caption { margin-top: 18px; }
+    #modestshop-loader .ms-meta { margin-top: 10px; }
+    #modestshop-loader .ms-status {
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    #modestshop-loader *,
+    #modestshop-loader *::before,
+    #modestshop-loader *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    #modestshop-loader .ms-stroke { stroke-dashoffset: 0; }
+    #modestshop-loader .ms-marker,
+    #modestshop-loader .ms-wm-modest,
+    #modestshop-loader .ms-wm-shop,
+    #modestshop-loader .ms-hand,
+    #modestshop-loader .ms-pivot,
+    #modestshop-loader .ms-ornament,
+    #modestshop-loader .ms-caption,
+    #modestshop-loader .ms-meta,
+    #modestshop-loader .ms-status { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     LOADER — drop as the first child of <body>
+     ============================================================ -->
+<div id="modestshop-loader" role="status" aria-live="polite" aria-label="Loading ModestShop">
+
+  <!-- art-deco corners -->
+  <svg class="ms-ornament tl" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true">
+    <path d="M2 30 L2 2 L30 2"/>
+    <path d="M2 16 L16 16 L16 2" opacity="0.5"/>
+    <circle cx="2" cy="2" r="1.5" fill="currentColor"/>
+  </svg>
+  <svg class="ms-ornament tr" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true">
+    <path d="M2 30 L2 2 L30 2"/>
+    <path d="M2 16 L16 16 L16 2" opacity="0.5"/>
+    <circle cx="2" cy="2" r="1.5" fill="currentColor"/>
+  </svg>
+  <svg class="ms-ornament bl" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true">
+    <path d="M2 30 L2 2 L30 2"/>
+    <path d="M2 16 L16 16 L16 2" opacity="0.5"/>
+    <circle cx="2" cy="2" r="1.5" fill="currentColor"/>
+  </svg>
+  <svg class="ms-ornament br" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true">
+    <path d="M2 30 L2 2 L30 2"/>
+    <path d="M2 16 L16 16 L16 2" opacity="0.5"/>
+    <circle cx="2" cy="2" r="1.5" fill="currentColor"/>
+  </svg>
+
+  <!-- bottle / clock icon -->
+  <svg class="ms-icon" viewBox="0 0 220 280" aria-hidden="true">
+    <g transform="translate(110, 50)">
+      <path class="ms-wisp w1" d="M-14 0 q -6 -8 0 -16 q 6 -8 0 -16"/>
+      <path class="ms-wisp w2" d="M0 0 q 6 -10 0 -20 q -6 -10 0 -20"/>
+      <path class="ms-wisp w3" d="M14 0 q -6 -8 0 -16 q 6 -8 0 -16"/>
+      <path class="ms-wisp w4" d="M-6 -4 q 8 -10 0 -22"/>
+    </g>
+
+    <g class="ms-stroke">
+      <rect x="92" y="68" width="36" height="14" rx="2"/>
+      <line x1="110" y1="82" x2="110" y2="98"/>
+      <circle cx="110" cy="175" r="68"/>
+    </g>
+
+    <circle class="ms-marker" cx="110" cy="115" r="1.6"/>
+    <circle class="ms-marker" cx="170" cy="175" r="1.6"/>
+    <circle class="ms-marker" cx="110" cy="235" r="1.6"/>
+    <circle class="ms-marker" cx="50"  cy="175" r="1.6"/>
+
+    <text class="ms-wm-modest" x="110" y="178">MODEST</text>
+    <text class="ms-wm-shop"   x="110" y="200">S H O P</text>
+
+    <line class="ms-hand" x1="110" y1="175" x2="110" y2="120"/>
+    <circle class="ms-pivot" cx="110" cy="175" r="2.5"/>
+  </svg>
+
+  <div class="ms-caption">
+    <span class="ms-rule"></span>
+    <span class="ms-label">Atelier de Parfum</span>
+    <span class="ms-rule"></span>
+  </div>
+
+  <div class="ms-meta">Fragrance Boutique</div>
+
+  <div class="ms-status">
+    Composing your visit<span class="ms-dots"><span>.</span><span>.</span><span>.</span></span>
+  </div>
+</div>
+
+<script id="modestshop-loader-script">
+  (function () {
+    const loader = document.getElementById('modestshop-loader');
+    if (!loader) return;
+
+    const MIN_DISPLAY_MS = 3200;
+    const start = Date.now();
+    let dismissed = false;
+
+    // lock body scroll while loader is visible (prevents pull-to-refresh
+    // and underlying-page scroll bleed on mobile)
+    const prevBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+
+      setTimeout(() => {
+        loader.classList.add('completing');
+        setTimeout(() => {
+          loader.classList.add('done');
+          // restore body scroll once loader fades out
+          document.body.style.overflow = prevBodyOverflow;
+        }, 600);
+      }, wait);
+    }
+
+    if (document.readyState === 'complete') {
+      dismiss();
+    } else {
+      window.addEventListener('load', dismiss);
+    }
+
+    // For SPAs / data-driven dismissal:
+    //   window.ModestShopLoader.hide();
+    window.ModestShopLoader = { hide: dismiss };
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "title": "Seturi Discovery , mostre de parfumuri",
+    "description": "Construiește-ți propriul set de mostre sau alege un set predefinit. Decanturi de la 2 ml. Livrare în Moldova și UE."
+  },
+  "metaSet": {
+    "title": "{{name}} , Set Discovery",
+    "description": "Setul discovery {{name}}. Mostre de parfumuri autentice de la 2 ml. Livrare în Moldova și UE."
+  },
+  "title": "Seturi Discovery",
+  "subtitle": "Mostre întâi. Decide care merită sticla , fără riscuri.",
+  "tabs": {
+    "predefined": "Predefinite",
+    "builder": "Construiește",
+    "recommend": "Ajută-mă să aleg"
+  },
+  "predefined": {
+    "empty": "Nu există seturi predefinite momentan.",
+    "sample_one": "mostră",
+    "sample_few": "mostre",
+    "sample_other": "mostre"
+  },
+  "builder": {
+    "title": "Construiește setul",
+    "subtitle": "Alege {{count}} mostre din catalog. Decide care merită sticla.",
+    "size": "Mărime",
+    "volume": "Volum",
+    "sizeOption_one": "{{count}} mostră",
+    "sizeOption_few": "{{count}} mostre",
+    "sizeOption_other": "{{count}} de mostre",
+    "slotEmpty": "Slot gol",
+    "slotsLabel": "Setul tău",
+    "slotsCount": "{{selected}} / {{total}}",
+    "slotsUnit_one": "mostră",
+    "slotsUnit_few": "mostre",
+    "slotsUnit_other": "mostre",
+    "subtotal": "Subtotal",
+    "viewSet": "Vezi setul →",
+    "catalog": {
+      "search": "Caută produse...",
+      "sortFeatured": "Recomandate",
+      "sortPriceAsc": "Preț ↑",
+      "sortPriceDesc": "Preț ↓",
+      "sortName": "Nume A-Z",
+      "sortNewest": "Cele mai noi",
+      "filters": "Filtre",
+      "filtersTitle": "Filtre",
+      "apply": "Aplică",
+      "loadMore": "Încarcă mai multe",
+      "empty": "Niciun produs găsit."
+    },
+    "addToCart": "Adaugă în coș",
+    "add": "Adaugă",
+    "added": "Adăugat!",
+    "noSlots": "Nu mai sunt sloturi",
+    "continue": "Continuă ({{selected}}/{{total}})",
+    "processing": "Se procesează..."
+  },
+  "recommend": {
+    "step": "Pasul {{current}} / {{total}}",
+    "steps": {
+      "occasion": {
+        "prompt": "Pentru ce ocazie?",
+        "options": {
+          "day": "Zi",
+          "evening": "Seară",
+          "special": "Special",
+          "any": "Toate"
+        }
+      },
+      "notes": {
+        "prompt": "Ce note te atrag?",
+        "hint": "Alege 1–3.",
+        "maxHint": "Maxim 3 selecții",
+        "options": {
+          "woody": "Lemn",
+          "citrus": "Citric",
+          "floral": "Floral",
+          "oriental": "Oriental",
+          "gourmand": "Gurmand",
+          "aquatic": "Aquatic",
+          "green": "Verde",
+          "musk": "Mosc"
+        }
+      },
+      "favorite": {
+        "prompt": "Un parfum care îți place?",
+        "hint": "Opțional. Poți sări peste.",
+        "placeholder": "Ex. Aventus de Creed, Santal 33..."
+      }
+    },
+    "continue": "Continuă →",
+    "back": "Înapoi",
+    "skip": "Sari peste",
+    "submit": "Vezi recomandările →",
+    "results": {
+      "label": "Rezultate",
+      "title_one": "{{count}} sugestie pentru tine",
+      "title_few": "{{count}} sugestii pentru tine",
+      "title_other": "{{count}} sugestii pentru tine",
+      "basedOn": "Pe baza alegerilor tale: {{summary}}",
+      "buildSet": "Construiește un set din acestea →",
+      "backToQuestions": "Înapoi la întrebări",
+      "noMatch": "Niciun parfum nu se potrivește perfect.",
+      "changeAnswers": "Schimbă răspunsurile"
+    }
+  },
+  "set": {
+    "unavailable": "Setul nu este disponibil",
+    "backToSets": "Înapoi la Seturi",
+    "contents": "Fragranțele din set",
+    "discoverySet": "Set discovery",
+    "sample_one": "mostră",
+    "sample_few": "mostre",
+    "sample_other": "mostre"
+  },
+  "purchase": {
+    "addToCart": "Adaugă în coș",
+    "processing": "Se procesează...",
+    "decreaseQty": "Scade cantitatea",
+    "increaseQty": "Crește cantitatea"
+  }
+}

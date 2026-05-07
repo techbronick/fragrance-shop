@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Checkout",
+    "description": "Enter your shipping details and place your order. Delivery to Moldova and the EU."
+  },
+  "title": "Checkout",
+  "form": {
+    "sectionContact": "Contact",
+    "sectionShipping": "Delivery details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal code",
+    "country": "Country"
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email",
+    "phoneRequired": "Phone is required",
+    "phoneInvalid": "Invalid phone number",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required",
+    "addressRequired": "Address is required",
+    "cityRequired": "City is required",
+    "postalCodeRequired": "Postal code is required"
+  },
+  "summary": {
+    "title": "In cart",
+    "subtotal": "Subtotal",
+    "vat": "VAT ({{rate}}%)",
+    "shipping": "Shipping",
+    "total": "Total",
+    "taxIncluded": "Including {{amount}} in taxes",
+    "empty": "Your cart is empty.",
+    "backToShop": "Back to Shop",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items"
+  },
+  "shippingEstimate": {
+    "inStock": "Delivery in {{min}}–{{max}} business days",
+    "backorder": "Made to order: {{min}}–{{max}} business days"
+  },
+  "submit": "Place order",
+  "submitting": "Processing..."
+}

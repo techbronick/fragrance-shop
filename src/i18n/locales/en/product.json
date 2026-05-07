@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "{{name}} , {{brand}}",
+    "description": "{{name}} by {{brand}}. Decants from 2 ml. Delivery to Moldova and the EU."
+  },
+  "image": {
+    "expand": "Enlarge image",
+    "close": "Close"
+  },
+  "size": {
+    "ml": "ml",
+    "noVariants": "No variants available."
+  },
+  "purchase": {
+    "addToCart": "Add to cart",
+    "add": "Add",
+    "added": "Added",
+    "order": "Order (7–14 days)",
+    "orderShort": "Order",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity"
+  },
+  "details": {
+    "concentration": "Concentration",
+    "family": "Family",
+    "brand": "Brand",
+    "year": "Year",
+    "gender": "Gender",
+    "rating": "Rating",
+    "viewOnFragrantica": "View on Fragrantica"
+  },
+  "gender": {
+    "unisex": "Unisex",
+    "gendered": "Masculine / Feminine"
+  },
+  "notes": {
+    "title": "Olfactory notes",
+    "top": "Top",
+    "heart": "Heart",
+    "base": "Base"
+  },
+  "rating": {
+    "review_one": "review",
+    "review_other": "reviews"
+  },
+  "notFound": {
+    "title": "Product unavailable",
+    "description": "This product is not currently available.",
+    "back": "Back to Shop"
+  },
+  "details_section": {
+    "title": "Details"
+  }
+}

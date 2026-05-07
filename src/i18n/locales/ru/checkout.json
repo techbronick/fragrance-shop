@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "title": "Оформление заказа",
+    "description": "Введите данные доставки и оформите заказ. Доставка в Молдову и ЕС."
+  },
+  "title": "Оформление заказа",
+  "form": {
+    "sectionContact": "Контакт",
+    "sectionShipping": "Детали доставки",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Email",
+    "phone": "Телефон",
+    "address": "Адрес",
+    "city": "Город",
+    "postalCode": "Почтовый индекс",
+    "country": "Страна"
+  },
+  "validation": {
+    "emailRequired": "Email обязателен",
+    "emailInvalid": "Некорректный email",
+    "phoneRequired": "Телефон обязателен",
+    "phoneInvalid": "Некорректный телефон",
+    "firstNameRequired": "Имя обязательно",
+    "lastNameRequired": "Фамилия обязательна",
+    "addressRequired": "Адрес обязателен",
+    "cityRequired": "Город обязателен",
+    "postalCodeRequired": "Почтовый индекс обязателен"
+  },
+  "summary": {
+    "title": "В корзине",
+    "subtotal": "Сумма",
+    "vat": "НДС ({{rate}}%)",
+    "shipping": "Доставка",
+    "total": "Итого",
+    "taxIncluded": "Включая {{amount}} налогов",
+    "empty": "Корзина пуста.",
+    "backToShop": "Назад в магазин",
+    "items_one": "{{count}} товар",
+    "items_few": "{{count}} товара",
+    "items_many": "{{count}} товаров",
+    "items_other": "{{count}} товара"
+  },
+  "shippingEstimate": {
+    "inStock": "Доставка за {{min}}–{{max}} рабочих дней",
+    "backorder": "Под заказ: {{min}}–{{max}} рабочих дней"
+  },
+  "submit": "Оформить заказ",
+  "submitting": "Обработка..."
+}

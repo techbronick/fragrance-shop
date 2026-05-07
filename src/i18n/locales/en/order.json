@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Order confirmed",
+    "description": "Your order has been placed successfully. We'll reach out on WhatsApp to confirm and arrange payment."
+  },
+  "seo": {
+    "title": "Order #{{id}} | modestshop",
+    "description": "Order details #{{id}}"
+  },
+  "celebration": {
+    "title": "Order placed",
+    "subtitle": "We'll reach out on WhatsApp to confirm and arrange payment.",
+    "orderMeta": "#{{id}} · {{date}}",
+    "continueShopping": "Continue shopping"
+  },
+  "detail": {
+    "eyebrow": "Order",
+    "placedAt": "Placed on {{date}}",
+    "notFound": "Order not found",
+    "backToShop": "Back to Shop"
+  },
+  "sections": {
+    "items": "Items ordered",
+    "contact": "Contact details",
+    "shipping": "Shipping address"
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "item": {
+    "unknownProduct": "Product"
+  },
+  "summary": {
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "taxIncluded": "Including {{amount}} in taxes",
+    "vatLabel": "VAT {{country}} ({{rate}}%)"
+  },
+  "status": {
+    "draft": "Draft",
+    "placed": "Placed",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "processing": "Processing",
+    "paid": "Paid",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "canceled": "Cancelled",
+    "cancelled": "Cancelled",
+    "refunded": "Refunded"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Заказ подтверждён",
+    "description": "Ваш заказ успешно оформлен. Мы свяжемся с вами в WhatsApp для подтверждения и оплаты."
+  },
+  "seo": {
+    "title": "Заказ #{{id}} | modestshop",
+    "description": "Детали заказа #{{id}}"
+  },
+  "celebration": {
+    "title": "Заказ оформлен",
+    "subtitle": "Мы свяжемся с вами в WhatsApp для подтверждения и оплаты.",
+    "orderMeta": "#{{id}} · {{date}}",
+    "continueShopping": "Продолжить покупки"
+  },
+  "detail": {
+    "eyebrow": "Заказ",
+    "placedAt": "Оформлен {{date}}",
+    "notFound": "Заказ не найден",
+    "backToShop": "Назад в магазин"
+  },
+  "sections": {
+    "items": "Товары в заказе",
+    "contact": "Контактные данные",
+    "shipping": "Адрес доставки"
+  },
+  "contact": {
+    "email": "Email",
+    "phone": "Телефон"
+  },
+  "item": {
+    "unknownProduct": "Продукт"
+  },
+  "summary": {
+    "subtotal": "Сумма",
+    "shipping": "Доставка",
+    "total": "Итого",
+    "taxIncluded": "Включая {{amount}} налогов",
+    "vatLabel": "НДС {{country}} ({{rate}}%)"
+  },
+  "status": {
+    "draft": "Черновик",
+    "placed": "Оформлен",
+    "pending": "Ожидает",
+    "confirmed": "Подтверждён",
+    "processing": "В обработке",
+    "paid": "Оплачен",
+    "shipped": "Отправлен",
+    "delivered": "Доставлен",
+    "canceled": "Отменён",
+    "cancelled": "Отменён",
+    "refunded": "Возврат"
+  }
+}

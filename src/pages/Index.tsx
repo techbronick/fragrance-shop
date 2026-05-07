@@ -1,0 +1,78 @@
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
+import { BrandWall } from "@/components/BrandWall";
+import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
+import ClientReviews from "@/components/ClientReviews";
+import { DiscoveryCTA } from "@/components/home/DiscoveryCTA";
+import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useAllSKUs, buildSkusByProductMap } from "@/hooks/useAllSKUs";
+import { PageMeta } from "@/hooks/usePageMeta";
+import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+
+const Index = () => {
+  const { t } = useTranslation('home');
+  const localizedHref = useLocalizedHref();
+  const { data: products = [] } = usePricedProducts();
+  const { data: allSkus = [] } = useAllSKUs();
+  const skusByProduct = buildSkusByProductMap(allSkus);
+
+  // New Arrivals = most recently created products, top 8.
+  const newArrivals = [...products]
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 8);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-paper">
+      <PageMeta
+        namespace="home"
+        titleKey="meta.title"
+        descriptionKey="meta.description"
+      />
+      <Header />
+
+      <main className="flex-1">
+        {/* Hero */}
+        <HeroSection />
+
+        {/* Brand wall */}
+        <BrandWall />
+
+        {/* New Arrivals */}
+        {newArrivals.length > 0 && (
+          <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-16 md:mt-24 mb-16 md:mb-24">
+            <div className="flex items-baseline justify-between mb-8">
+              <p className="text-caption uppercase tracking-[0.06em] text-text-muted">
+                {t('newArrivals.title')}
+              </p>
+              <Link
+                to={localizedHref('/shop?sort=newest')}
+                className="text-caption text-text-muted hover:text-text duration-instant ease-default"
+              >
+                {t('newArrivals.viewAll')}
+              </Link>
+            </div>
+            <NewArrivalsCarousel products={newArrivals} skusByProduct={skusByProduct} />
+          </section>
+        )}
+
+        {/* Discovery CTA */}
+        <DiscoveryCTA />
+
+        {/* Reviews */}
+        <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-16 md:mb-24">
+          <p className="text-caption uppercase tracking-[0.06em] text-text-muted mb-8">
+            {t('reviews.title')}
+          </p>
+          <ClientReviews />
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;

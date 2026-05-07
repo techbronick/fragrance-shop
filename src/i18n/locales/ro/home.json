@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "title": "modestshop , Parfumuri niche și orientale",
+    "description": "Parfumuri rare din maisons curatoriate. Mostre întâi, sticla când ești sigur. Livrare în Moldova și UE."
+  },
+  "hero": {
+    "tagline": "Eleganta nu se striga.",
+    "subhead": "Pentru cei care lasă parfumul să vorbească.",
+    "ctaShop": "Magazin →",
+    "ctaDiscovery": "Descoperă seturi",
+    "imgAlt": "modestshop , Eleganta nu se striga"
+  },
+  "newArrivals": {
+    "title": "Noutăți",
+    "viewAll": "Vezi toate →"
+  },
+  "discoveryCta": {
+    "title": "Construiește-ți setul",
+    "body": "Alege 5 sau 10 mostre din catalogul de parfumuri. Decide care merită sticla , fără riscuri.",
+    "cta": "Construiește setul →"
+  },
+  "reviews": {
+    "title": "Recenzii"
+  }
+}

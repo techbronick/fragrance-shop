@@ -1,0 +1,59 @@
+import { useEffect, useState, RefObject } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
+import { SKU } from "@/types/database";
+import { formatPrice } from "@/utils/formatPrice";
+
+type Props = {
+  selectedSku: SKU | null;
+  quantity: number;
+  onAddToCart: () => void;
+  watchRef: RefObject<HTMLElement>;
+};
+
+export function MobileBuyBar({ selectedSku, quantity, onAddToCart, watchRef }: Props) {
+  const { t } = useTranslation("product");
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const target = watchRef.current;
+    if (!target) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [watchRef]);
+
+  if (!selectedSku || !visible) return null;
+
+  const scrollBack = () => {
+    watchRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const oos = selectedSku.stock <= 0;
+  const buttonText = oos ? t('purchase.orderShort') : t('purchase.addToCart');
+
+  return (
+    <div
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-paper border-t border-border"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+    >
+      <div className="px-4 py-3 flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={scrollBack}
+          className="text-body text-text-strong text-left flex-1 min-w-0 truncate"
+        >
+          <span className="text-text-muted">{selectedSku.size_ml}{t('size.ml')}</span>
+          <span className="mx-2 text-text-faint">·</span>
+          <span>{formatPrice(selectedSku.price * quantity)}</span>
+        </button>
+        <Button variant="primary" size="md" onClick={onAddToCart}>
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  );
+}

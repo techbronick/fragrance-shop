@@ -1,0 +1,87 @@
+{
+  "title": "Magazin",
+  "tabs": {
+    "products": "Produse",
+    "brands": "Branduri"
+  },
+  "meta": {
+    "title": "Magazin , parfumuri niche și orientale",
+    "description": "Catalogul modestshop , parfumuri rare din maisons curatoriate. Mostre întâi, sticla când ești sigur. Livrare în Moldova și UE."
+  },
+  "seo": {
+    "title": "Magazin | modestshop",
+    "description": "Catalogul modestshop , parfumuri rare din maisons curatoriate. Mostre întâi, sticla când ești sigur. Livrare în Moldova și UE."
+  },
+  "count": {
+    "products_one": "{{count}} produs",
+    "products_few": "{{count}} produse",
+    "products_other": "{{count}} de produse",
+    "brands_one": "{{count}} brand",
+    "brands_few": "{{count}} branduri",
+    "brands_other": "{{count}} de branduri"
+  },
+  "catalogEmpty": "Catalogul este momentan gol.",
+  "filters": {
+    "title": "Filtre",
+    "open": "Filtre",
+    "apply": "Aplică",
+    "clear": "Șterge filtrele",
+    "clearAll": "Șterge toate",
+    "brand": "Brand",
+    "family": "Familie",
+    "gender": "Gen",
+    "availability": "Disponibilitate",
+    "inStockOnly": "Doar produse în stoc",
+    "showLess": "Vezi mai puțin ↑",
+    "showAll": "Vezi toate ({{count}}) ↓"
+  },
+  "gender": {
+    "all": "Toate",
+    "male": "Bărbați",
+    "female": "Femei",
+    "unisex": "Unisex"
+  },
+  "sort": {
+    "featured": "Recomandate",
+    "inStockFirst": "În stoc primele",
+    "priceAsc": "Preț ↑",
+    "priceDesc": "Preț ↓",
+    "name": "Nume A-Z",
+    "newest": "Cele mai noi"
+  },
+  "search": {
+    "productsPlaceholder": "Caută produse...",
+    "brandsPlaceholder": "Caută brand..."
+  },
+  "viewMode": {
+    "grid": "Vizualizare grilă",
+    "list": "Vizualizare listă"
+  },
+  "activeFilters": {
+    "removeAriaLabel": "Elimină filtrul: {{label}}",
+    "brandPrefix": "Brand: {{value}}",
+    "familyPrefix": "Familie: {{value}}",
+    "inStock": "În stoc",
+    "genderMale": "Gen: Bărbați",
+    "genderFemale": "Gen: Femei",
+    "genderUnisex": "Gen: Unisex"
+  },
+  "results": {
+    "empty": "Niciun produs nu corespunde filtrelor.",
+    "loadMore": "Încarcă mai multe"
+  },
+  "brands": {
+    "empty": "Niciun brand pentru \"{{query}}\".",
+    "searchPlaceholder": "Caută branduri...",
+    "searchAriaLabel": "Caută branduri",
+    "clearSearch": "Șterge căutarea",
+    "viewCards": "Vizualizare carduri",
+    "viewCompact": "Vizualizare compactă",
+    "alphabetNavAriaLabel": "Navigare alfabetică",
+    "jumpToSection": "Salt la secțiunea {{letter}}",
+    "noSection": "Niciun brand pentru {{letter}}",
+    "viewAllProducts": "Vezi toate produsele",
+    "viewAllProductsShort": "Toate produsele",
+    "seeAll": "Vezi toate"
+  }
+}

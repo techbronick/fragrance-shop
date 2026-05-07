@@ -1,0 +1,38 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "redirects": [
+    { "source": "/shop", "destination": "/ro/shop", "permanent": true },
+    { "source": "/product/:id", "destination": "/ro/product/:id", "permanent": true },
+    { "source": "/discovery-sets", "destination": "/ro/discovery-sets", "permanent": true },
+    { "source": "/discovery-set/:id", "destination": "/ro/discovery-set/:id", "permanent": true },
+    { "source": "/checkout", "destination": "/ro/checkout", "permanent": true },
+    { "source": "/about", "destination": "/ro/about", "permanent": true },
+    { "source": "/contact", "destination": "/ro/contact", "permanent": true },
+    { "source": "/faq", "destination": "/ro/faq", "permanent": true },
+    { "source": "/privacy", "destination": "/ro/privacy", "permanent": true },
+    { "source": "/terms", "destination": "/ro/terms", "permanent": true },
+    { "source": "/careers", "destination": "/ro/careers", "permanent": true },
+    { "source": "/login", "destination": "/ro/login", "permanent": true }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

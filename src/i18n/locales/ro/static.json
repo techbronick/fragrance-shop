@@ -1,0 +1,618 @@
+{
+  "about": {
+    "meta": {
+      "title": "Despre Modest.Shops , parfumuri niche din Chișinău",
+      "description": "Modest.Shops , brand local din Chișinău specializat în parfumuri niche și orientale. Colecții atent selecționate pentru cei care apreciază autenticitatea."
+    },
+    "seoTitle": "Despre Modest.Shops | Parfumuri Niche și Orientale din Chișinău",
+    "seoDescription": "Modest.Shops este un brand/retailer local din Chișinău specializat în parfumuri niche și orientale. Descoperă colecții atent selecționate de parfumuri originale pentru cei care apreciază autenticitatea și calitatea excepțională.",
+    "heroTitle": "Despre Modest.Shops",
+    "heroLead": "Un brand local din Chișinău care aduce pe piața din Moldova colecții atent selecționate de parfumuri originale, create pentru cei care apreciază autenticitatea, emoția și calitatea excepțională.",
+    "mainTitle": "Despre Modest.Shops",
+    "mainBody": "Modest.Shops este un brand/retailer local din Chișinău specializat în parfumuri niche și orientale, care aduce pe piața din Moldova colecții atent selecționate de parfumuri originale, create pentru cei care apreciază autenticitatea, emoția și calitatea excepțională.",
+    "offerTitle": "Ce Oferim",
+    "offerLead": "La Modest.Shops găsești parfumuri care transformă fiecare moment într-o experiență senzorială unică.",
+    "offer": {
+      "niche": {
+        "title": "Parfumuri Niche și Orientale Autentice",
+        "body": "Produse din colecții rare și sofisticate, care aduc experiențe senzoriale unice. Fiecare parfum este ales cu grijă pentru a satisface gusturile clienților care caută emoție, eleganță și rafinament într-o sticlă."
+      },
+      "brands": {
+        "title": "Branduri Originale Internaționale",
+        "body": "Doar produse de înaltă calitate, non-imitate. Colaborăm exclusiv cu case de parfumuri respectate pentru a-ți oferi autenticitate garantată în fiecare sticlă."
+      },
+      "order": {
+        "title": "Comandă la Cerere",
+        "body": "Posibilitatea de comandă la cerere, inclusiv parfumuri care nu sunt în stoc, cu livrare în 7–10 zile. Găsește-ți parfumul perfect, chiar dacă nu este disponibil imediat."
+      }
+    },
+    "presenceTitle": "Prezența Noastră",
+    "presenceBody": "Suntem activi pe Instagram, unde avem o comunitate puternică și pasionată de peste <strong>36.000 de urmăritori</strong>. Acolo prezentăm colecții, noutăți și recomandări de parfumuri, dar și momente inspiraționale din universul aromelor.",
+    "followInstagram": "Urmărește-ne pe Instagram",
+    "followersCount": "36.000+",
+    "followersLabel": "Urmăritori pe Instagram",
+    "followersCommunity": "O comunitate pasionată de parfumuri niche și orientale",
+    "visionTitle": "Viziunea Noastră",
+    "visionLead": "La Modest.Shops, ne dorim să fim mai mult decât un simplu retailer de parfumuri.",
+    "vision": {
+      "reference": {
+        "title": "Punct de Referință",
+        "body": "Punctul de referință pentru pasionații de parfumuri niche din Moldova și regiune."
+      },
+      "emotion": {
+        "title": "Spațiu de Emoție",
+        "body": "Un spațiu unde calitatea întâlnește emoția, iar fiecare parfum este o poveste."
+      },
+      "trust": {
+        "title": "Brand de Încredere",
+        "body": "Un brand în care clienții au încredere, pentru cele mai originale selecții de produse."
+      }
+    },
+    "ctaTitle": "Descoperă Colecția Noastră",
+    "ctaBody": "Explorează parfumurile noastre selectate cu grijă și găsește-ți următorul parfum semnătură. Fiecare aromă spune o poveste unică.",
+    "ctaShop": "Explorează Magazinul",
+    "ctaDiscovery": "Seturi Discovery"
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact , Modest.Shops",
+      "description": "Contactează echipa Modest.Shops pentru întrebări, suport sau informații despre produse. Răspundem în cel mai scurt timp."
+    },
+    "seoTitle": "Contactează-ne | Modest.Shops",
+    "seoDescription": "Contactează echipa Modest.Shops pentru întrebări, suport sau informații despre produse. Suntem aici să te ajutăm!",
+    "heroTitle": "Contactează-ne",
+    "heroLead": "Suntem aici să te ajutăm cu orice întrebări sau nelămuriri. Echipa noastră este pregătită să răspundă la toate solicitările tale.",
+    "infoTitle": "Informații de Contact",
+    "infoLead": "Ne poți contacta prin oricare dintre metodele de mai jos. Răspundem în cel mai scurt timp posibil.",
+    "email": "Email",
+    "emailHint": "Răspundem în 24 de ore",
+    "phone": "Telefon",
+    "phoneHours": "Luni - Vineri: 10:00 - 18:00",
+    "address": "Adresă",
+    "addressValue": "Strada Ștefan cel Mare 123\nChișinău, MD-2004\nRepublica Moldova",
+    "instagram": "Instagram",
+    "instagramFollowers": "36.000+ urmăritori",
+    "schedule": "Program de Lucru",
+    "weekdays": "Luni - Vineri:",
+    "saturday": "Sâmbătă:",
+    "sunday": "Duminică:",
+    "closed": "Închis",
+    "formTitle": "Trimite-ne un Mesaj",
+    "formLead": "Completează formularul de mai jos și te vom contacta cât mai curând.",
+    "fieldName": "Nume complet *",
+    "fieldNamePlaceholder": "Introdu numele tău",
+    "fieldEmail": "Email *",
+    "fieldEmailPlaceholder": "nume@exemplu.com",
+    "fieldPhone": "Telefon",
+    "fieldPhonePlaceholder": "+373 60 123 456",
+    "fieldSubject": "Subiect *",
+    "fieldSubjectPlaceholder": "Despre ce este mesajul tău?",
+    "fieldMessage": "Mesaj *",
+    "fieldMessagePlaceholder": "Scrie mesajul tău aici...",
+    "submitSending": "Se trimite...",
+    "submitButton": "Trimite Mesajul",
+    "formDisclaimer": "Prin trimiterea acestui formular, confirmi că ai citit și acceptat",
+    "formDisclaimerTerms": "Termenii și Condițiile",
+    "formDisclaimerAnd": "și",
+    "formDisclaimerPrivacy": "Politica de Confidențialitate",
+    "faqSectionTitle": "Întrebări Frecvente",
+    "faqSectionLead": "Poate găsești răspunsul la întrebarea ta în secțiunea noastră de FAQ.",
+    "faqDelivery": "Livrare",
+    "faqDeliveryBody": "Informații despre termenii și costurile de livrare",
+    "faqReturns": "Retururi",
+    "faqReturnsBody": "Politica noastră de retur și schimb",
+    "faqProducts": "Produse",
+    "faqProductsBody": "Întrebări despre produsele noastre"
+  },
+  "faq": {
+    "meta": {
+      "title": "Întrebări frecvente , Modest.Shops",
+      "description": "Răspunsuri la cele mai frecvente întrebări despre produse, comenzi, livrare și retururi la Modest.Shops."
+    },
+    "seoTitle": "Întrebări Frecvente (FAQ) | Modest.Shops",
+    "seoDescription": "Găsește răspunsuri la cele mai frecvente întrebări despre Modest.Shops, produse, comenzi, livrare, retururi și multe altele.",
+    "heroTitle": "Întrebări Frecvente",
+    "heroLead": "Găsește răspunsuri rapide la cele mai comune întrebări despre produse, comenzi, livrare și serviciile noastre.",
+    "sections": {
+      "about": {
+        "title": "Despre Modest.Shops",
+        "items": [
+          {
+            "question": "Ce este Modest.Shops?",
+            "answer": "Modest.Shops este un brand din Republica Moldova, specializat în parfumuri originale, niche și orientale, atent selecționate pentru persoanele care caută arome deosebite și autentice."
+          },
+          {
+            "question": "Unde este localizat Modest.Shops?",
+            "answer": "Activitatea Modest.Shops este concentrată în Chișinău, Republica Moldova, cu livrări pe teritoriul țării."
+          },
+          {
+            "question": "Produsele sunt originale?",
+            "answer": "Da. Toate produsele comercializate de Modest.Shops sunt 100% originale. Lucrăm exclusiv cu parfumuri autentice, provenite de la furnizori de încredere."
+          }
+        ]
+      },
+      "products": {
+        "title": "Produse",
+        "items": [
+          {
+            "question": "Ce tipuri de parfumuri pot găsi?",
+            "answerIntro": "În oferta Modest.Shops găsești:",
+            "answerItems": [
+              "parfumuri niche",
+              "parfumuri orientale",
+              "arome intense, rare și premium",
+              "branduri internaționale cunoscute în lumea parfumurilor"
+            ]
+          },
+          {
+            "question": "Parfumurile sunt sigilate?",
+            "answer": "Da. Toate parfumurile sunt livrate sigilate, în ambalajul original al producătorului, cu excepția cazurilor în care este menționat clar altfel (ex: decant)."
+          },
+          {
+            "question": "Oferiți parfumuri la comandă?",
+            "answer": "Da. Dacă un produs nu este în stoc, acesta poate fi comandat special, cu un termen estimativ de livrare de 7–10 zile lucrătoare."
+          }
+        ]
+      },
+      "orders": {
+        "title": "Comenzi",
+        "items": [
+          {
+            "question": "Cum pot plasa o comandă?",
+            "answerIntro": "Comenzile pot fi plasate:",
+            "answerItems": [
+              "direct pe website",
+              "prin mesaj (Instagram / telefon), în funcție de opțiunile disponibile"
+            ],
+            "answerOutro": "După plasarea comenzii, vei fi contactat pentru confirmare."
+          },
+          {
+            "question": "Pot anula o comandă?",
+            "answer": "Da, o comandă poate fi anulată înainte de expediere. Pentru anulare, te rugăm să ne contactezi cât mai rapid."
+          }
+        ]
+      },
+      "payment": {
+        "title": "Plată",
+        "items": [
+          {
+            "question": "Ce metode de plată sunt disponibile?",
+            "answerIntro": "Metodele de plată pot include:",
+            "answerItems": [
+              "plata ramburs la livrare",
+              "transfer bancar",
+              "plată online (dacă este disponibilă pe site)"
+            ],
+            "answerOutro": "Metoda exactă va fi afișată în procesul de comandă."
+          }
+        ]
+      },
+      "shipping": {
+        "title": "Livrare",
+        "items": [
+          {
+            "question": "Unde livrați?",
+            "answer": "Livrăm pe întreg teritoriul Republicii Moldova."
+          },
+          {
+            "question": "În cât timp ajunge comanda?",
+            "answerItems": [
+              "Produse în stoc: 1–3 zile lucrătoare",
+              "Produse la comandă: 7–10 zile lucrătoare"
+            ],
+            "answerOutro": "Termenul poate varia în funcție de curier și localitate."
+          },
+          {
+            "question": "Care este costul livrării?",
+            "answer": "Costul livrării este afișat la finalizarea comenzii și poate varia în funcție de destinație."
+          }
+        ]
+      },
+      "returns": {
+        "title": "Retururi și reclamații",
+        "items": [
+          {
+            "question": "Pot returna un produs?",
+            "answer": "Da, conform legislației Republicii Moldova, produsele pot fi returnate în termen de 14 zile calendaristice, doar dacă sunt sigilate și neutilizate."
+          },
+          {
+            "question": "De ce nu pot returna un parfum desigilat?",
+            "answer": "Din motive de igienă și siguranță, parfumurile desigilate sau utilizate nu pot fi returnate."
+          },
+          {
+            "question": "Ce fac dacă primesc un produs greșit sau defect?",
+            "answer": "Te rugăm să ne contactezi în termen de 48 de ore de la primirea coletului, iar echipa noastră va soluționa situația cât mai rapid."
+          }
+        ]
+      },
+      "warranty": {
+        "title": "Garanții și siguranță",
+        "items": [
+          {
+            "question": "Parfumurile pot provoca alergii?",
+            "answer": "Ca orice produs cosmetic, parfumurile pot provoca reacții alergice. Recomandăm verificarea ingredientelor și testarea produsului cu atenție.",
+            "answerNote": "Modest.Shops nu este responsabil pentru reacții alergice individuale."
+          }
+        ]
+      },
+      "account": {
+        "title": "Cont și date personale",
+        "items": [
+          {
+            "question": "Trebuie să îmi creez cont pentru a comanda?",
+            "answer": "Nu neapărat. Poți plasa comenzi și fără cont, în funcție de opțiunile site-ului."
+          },
+          {
+            "question": "Cum sunt protejate datele mele?",
+            "answer": "Datele tale sunt protejate conform Legii nr. 133/2011 privind protecția datelor cu caracter personal din Republica Moldova.",
+            "answerLinkText": "Politica de Confidențialitate"
+          }
+        ]
+      },
+      "contact": {
+        "title": "Contact",
+        "items": [
+          {
+            "question": "Cum pot lua legătura cu Modest.Shops?",
+            "answerIntro": "Ne poți contacta prin:"
+          },
+          {
+            "question": "Oferiți consultanță în alegerea parfumului?",
+            "answer": "Da. Suntem bucuroși să te ajutăm cu recomandări personalizate, în funcție de preferințele tale."
+          }
+        ]
+      }
+    },
+    "moreQuestionsTitle": "Ai alte întrebări?",
+    "moreQuestionsBody": "Dacă ai alte întrebări, nu ezita să ne contactezi , suntem aici să te ajutăm.",
+    "contactUs": "Contactează-ne",
+    "additionalInfoTitle": "Informații Suplimentare",
+    "additionalInfoLead": "Consultă și celelalte pagini pentru mai multe detalii",
+    "termsLink": "Termeni și Condiții",
+    "termsLinkBody": "Condițiile de utilizare și servicii",
+    "privacyLink": "Politica de Confidențialitate",
+    "privacyLinkBody": "Protecția datelor personale",
+    "contactLink": "Contact",
+    "contactLinkBody": "Trimite-ne un mesaj"
+  },
+  "privacy": {
+    "meta": {
+      "title": "Politica de confidențialitate , Modest.Shops",
+      "description": "Politica de confidențialitate Modest.Shops. Află cum protejăm datele tale personale conform legislației Republicii Moldova."
+    },
+    "seoTitle": "Politica de Confidențialitate | Modest.Shops",
+    "seoDescription": "Politica de confidențialitate Modest.Shops. Află cum protejăm și prelucrăm datele tale personale în conformitate cu legislația Republicii Moldova.",
+    "heroTitle": "Politica de Confidențialitate",
+    "lastUpdated": "Ultima actualizare: {{date}}",
+    "intro": "Prezenta Politică de Confidențialitate descrie modul în care Modest.Shops prelucrează datele cu caracter personal ale utilizatorilor, în conformitate cu Legea nr. 133 din 08.07.2011 privind protecția datelor cu caracter personal din Republica Moldova.",
+    "introConsent": "Prin utilizarea acestui website, sunteți de acord cu termenii acestei politici.",
+    "sections": {
+      "operator": {
+        "title": "1. Operatorul de date",
+        "intro": "Operatorul datelor cu caracter personal este:",
+        "name": "Denumire: Modest.Shops",
+        "address": "Sediu: Strada Ștefan cel Mare 123, Chișinău, MD-2004, Republica Moldova",
+        "outro": "Operatorul prelucrează datele personale în mod legal, echitabil și transparent."
+      },
+      "dataTypes": {
+        "title": "2. Tipuri de date cu caracter personal prelucrate",
+        "intro": "Prelucrăm următoarele categorii de date:",
+        "userProvided": "a) Date furnizate de utilizator",
+        "userProvidedItems": [
+          "Nume și prenume",
+          "Număr de telefon",
+          "Adresă de email",
+          "Adresă de livrare",
+          "Date necesare facturării, după caz"
+        ],
+        "autoCollected": "b) Date colectate automat",
+        "autoCollectedItems": [
+          "adresa IP",
+          "tipul browserului și dispozitivului",
+          "informații despre vizitele pe site",
+          "cookie-uri și tehnologii similare"
+        ]
+      },
+      "purposes": {
+        "title": "3. Scopurile prelucrării datelor",
+        "intro": "Datele personale sunt prelucrate pentru:",
+        "items": [
+          "preluarea, procesarea și livrarea comenzilor",
+          "comunicarea cu clienții",
+          "îndeplinirea obligațiilor legale",
+          "îmbunătățirea funcționării site-ului",
+          "activități de marketing (doar cu consimțământul utilizatorului)"
+        ]
+      },
+      "legalBasis": {
+        "title": "4. Temeiul legal al prelucrării",
+        "intro": "Conform legislației Republicii Moldova, datele sunt prelucrate în baza:",
+        "items": [
+          "consimțământului persoanei vizate",
+          "executării unui contract",
+          "obligațiilor legale ale operatorului",
+          "interesului legitim al operatorului"
+        ]
+      },
+      "recipients": {
+        "title": "5. Destinatarii datelor",
+        "intro": "Datele pot fi transmise exclusiv către:",
+        "items": [
+          "companii de curierat",
+          "furnizori de servicii IT și hosting",
+          "procesatori de plăți (dacă este cazul)",
+          "autorități publice, în limitele legii"
+        ],
+        "noSale": "Nu comercializăm și nu cedăm datele personale către terți în scopuri comerciale."
+      },
+      "retention": {
+        "title": "6. Durata de stocare a datelor",
+        "intro": "Datele cu caracter personal sunt păstrate:",
+        "items": [
+          "pe perioada necesară realizării scopurilor pentru care au fost colectate",
+          "conform termenelor prevăzute de legislația Republicii Moldova"
+        ],
+        "outro": "Ulterior, datele vor fi șterse, distruse sau anonimizate."
+      },
+      "rights": {
+        "title": "7. Drepturile persoanei vizate",
+        "intro": "Conform Legii nr. 133/2011, aveți următoarele drepturi:",
+        "items": [
+          "dreptul de informare",
+          "dreptul de acces la date",
+          "dreptul de intervenție asupra datelor",
+          "dreptul de opoziție",
+          "dreptul de a nu fi supus unei decizii individuale automate",
+          "dreptul de a vă adresa instanței de judecată"
+        ],
+        "contact": "Pentru exercitarea drepturilor, ne puteți contacta la:"
+      },
+      "security": {
+        "title": "8. Securitatea datelor",
+        "body": "Operatorul aplică măsuri tehnice și organizatorice adecvate pentru a proteja datele personale împotriva accesului neautorizat, pierderii, distrugerii sau divulgării ilegale."
+      },
+      "cookies": {
+        "title": "9. Cookie-uri",
+        "body1": "Website-ul utilizează cookie-uri pentru a asigura funcționarea corectă și pentru analiza traficului.",
+        "body2": "Utilizatorul poate configura browserul pentru a accepta sau refuza cookie-urile."
+      },
+      "transfer": {
+        "title": "10. Transferul datelor în afara Republicii Moldova",
+        "body": "În cazul în care datele sunt transferate în afara Republicii Moldova, acest lucru se va face doar cu respectarea cerințelor legale și cu garanții adecvate privind protecția datelor."
+      },
+      "changes": {
+        "title": "11. Modificări ale politicii",
+        "body": "Ne rezervăm dreptul de a actualiza această Politică de Confidențialitate. Versiunea actualizată va fi publicată pe această pagină."
+      },
+      "contact": {
+        "title": "12. Contact",
+        "intro": "Pentru orice întrebări privind protecția datelor cu caracter personal, ne puteți contacta la:"
+      }
+    },
+    "acceptanceNotice": "Prin utilizarea acestui website, confirmați că ați luat cunoștință de această Politică de Confidențialitate.",
+    "legalDocsTitle": "Documente Legale",
+    "legalDocsLead": "Consultă și celelalte documente legale ale Modest.Shops",
+    "termsLink": "Termeni și Condiții",
+    "contactLink": "Contactează-ne"
+  },
+  "terms": {
+    "meta": {
+      "title": "Termeni și condiții , Modest.Shops",
+      "description": "Termenii și condițiile de utilizare a site-ului Modest.Shops: produse, comenzi, livrare, retur și protecția datelor personale."
+    },
+    "seoTitle": "Termeni și Condiții | Modest.Shops",
+    "seoDescription": "Termenii și condițiile de utilizare a site-ului Modest.Shops. Citește cu atenție informațiile despre produse, comenzi, livrare, retur și protecția datelor personale.",
+    "heroTitle": "Termeni și Condiții",
+    "lastUpdated": "Ultima actualizare: {{date}}",
+    "intro": "Bine ați venit pe website-ul Modest.Shops („Site-ul”). Utilizarea acestui site implică acceptarea termenilor și condițiilor de mai jos. Vă rugăm să citiți cu atenție acest document înainte de a plasa o comandă sau de a utiliza serviciile noastre.",
+    "sections": {
+      "general": {
+        "title": "1. Informații generale",
+        "body": "Website-ul Modest.Shops este operat de Modest.Shops, cu sediul în Chișinău, Republica Moldova.",
+        "outro": "Ne rezervăm dreptul de a modifica oricând acești Termeni și Condiții, fără o notificare prealabilă. Versiunea actualizată va fi publicată pe site."
+      },
+      "definitions": {
+        "title": "2. Definiții",
+        "seller": "Vânzător – Modest.Shops",
+        "client": "Client / Utilizator – orice persoană fizică sau juridică ce accesează site-ul și/sau plasează o comandă",
+        "products": "Produse – parfumuri și alte articole afișate spre vânzare pe site",
+        "order": "Comandă – document electronic prin care Clientul solicită achiziționarea produselor"
+      },
+      "authenticity": {
+        "title": "3. Produse și autenticitate",
+        "body1": "Toate produsele comercializate pe site sunt originale și autentice.",
+        "body2": "Imaginile produselor sunt cu titlu de prezentare și pot exista mici diferențe de ambalaj sau culoare față de produsul livrat, în funcție de lotul producătorului."
+      },
+      "orders": {
+        "title": "4. Plasarea comenzilor",
+        "body1": "Comenzile pot fi plasate online, 24/7",
+        "body2": "După plasarea comenzii, Clientul va primi o confirmare prin email / telefon / mesaj",
+        "refusalTitle": "Ne rezervăm dreptul de a refuza o comandă în cazul:",
+        "refusalItems": [
+          "lipsei stocului",
+          "informațiilor incomplete sau incorecte",
+          "suspiciunilor de fraudă"
+        ]
+      },
+      "prices": {
+        "title": "5. Prețuri și plăți",
+        "body1": "Toate prețurile sunt afișate în MDL (Lei)",
+        "body2": "Prețurile pot fi modificate fără notificare prealabilă",
+        "paymentTitle": "Metode de plată acceptate:",
+        "paymentItems": [
+          "ramburs",
+          "transfer bancar",
+          "online (dacă este cazul)"
+        ],
+        "body3": "Costurile de livrare pot fi afișate separat, în funcție de locație."
+      },
+      "shipping": {
+        "title": "6. Livrare",
+        "body1": "Livrarea se face pe teritoriul Republicii Moldova",
+        "deliveryTitle": "Termenul estimat de livrare este:",
+        "deliveryItems": [
+          "produse în stoc: 1–3 zile lucrătoare",
+          "produse la comandă: 7–10 zile lucrătoare"
+        ],
+        "body2": "Întârzierile cauzate de curieri sau factori externi nu sunt responsabilitatea Vânzătorului."
+      },
+      "returns": {
+        "title": "7. Dreptul de retur",
+        "body1": "Clientul are dreptul de a returna produsele în termen de 14 zile calendaristice, conform legislației în vigoare, cu următoarele condiții:",
+        "noReturnTitle": "Produsele NU pot fi returnate dacă:",
+        "noReturnItems": [
+          "au fost desigilate",
+          "au fost utilizate",
+          "prezintă urme de deteriorare"
+        ],
+        "body2": "Produsele trebuie returnate în ambalajul original, sigilat, cu toate accesoriile incluse.",
+        "body3": "Costurile de retur sunt suportate de Client, cu excepția cazurilor în care produsul este defect sau livrat greșit."
+      },
+      "warranty": {
+        "title": "8. Garanții și reclamații",
+        "body1": "În cazul unui produs defect sau livrat eronat, Clientul este rugat să ne contacteze în maximum 48 de ore de la primirea coletului.",
+        "body2": "Reclamațiile pot fi trimise la:"
+      },
+      "ip": {
+        "title": "9. Drepturi de proprietate intelectuală",
+        "body": "Întregul conținut al site-ului (texte, imagini, logo-uri, design) este proprietatea Modest.Shops și nu poate fi copiat, distribuit sau utilizat fără acordul scris al Vânzătorului."
+      },
+      "dataProtection": {
+        "title": "10. Protecția datelor personale",
+        "intro": "Datele personale colectate sunt utilizate exclusiv pentru:",
+        "items": [
+          "procesarea comenzilor",
+          "comunicarea cu clienții",
+          "îmbunătățirea serviciilor"
+        ],
+        "privacyLink": "Politica de Confidențialitate"
+      },
+      "liability": {
+        "title": "11. Limitarea răspunderii",
+        "intro": "Vânzătorul nu este responsabil pentru:",
+        "items": [
+          "utilizarea necorespunzătoare a produselor",
+          "reacții alergice cauzate de ingrediente (Clientul are obligația de a verifica lista ingredientelor)",
+          "erori tehnice temporare ale site-ului"
+        ]
+      },
+      "law": {
+        "title": "12. Legea aplicabilă",
+        "body": "Acești Termeni și Condiții sunt guvernați de legislația Republicii Moldova. Orice litigiu va fi soluționat pe cale amiabilă sau, în caz contrar, de instanțele competente."
+      }
+    },
+    "acceptanceNotice": "Prin utilizarea acestui site, confirmați că ați citit, înțeles și acceptat acești Termeni și Condiții.",
+    "questionsTitle": "Ai întrebări despre Termenii și Condițiile noastre?",
+    "questionsLead": "Suntem aici să te ajutăm. Contactează-ne pentru orice clarificări.",
+    "sendEmail": "Trimite Email",
+    "contactPage": "Pagina de Contact"
+  },
+  "careers": {
+    "meta": {
+      "title": "Cariere , Modest.Shops",
+      "description": "Alătură-te echipei Modest.Shops. Căutăm persoane pasionate de parfumuri, calitate și experiențe autentice."
+    },
+    "seoTitle": "Cariere | Modest.Shops",
+    "seoDescription": "Alătură-te echipei Modest.Shops! Căutăm persoane pasionate de parfumuri, calitate și experiențe autentice. Descoperă oportunitățile de carieră.",
+    "heroTitle": "Cariere",
+    "heroLead": "Alătură-te echipei Modest.Shops",
+    "intro1": "La Modest.Shops, credem că un brand puternic se construiește de oameni pasionați, creativi și dedicați. Suntem mereu în căutarea persoanelor care împărtășesc dragostea pentru parfumuri, calitate și experiențe autentice.",
+    "intro2": "Dacă îți dorești să lucrezi într-un mediu dinamic, unde ideile sunt apreciate și pasiunea contează, s-ar putea să fim potriviți unul pentru celălalt.",
+    "whyTitle": "De ce să lucrezi cu noi?",
+    "why": {
+      "friendly": {
+        "title": "Mediu de lucru prietenos",
+        "body": "Mediu de lucru prietenos și motivant, unde fiecare membru al echipei este valorificat."
+      },
+      "growing": {
+        "title": "Brand în creștere",
+        "body": "Brand în creștere, cu viziune pe termen lung și oportunități reale de dezvoltare."
+      },
+      "premium": {
+        "title": "Produse premium",
+        "body": "Posibilitatea de a lucra cu produse premium și niche, parfumuri autentice și de calitate."
+      },
+      "development": {
+        "title": "Dezvoltare profesională",
+        "body": "Oportunități reale de dezvoltare profesională și creștere în cadrul echipei."
+      },
+      "involvement": {
+        "title": "Implicare directă",
+        "body": "Implicare directă în evoluția brandului și în luarea deciziilor importante."
+      },
+      "trust": {
+        "title": "Responsabilitate și încredere",
+        "body": "Punem accent pe responsabilitate, încredere și colaborare în echipă."
+      }
+    },
+    "lookingForTitle": "Pe cine căutăm?",
+    "lookingForLead": "Căutăm persoane care împărtășesc valorile noastre și pasiunea pentru parfumuri.",
+    "lookingForIntro": "Căutăm persoane care:",
+    "lookingForItems": [
+      "sunt pasionate de domeniul beauty / parfumuri / retail",
+      "sunt responsabile și orientate către client",
+      "comunică clar și profesionist",
+      "sunt deschise să învețe și să evolueze",
+      "apreciază munca în echipă"
+    ],
+    "lookingForNote": "Experiența este un avantaj, dar atitudinea și dorința de implicare contează cel mai mult.",
+    "positionsTitle": "Poziții disponibile",
+    "positionsLead": "În funcție de necesități, pot exista oportunități pentru diferite roluri.",
+    "positions": {
+      "sales": {
+        "title": "Consultanți vânzări",
+        "body": "Ajută clienții să găsească parfumul perfect și oferă consultanță profesională."
+      },
+      "support": {
+        "title": "Customer support",
+        "body": "Asigură relații excelente cu clienții și rezolvă solicitările cu promptitudine."
+      },
+      "social": {
+        "title": "Social media & content",
+        "body": "Creează conținut atractiv și gestionează prezența online a brandului."
+      },
+      "logistics": {
+        "title": "Logistică și procesare",
+        "body": "Gestionează comenzile și asigură livrarea corectă a produselor către clienți."
+      }
+    },
+    "openApplication": "Chiar dacă nu vezi o poziție listată, ne poți trimite candidatura ta.",
+    "applyTitle": "Cum poți aplica?",
+    "applySendTitle": "Trimite-ne:",
+    "applyItems": [
+      "CV-ul tău",
+      "câteva rânduri despre tine și de ce vrei să faci parte din echipa noastră"
+    ],
+    "applyEmailLabel": "Email:",
+    "applyEmailSubjectHint": "Subiect: Cariere – [Numele tău]",
+    "applyInstagramLabel": "Sau scrie-ne direct pe Instagram:",
+    "equalOpportunityTitle": "Egalitate de șanse",
+    "equalOpportunityBody": "Modest.Shops oferă șanse egale tuturor candidaților, fără discriminare de gen, vârstă, religie sau alte criterii, în conformitate cu legislația Republicii Moldova.",
+    "ctaTitle": "Hai să construim împreună un brand care inspiră",
+    "ctaBody": "Dacă împărtășești pasiunea noastră pentru parfumuri și vrei să faci parte dintr-o echipă dedicată, așteptăm să te cunoaștem!",
+    "ctaApply": "Trimite Candidatura",
+    "ctaInstagram": "Contactează-ne pe Instagram"
+  },
+  "login": {
+    "meta": {
+      "title": "Autentificare",
+      "description": "Autentifică-te în panoul de administrare Modest.Shops."
+    },
+    "title": "Admin Login",
+    "description": "Enter your credentials to access the admin panel",
+    "email": "Email",
+    "emailPlaceholder": "admin@example.com",
+    "password": "Password",
+    "submit": "Sign In",
+    "submitting": "Signing in..."
+  },
+  "notFound": {
+    "meta": {
+      "title": "Pagină negăsită",
+      "description": "Pagina căutată nu există. Întoarce-te la pagina principală Modest.Shops."
+    },
+    "title": "Pagină negăsită",
+    "body": "Ne pare rău, pagina pe care o căutați nu există.",
+    "backHome": "Întoarcete-te la pagina principală"
+  }
+}

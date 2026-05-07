@@ -1,0 +1,89 @@
+{
+  "title": "Магазин",
+  "tabs": {
+    "products": "Продукты",
+    "brands": "Бренды"
+  },
+  "meta": {
+    "title": "Магазин , нишевые и восточные ароматы",
+    "description": "Каталог modestshop , редкие ароматы от отобранных maisons. Сначала пробники, флакон , когда уверен. Доставка в Молдову и ЕС."
+  },
+  "seo": {
+    "title": "Магазин | modestshop",
+    "description": "Каталог modestshop , редкие ароматы от отобранных maisons. Сначала пробники, флакон , когда уверен. Доставка в Молдову и ЕС."
+  },
+  "count": {
+    "products_one": "{{count}} продукт",
+    "products_few": "{{count}} продукта",
+    "products_many": "{{count}} продуктов",
+    "products_other": "{{count}} продукта",
+    "brands_one": "{{count}} бренд",
+    "brands_few": "{{count}} бренда",
+    "brands_many": "{{count}} брендов",
+    "brands_other": "{{count}} бренда"
+  },
+  "catalogEmpty": "Каталог пока пуст.",
+  "filters": {
+    "title": "Фильтры",
+    "open": "Фильтры",
+    "apply": "Применить",
+    "clear": "Сбросить фильтры",
+    "clearAll": "Сбросить все",
+    "brand": "Бренд",
+    "family": "Семейство",
+    "gender": "Пол",
+    "availability": "Наличие",
+    "inStockOnly": "Только в наличии",
+    "showLess": "Показать меньше ↑",
+    "showAll": "Показать все ({{count}}) ↓"
+  },
+  "gender": {
+    "all": "Все",
+    "male": "Мужской",
+    "female": "Женский",
+    "unisex": "Унисекс"
+  },
+  "sort": {
+    "featured": "Рекомендуемые",
+    "inStockFirst": "Сначала в наличии",
+    "priceAsc": "Цена ↑",
+    "priceDesc": "Цена ↓",
+    "name": "Название А-Я",
+    "newest": "Новинки"
+  },
+  "search": {
+    "productsPlaceholder": "Поиск продуктов...",
+    "brandsPlaceholder": "Поиск бренда..."
+  },
+  "viewMode": {
+    "grid": "Вид сеткой",
+    "list": "Вид списком"
+  },
+  "activeFilters": {
+    "removeAriaLabel": "Убрать фильтр: {{label}}",
+    "brandPrefix": "Бренд: {{value}}",
+    "familyPrefix": "Семейство: {{value}}",
+    "inStock": "В наличии",
+    "genderMale": "Пол: Мужской",
+    "genderFemale": "Пол: Женский",
+    "genderUnisex": "Пол: Унисекс"
+  },
+  "results": {
+    "empty": "Нет продуктов, соответствующих фильтрам.",
+    "loadMore": "Загрузить ещё"
+  },
+  "brands": {
+    "empty": "Нет брендов для «{{query}}».",
+    "searchPlaceholder": "Поиск брендов...",
+    "searchAriaLabel": "Поиск брендов",
+    "clearSearch": "Очистить поиск",
+    "viewCards": "Вид карточками",
+    "viewCompact": "Компактный вид",
+    "alphabetNavAriaLabel": "Алфавитная навигация",
+    "jumpToSection": "Перейти к разделу {{letter}}",
+    "noSection": "Нет брендов для {{letter}}",
+    "viewAllProducts": "Все продукты",
+    "viewAllProductsShort": "Все продукты",
+    "seeAll": "Смотреть все"
+  }
+}

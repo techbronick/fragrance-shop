@@ -1,0 +1,85 @@
+{
+  "title": "Shop",
+  "tabs": {
+    "products": "Products",
+    "brands": "Brands"
+  },
+  "meta": {
+    "title": "Shop , niche & oriental fragrances",
+    "description": "The modestshop catalogue , rare fragrances from curated maisons. Samples first, bottle when you're sure. Delivery to Moldova and the EU."
+  },
+  "seo": {
+    "title": "Shop | modestshop",
+    "description": "The modestshop catalogue , rare fragrances from curated maisons. Samples first, bottle when you're sure. Delivery to Moldova and the EU."
+  },
+  "count": {
+    "products_one": "{{count}} product",
+    "products_other": "{{count}} products",
+    "brands_one": "{{count}} brand",
+    "brands_other": "{{count}} brands"
+  },
+  "catalogEmpty": "The catalogue is currently empty.",
+  "filters": {
+    "title": "Filters",
+    "open": "Filters",
+    "apply": "Apply",
+    "clear": "Clear filters",
+    "clearAll": "Clear all",
+    "brand": "Brand",
+    "family": "Family",
+    "gender": "Gender",
+    "availability": "Availability",
+    "inStockOnly": "In stock only",
+    "showLess": "Show less ↑",
+    "showAll": "Show all ({{count}}) ↓"
+  },
+  "gender": {
+    "all": "All",
+    "male": "Men",
+    "female": "Women",
+    "unisex": "Unisex"
+  },
+  "sort": {
+    "featured": "Featured",
+    "inStockFirst": "In stock first",
+    "priceAsc": "Price ↑",
+    "priceDesc": "Price ↓",
+    "name": "Name A–Z",
+    "newest": "Newest"
+  },
+  "search": {
+    "productsPlaceholder": "Search products...",
+    "brandsPlaceholder": "Search brands..."
+  },
+  "viewMode": {
+    "grid": "Grid view",
+    "list": "List view"
+  },
+  "activeFilters": {
+    "removeAriaLabel": "Remove filter: {{label}}",
+    "brandPrefix": "Brand: {{value}}",
+    "familyPrefix": "Family: {{value}}",
+    "inStock": "In stock",
+    "genderMale": "Gender: Men",
+    "genderFemale": "Gender: Women",
+    "genderUnisex": "Gender: Unisex"
+  },
+  "results": {
+    "empty": "No products match the current filters.",
+    "loadMore": "Load more"
+  },
+  "brands": {
+    "empty": "No brands found for \"{{query}}\".",
+    "searchPlaceholder": "Search brands...",
+    "searchAriaLabel": "Search brands",
+    "clearSearch": "Clear search",
+    "viewCards": "Card view",
+    "viewCompact": "Compact view",
+    "alphabetNavAriaLabel": "Alphabetical navigation",
+    "jumpToSection": "Jump to section {{letter}}",
+    "noSection": "No brands for {{letter}}",
+    "viewAllProducts": "View all products",
+    "viewAllProductsShort": "All products",
+    "seeAll": "See all"
+  }
+}

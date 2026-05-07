@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "title": "Discovery Sets , fragrance samples",
+    "description": "Build your own sample set or choose a predefined one. Decants from 2 ml. Delivery to Moldova and the EU."
+  },
+  "metaSet": {
+    "title": "{{name}} , Discovery Set",
+    "description": "Discovery set {{name}}. Authentic fragrance samples from 2 ml. Delivery to Moldova and the EU."
+  },
+  "title": "Discovery Sets",
+  "subtitle": "Samples first. Decide what deserves the full bottle , no risk.",
+  "tabs": {
+    "predefined": "Predefined",
+    "builder": "Build",
+    "recommend": "Help me choose"
+  },
+  "predefined": {
+    "empty": "No predefined sets available at the moment.",
+    "sample_one": "sample",
+    "sample_other": "samples"
+  },
+  "builder": {
+    "title": "Build your set",
+    "subtitle": "Choose {{count}} samples from the catalog. Decide what deserves the full bottle.",
+    "size": "Size",
+    "volume": "Volume",
+    "sizeOption_one": "{{count}} sample",
+    "sizeOption_other": "{{count}} samples",
+    "slotEmpty": "Empty slot",
+    "slotsLabel": "Your set",
+    "slotsCount": "{{selected}} / {{total}}",
+    "slotsUnit_one": "sample",
+    "slotsUnit_other": "samples",
+    "subtotal": "Subtotal",
+    "viewSet": "View set →",
+    "catalog": {
+      "search": "Search products...",
+      "sortFeatured": "Featured",
+      "sortPriceAsc": "Price ↑",
+      "sortPriceDesc": "Price ↓",
+      "sortName": "Name A-Z",
+      "sortNewest": "Newest",
+      "filters": "Filters",
+      "filtersTitle": "Filters",
+      "apply": "Apply",
+      "loadMore": "Load more",
+      "empty": "No products found."
+    },
+    "addToCart": "Add to cart",
+    "add": "Add",
+    "added": "Added!",
+    "noSlots": "No slots left",
+    "continue": "Continue ({{selected}}/{{total}})",
+    "processing": "Processing..."
+  },
+  "recommend": {
+    "step": "Step {{current}} / {{total}}",
+    "steps": {
+      "occasion": {
+        "prompt": "What's the occasion?",
+        "options": {
+          "day": "Day",
+          "evening": "Evening",
+          "special": "Special",
+          "any": "Any"
+        }
+      },
+      "notes": {
+        "prompt": "Which notes appeal to you?",
+        "hint": "Pick 1–3.",
+        "maxHint": "Maximum 3 selections",
+        "options": {
+          "woody": "Woody",
+          "citrus": "Citrus",
+          "floral": "Floral",
+          "oriental": "Oriental",
+          "gourmand": "Gourmand",
+          "aquatic": "Aquatic",
+          "green": "Green",
+          "musk": "Musk"
+        }
+      },
+      "favorite": {
+        "prompt": "A fragrance you already love?",
+        "hint": "Optional. You can skip this.",
+        "placeholder": "E.g. Aventus by Creed, Santal 33..."
+      }
+    },
+    "continue": "Continue →",
+    "back": "Back",
+    "skip": "Skip",
+    "submit": "See recommendations →",
+    "results": {
+      "label": "Results",
+      "title_one": "{{count}} suggestion for you",
+      "title_other": "{{count}} suggestions for you",
+      "basedOn": "Based on your choices: {{summary}}",
+      "buildSet": "Build a set from these →",
+      "backToQuestions": "Back to questions",
+      "noMatch": "No fragrance matches perfectly.",
+      "changeAnswers": "Change answers"
+    }
+  },
+  "set": {
+    "unavailable": "Set not available",
+    "backToSets": "Back to sets",
+    "contents": "Fragrances in the set",
+    "discoverySet": "Discovery set",
+    "sample_one": "sample",
+    "sample_other": "samples"
+  },
+  "purchase": {
+    "addToCart": "Add to cart",
+    "processing": "Processing...",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity"
+  }
+}

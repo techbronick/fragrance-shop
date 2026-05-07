@@ -1,0 +1,132 @@
+import { Product, SKU } from "@/types/database";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useSKUs } from "@/hooks/useSKUs";
+import { formatPrice } from "@/utils/formatPrice";
+import { useNavigate } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useCart } from "@/hooks/useCart";
+import { useButtonAnimation } from "@/hooks/useButtonAnimation";
+import OptimizedImage from "@/components/ui/optimized-image";
+import { useTranslation } from "react-i18next";
+import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+
+interface ProductCardProps {
+  product: Product;
+  featured?: boolean;
+  skus?: SKU[];
+}
+
+const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardProps) => {
+  const navigate = useNavigate();
+  const href = useLocalizedHref();
+  const { t } = useTranslation("product");
+  const { data: fetchedSkus } = useSKUs(skusProp ? "" : product.id);
+  const skus = skusProp ?? fetchedSkus;
+  const sortedSkus = useMemo(
+    () => (skus ? [...skus].sort((a, b) => a.size_ml - b.size_ml) : []),
+    [skus],
+  );
+  const defaultSkuId =
+    sortedSkus.find(s => s.size_ml === 2)?.id ?? sortedSkus[0]?.id ?? "";
+  const [selectedSkuId, setSelectedSkuId] = useState<string>("");
+  const activeSkuId = selectedSkuId || defaultSkuId;
+  const selectedSKU = sortedSkus.find(s => s.id === activeSkuId) ?? null;
+
+  const [, setImageError] = useState(false);
+  const { addItem } = useCart();
+  const { isAnimating, triggerAnimation } = useButtonAnimation();
+
+  const handleProductClick = () => {
+    navigate(href(`/product/${product.id}`));
+  };
+
+  const handleQuickAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedSKU) return;
+    addItem({
+      id: product.id,
+      skuId: selectedSKU.id,
+      type: 'product',
+      name: product.name,
+      brand: product.brand,
+      image: product.image_url,
+      sizeLabel: selectedSKU.label,
+      quantity: 1,
+      price: Math.round(selectedSKU.price / 100),
+    });
+    triggerAnimation();
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const fallbackImage = "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=300&h=300&q=75&fm=webp";
+
+  return (
+    <div
+      className="group cursor-pointer rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
+      onClick={handleProductClick}
+    >
+      <div className="aspect-square bg-white p-[12%]">
+        <OptimizedImage
+          src={product.image_url || fallbackImage}
+          alt={`Parfum ${product.name} de la ${product.brand}`}
+          className="w-full h-full"
+          imgClassName="transition-transform duration-slow ease-default group-hover:scale-105 will-change-transform"
+          fallbackSrc={fallbackImage}
+          width={featured ? 400 : 300}
+          height={featured ? 400 : 300}
+          onError={handleImageError}
+        />
+      </div>
+      <div className="p-3 space-y-2">
+        <div className="text-caption text-text-muted">{product.brand}</div>
+        <h3 className="text-body line-clamp-2 transition-colors duration-instant group-hover:text-mocha">
+          {product.name}
+        </h3>
+
+        {sortedSkus.length > 0 && activeSkuId && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <Select value={activeSkuId} onValueChange={setSelectedSkuId}>
+              <SelectTrigger className="h-9 px-2 text-caption w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {sortedSkus.map(sku => (
+                  <SelectItem key={sku.id} value={sku.id} className="text-caption">
+                    {sku.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between gap-2 pt-1">
+          {selectedSKU && (
+            <p className="text-body">{formatPrice(selectedSKU.price)}</p>
+          )}
+          <Button
+            size={featured ? "default" : "sm"}
+            variant="outline"
+            className="shrink-0 ml-auto"
+            onClick={e => { e.stopPropagation(); handleQuickAdd(e as React.MouseEvent); }}
+            disabled={isAnimating || !selectedSKU}
+          >
+            {isAnimating ? t("purchase.added") : t("purchase.add")}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
