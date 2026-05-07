@@ -1,14 +1,20 @@
-import './i18n';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 import './index.css';
-import { ViteReactSSG } from 'vite-react-ssg';
-import { routes } from '@/lib/routes';
-import { imagePreloader } from '@/utils/imagePreloader';
+import { HelmetProvider } from 'react-helmet-async';
+import './i18n';
+import { CartProvider } from './hooks/useCart';
+import { imagePreloader } from './utils/imagePreloader';
 
-if (typeof window !== 'undefined') {
-  imagePreloader.preloadCriticalImages();
-}
+imagePreloader.preloadCriticalImages();
 
-export const createRoot = ViteReactSSG(
-  // react-router-dom data routes
-  { routes },
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </HelmetProvider>
+  </React.StrictMode>,
 );

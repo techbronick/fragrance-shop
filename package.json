@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && (vite-react-ssg build || true) && test -d dist && ts-node --project tsconfig.scripts.json src/scripts/generate-sitemap.ts",
+    "build": "tsc && vite build && ts-node --project tsconfig.scripts.json src/scripts/generate-sitemap.ts",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "add-brands": "ts-node -P tsconfig.scripts.json src/scripts/addNicheBrands.ts",
