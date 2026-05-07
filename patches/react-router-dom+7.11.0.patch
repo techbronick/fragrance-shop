@@ -1,3 +1,18 @@
+diff --git a/node_modules/react-router-dom/package.json b/node_modules/react-router-dom/package.json
+index 629cd41..8875b68 100644
+--- a/node_modules/react-router-dom/package.json
++++ b/node_modules/react-router-dom/package.json
+@@ -38,7 +38,9 @@
+         "default": "./dist/index.js"
+       }
+     },
+-    "./package.json": "./package.json"
++    "./package.json": "./package.json",
++    "./server.js": "./server.js",
++    "./server": "./server.js"
+   },
+   "wireit": {
+     "build": {
 diff --git a/node_modules/react-router-dom/server.js b/node_modules/react-router-dom/server.js
 new file mode 100644
 index 0000000..bc0c2fc
