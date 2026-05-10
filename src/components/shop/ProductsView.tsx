@@ -197,7 +197,7 @@ export function ProductsView({
           />
           <div className="flex items-center gap-2 sm:ml-auto">
             <Select value={sort} onValueChange={(v) => onSortChange(v as SortKey)}>
-              <SelectTrigger className="w-44">
+              <SelectTrigger className="w-44" aria-label={t('sort.label', { defaultValue: 'Sort products' })}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -278,14 +278,19 @@ export function ProductsView({
               {t('filters.clear')}
             </Button>
           </div>
-        ) : viewMode === 'grid' ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {visible.map(p => <ProductCard key={p.id} product={p} skus={skusByProduct.get(p.id) ?? []} />)}
-          </div>
         ) : (
-          <div className="flex flex-col gap-4">
-            {visible.map(p => <ProductListCard key={p.id} product={p} skus={skusByProduct.get(p.id) ?? []} />)}
-          </div>
+          <>
+            <h2 className="sr-only">{t('products.heading', { defaultValue: 'Products' })}</h2>
+            {viewMode === 'grid' ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {visible.map(p => <ProductCard key={p.id} product={p} skus={skusByProduct.get(p.id) ?? []} />)}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {visible.map(p => <ProductListCard key={p.id} product={p} skus={skusByProduct.get(p.id) ?? []} />)}
+              </div>
+            )}
+          </>
         )}
 
         {/* Load more */}

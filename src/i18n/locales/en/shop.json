@@ -40,6 +40,7 @@
     "unisex": "Unisex"
   },
   "sort": {
+    "label": "Sort products",
     "featured": "Featured",
     "inStockFirst": "In stock first",
     "priceAsc": "Price ↑",

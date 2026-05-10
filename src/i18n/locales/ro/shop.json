@@ -42,6 +42,7 @@
     "unisex": "Unisex"
   },
   "sort": {
+    "label": "Sortează produsele",
     "featured": "Recomandate",
     "inStockFirst": "În stoc primele",
     "priceAsc": "Preț ↑",

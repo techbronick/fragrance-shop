@@ -29,8 +29,12 @@ const Shop = () => {
   const { t: tCommon, i18n } = useTranslation('common');
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: products = [], isLoading: productsLoading } = usePricedProducts();
-  const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
-  const isLoading = productsLoading || skusLoading;
+  const { data: allSkus = [] } = useAllSKUs();
+  // Render the product grid as soon as products land — don't gate on the
+  // (much heavier) SKU sweep. Prices and in-stock badges fill in on the
+  // next render once SKUs arrive; the layout doesn't shift because cards
+  // reserve space for them.
+  const isLoading = productsLoading;
   const priceByProduct = useMemo(() => buildMinPriceMap(allSkus), [allSkus]);
   const inStockByProduct = useMemo(() => buildInStockMap(allSkus), [allSkus]);
   const skusByProduct = useMemo(() => buildSkusByProductMap(allSkus), [allSkus]);

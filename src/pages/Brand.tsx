@@ -20,9 +20,11 @@ const Brand = () => {
   const { t } = useTranslation("shop");
   const { t: tCommon, i18n } = useTranslation("common");
   const { data: products = [], isLoading: productsLoading } = usePricedProducts();
-  const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
+  const { data: allSkus = [] } = useAllSKUs();
 
-  if (productsLoading || skusLoading) return <BrandLoader />;
+  // Render as soon as products land; SKU-derived data (price, stock) hydrates
+  // on the next tick.
+  if (productsLoading) return <BrandLoader />;
 
   const brandProducts = products.filter((p) => brandSlug(p.brand) === slug);
   if (brandProducts.length === 0) {
