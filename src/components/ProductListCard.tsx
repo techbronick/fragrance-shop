@@ -114,7 +114,10 @@ const ProductListCard = ({ product, skus: skusProp }: ProductListCardProps) => {
             {sortedSkus.length > 0 && activeSkuId && (
               <div onClick={(e) => e.stopPropagation()}>
                 <Select value={activeSkuId} onValueChange={setSelectedSkuId}>
-                  <SelectTrigger className="h-9 px-2 text-caption w-28">
+                  <SelectTrigger
+                    className="h-9 px-2 text-caption w-28"
+                    aria-label={t('size.select', { defaultValue: `Select size for ${product.name}` })}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>

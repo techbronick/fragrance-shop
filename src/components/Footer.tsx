@@ -49,16 +49,16 @@ const Footer = () => {
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 py-6 border-t border-border">
-          <p className="text-caption text-text-faint italic">{t("footer.tagline")}</p>
+          <p className="text-caption text-text-muted italic">{t("footer.tagline")}</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <LanguageSwitcher variant="footer" />
-            <p className="text-caption text-text-faint">
+            <p className="text-caption text-text-muted">
               © 2026 modestshop ·{" "}
-              <Link to={href("/privacy")} className="hover:text-text duration-instant ease-default">
+              <Link to={href("/privacy")} className="text-text-muted hover:text-text duration-instant ease-default">
                 {t("footer.privacy")}
               </Link>{" "}
               ·{" "}
-              <Link to={href("/terms")} className="hover:text-text duration-instant ease-default">
+              <Link to={href("/terms")} className="text-text-muted hover:text-text duration-instant ease-default">
                 {t("footer.terms")}
               </Link>
             </p>

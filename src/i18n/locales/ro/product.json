@@ -9,7 +9,8 @@
   },
   "size": {
     "ml": "ml",
-    "noVariants": "Nu există variante disponibile."
+    "noVariants": "Nu există variante disponibile.",
+    "select": "Alege mărimea"
   },
   "purchase": {
     "addToCart": "Adaugă în coș",

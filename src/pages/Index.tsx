@@ -7,8 +7,7 @@ import { BrandWall } from "@/components/BrandWall";
 import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
 import ClientReviews from "@/components/ClientReviews";
 import { DiscoveryCTA } from "@/components/home/DiscoveryCTA";
-import { usePricedProducts } from "@/hooks/usePricedProducts";
-import { useAllSKUs, buildSkusByProductMap } from "@/hooks/useAllSKUs";
+import { useNewestProducts } from "@/hooks/useProducts";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { JsonLd } from "@/components/JsonLd";
@@ -17,14 +16,10 @@ import { organizationJsonLd, websiteJsonLd } from "@/utils/jsonLd";
 const Index = () => {
   const { t, i18n } = useTranslation('home');
   const localizedHref = useLocalizedHref();
-  const { data: products = [] } = usePricedProducts();
-  const { data: allSkus = [] } = useAllSKUs();
-  const skusByProduct = buildSkusByProductMap(allSkus);
-
-  // New Arrivals = most recently created products, top 8.
-  const newArrivals = [...products]
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 8);
+  // Fetch only the 8 newest products directly — no client-side sort over
+  // 2k+ rows, no companion 14k-SKU pull (each ProductCard fetches its own
+  // SKUs lazily via useSKUs).
+  const { data: newArrivals = [] } = useNewestProducts(8);
 
   return (
     <div className="min-h-screen flex flex-col bg-paper">
@@ -58,7 +53,7 @@ const Index = () => {
                 {t('newArrivals.viewAll')}
               </Link>
             </div>
-            <NewArrivalsCarousel products={newArrivals} skusByProduct={skusByProduct} />
+            <NewArrivalsCarousel products={newArrivals} />
           </section>
         )}
 

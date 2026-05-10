@@ -2,6 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { SKU } from "@/types/database";
 
+// Columns sufficient to compute price/stock/size aggregates and to identify
+// SKUs by id+product. We deliberately avoid `select('*')` here — the full row
+// is ~5x larger and the catalog has 14k+ rows, which dominates page load on
+// shop/brand views.
+const ALL_SKU_COLUMNS = "id, product_id, price, stock, size_ml, label";
+
 export function useAllSKUs() {
   return useQuery({
     queryKey: ['skus', 'all'],
@@ -13,18 +19,18 @@ export function useAllSKUs() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('skus')
-          .select('*')
+          .select(ALL_SKU_COLUMNS)
           .range(from, from + pageSize - 1);
         if (error) throw error;
         if (data && data.length > 0) {
-          all = [...all, ...data];
+          all = [...all, ...(data as unknown as SKU[])];
           from += pageSize;
           hasMore = data.length === pageSize;
         } else {
           hasMore = false;
         }
       }
-      return all as SKU[];
+      return all;
     },
   });
 }

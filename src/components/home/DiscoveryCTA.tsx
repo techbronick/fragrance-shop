@@ -15,6 +15,8 @@ export function DiscoveryCTA() {
           <img
             src="/discovery-cta.webp"
             alt={t('discoveryCta.title')}
+            width={1254}
+            height={1254}
             className="w-full h-full object-cover"
             loading="lazy"
             decoding="async"

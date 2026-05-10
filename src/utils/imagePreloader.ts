@@ -2,17 +2,15 @@
 class ImagePreloader {
   private cache = new Map<string, Promise<string>>();
 
-  // Preload critical images
+  // Preload only images visible above the fold on first paint.
+  // Brand wordmarks and Discoverybox were here previously — none are displayed
+  // before scroll, and the BrandsCarousel that referenced them isn't mounted.
+  // Preloading them was burning ~9 MB of bandwidth per cold load.
   preloadCriticalImages() {
-    const criticalImages = [
-      '/logo.png',
-      '/Discoverybox.png',
-      '/TomFord.webp',
-      '/Lelabo.webp',
-      '/Creed.webp',
-      '/pdmarly.webp',
-      '/Amouage.webp',
-      '/Xerjoff.webp'
+    const criticalImages: string[] = [
+      // Hero image is already preloaded by <link rel="preload" as="image"> in index.html
+      // and the <img loading="eager" fetchpriority="high"> tag in HeroSection.
+      // Logo is small (resized) and fetched by the header — no need to preload here.
     ];
 
     criticalImages.forEach(src => this.preloadImage(src));

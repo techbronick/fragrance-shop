@@ -9,7 +9,8 @@
   },
   "size": {
     "ml": "ml",
-    "noVariants": "No variants available."
+    "noVariants": "No variants available.",
+    "select": "Select size"
   },
   "purchase": {
     "addToCart": "Add to cart",

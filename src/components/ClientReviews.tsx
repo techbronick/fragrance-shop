@@ -139,7 +139,7 @@ const ClientReviews = () => {
                         <AvatarFallback>{review.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <h4 className="font-semibold">{review.name}</h4>
+                        <h3 className="font-semibold">{review.name}</h3>
                         <div className="flex space-x-1 mt-1">
                           {renderStars(review.rating)}
                         </div>
@@ -170,7 +170,7 @@ const ClientReviews = () => {
                     <AvatarFallback>{review.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-semibold">{review.name}</h4>
+                    <h3 className="font-semibold">{review.name}</h3>
                     <div className="flex space-x-1 mt-1">
                       {renderStars(review.rating)}
                     </div>

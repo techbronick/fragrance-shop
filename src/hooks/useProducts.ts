@@ -37,6 +37,26 @@ export const useProducts = () => {
     }
   });
 };
+/**
+ * Fetches the N most recently created products. Targeted query — doesn't pull
+ * the entire products table just to slice the top 8 client-side. Used on the
+ * homepage's New Arrivals carousel.
+ */
+export const useNewestProducts = (limit = 8) => {
+  return useQuery({
+    queryKey: ['products', 'newest', limit],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+      if (error) throw error;
+      return (data ?? []) as Product[];
+    },
+  });
+};
+
 export const useProduct = (id: string) => {
   return useQuery({
     queryKey: ['product', id],

@@ -58,6 +58,8 @@ const Header = () => {
           <img
             src="/logo.png"
             alt="modestshop"
+            width={200}
+            height={175}
             className="h-10 md:h-12 w-auto object-contain"
           />
         </Link>
