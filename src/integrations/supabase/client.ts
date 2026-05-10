@@ -28,7 +28,7 @@ export const supabase = createClient<Database>(
     },
     global: {
       headers: {
-        'x-application-name': 'scent-discovery-vault',
+        'x-application-name': 'modestshop',
       },
     },
   }

@@ -548,7 +548,7 @@ const Admin = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Scent Discovery Vault Admin</h1>
+            <h1 className="text-3xl font-bold mb-2">modestshop Admin</h1>
             <p className="text-muted-foreground">
               Complete database management and content creation tools
             </p>
