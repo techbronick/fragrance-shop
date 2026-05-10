@@ -43,9 +43,9 @@ const Index = () => {
         {newArrivals.length > 0 && (
           <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-16 md:mt-24 mb-16 md:mb-24">
             <div className="flex items-baseline justify-between mb-8">
-              <p className="text-caption uppercase tracking-[0.06em] text-text-muted">
+              <h2 className="text-caption uppercase tracking-[0.06em] text-text-muted font-normal m-0">
                 {t('newArrivals.title')}
-              </p>
+              </h2>
               <Link
                 to={localizedHref('/shop?sort=newest')}
                 className="text-caption text-text-muted hover:text-text duration-instant ease-default"
@@ -62,9 +62,9 @@ const Index = () => {
 
         {/* Reviews */}
         <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-16 md:mb-24">
-          <p className="text-caption uppercase tracking-[0.06em] text-text-muted mb-8">
+          <h2 className="text-caption uppercase tracking-[0.06em] text-text-muted font-normal m-0 mb-8">
             {t('reviews.title')}
-          </p>
+          </h2>
           <ClientReviews />
         </section>
       </main>

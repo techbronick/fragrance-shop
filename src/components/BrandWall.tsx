@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
-import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useBrandList } from "@/hooks/useProducts";
 import { brandPath } from "@/utils/slugs";
 
 function shuffle<T>(arr: T[]): T[] {
@@ -17,13 +17,10 @@ function shuffle<T>(arr: T[]): T[] {
 export function BrandWall() {
   const { t } = useTranslation("common");
   const href = useLocalizedHref();
-  const { data: products = [] } = usePricedProducts();
+  const { data: brandNames = [] } = useBrandList();
 
-  // Unique brands from real catalog, shuffled fresh on every mount.
-  const brands = useMemo(() => {
-    const unique = Array.from(new Set(products.map((p) => p.brand))).filter(Boolean);
-    return shuffle(unique);
-  }, [products]);
+  // Shuffled fresh on every mount.
+  const brands = useMemo(() => shuffle(brandNames), [brandNames]);
 
   if (brands.length === 0) return null;
 

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Search, X } from "lucide-react";
-import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useSearchableProducts } from "@/hooks/useProducts";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { productPath } from "@/utils/slugs";
@@ -18,7 +18,9 @@ export function SearchOverlay({ open, onOpenChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const href = useLocalizedHref();
-  const { data: products = [] } = usePricedProducts();
+  // Only fetch when the overlay is opened — avoids the home page paying the
+  // cost on initial paint.
+  const { data: products = [] } = useSearchableProducts(open);
 
   useEffect(() => {
     if (open) {

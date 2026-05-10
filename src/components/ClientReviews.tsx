@@ -10,42 +10,42 @@ const reviews = [
     name: "Maria Popescu",
     rating: 5,
     comment: "Parfumurile de la Scent Discovery Vault sunt absolut divine! Am comandat discovery set-ul și a fost o experiență incredibilă să încerc atâtea parfumuri de lux. Recomandat cu căldură!",
-    image: "https://images.unsplash.com/photo-1494790108755-2616b9bb3458?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 2,
     name: "Alex Ionescu",
     rating: 5,
     comment: "Calitatea produselor este excepțională. Am găsit parfumul perfect pentru mine prin discovery set-ul lor. Serviciul clienți a fost foarte profesionist.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 3,
     name: "Elena Gheorghe",
     rating: 5,
     comment: "Sunt o mare iubitoare de parfumuri și această platformă mi-a deschis o lume nouă. Varietatea brandurilor premium este impresionantă!",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 4,
     name: "Cristian Munteanu",
     rating: 5,
     comment: "Discovery set-urile sunt perfecte pentru a explora noi parfumuri fără să te angajezi la o sticlă întreagă. Ambalajul este elegant și livarea rapidă.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 5,
     name: "Andreea Diaconu",
     rating: 5,
     comment: "Recomand cu încredere! Am descoperit parfumul meu de semnătură prin discovery set-ul lor. Experiența de shopping online a fost fluidă și plăcută.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 6,
     name: "Bogdan Stoica",
     rating: 5,
     comment: "Parfumurile sunt autentice și de calitate superioară. M-am îndrăgostit de mai multe branduri pe care nu le cunoșteam anterior. Mulțumesc pentru această experiență!",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   }
 ];
 
