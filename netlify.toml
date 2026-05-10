@@ -1,0 +1,120 @@
+# Netlify configuration — mirrors vercel.json so both deploy targets stay
+# in sync. Netlify auto-picks up Node version from package.json's `engines`,
+# and reads `legacy-peer-deps=true` from .npmrc on install.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# ----------------------------------------------------------------------------
+# Default-language redirects: bare paths (no /:lang prefix) → Romanian.
+# `force = false` means these only fire if the destination doesn't exist as
+# a static file — which it never does at the bare path, so they always fire.
+# ----------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/shop"
+  to = "/ro/shop"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/product/:id"
+  to = "/ro/product/:id"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/discovery-sets"
+  to = "/ro/discovery-sets"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/discovery-set/:id"
+  to = "/ro/discovery-set/:id"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/checkout"
+  to = "/ro/checkout"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/about"
+  to = "/ro/about"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/contact"
+  to = "/ro/contact"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/faq"
+  to = "/ro/faq"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/privacy"
+  to = "/ro/privacy"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/terms"
+  to = "/ro/terms"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/careers"
+  to = "/ro/careers"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/login"
+  to = "/ro/login"
+  status = 301
+  force = false
+
+# ----------------------------------------------------------------------------
+# SPA fallback: every other URL serves index.html so React Router can handle
+# client-side routing. status = 200 is critical — it's a rewrite, not a
+# redirect, so the original URL stays in the address bar.
+# ----------------------------------------------------------------------------
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ----------------------------------------------------------------------------
+# Security headers — apply to every response.
+# CSP keeps 'unsafe-inline' on script/style for now (loader IIFE + Tailwind
+# runtime injections). Tightening to nonces/hashes is a follow-up.
+# ----------------------------------------------------------------------------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=(), payment=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.unsplash.com https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.exchangerate.host; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';"
+
+# Long-lived cache for fingerprinted static assets — Vite hashes filenames so
+# this is safe (a content change creates a new filename).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
