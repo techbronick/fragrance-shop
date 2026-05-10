@@ -14,9 +14,11 @@ export function DiscoveryCTA() {
         <div className="aspect-square md:aspect-auto">
           <img
             src="/discovery-cta.webp"
+            srcSet="/discovery-cta-800.webp 800w, /discovery-cta.webp 1330w"
+            sizes="(max-width: 768px) 100vw, 50vw"
             alt={t('discoveryCta.title')}
-            width={1254}
-            height={1254}
+            width={1330}
+            height={1330}
             className="w-full h-full object-cover"
             loading="lazy"
             decoding="async"
