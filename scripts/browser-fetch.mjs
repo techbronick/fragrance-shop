@@ -28,6 +28,10 @@ async function ensureBrowser() {
 export async function browserFetch(url, opts = {}) {
   await ensureBrowser();
   const page = await context.newPage();
+  // Default: 5s post-load wait so client-side renders (e.g. Algolia search
+  // results) have time to populate the DOM before we grab page.content().
+  // Caller can pass { waitForContentMs: 0 } when fetching pre-rendered pages.
+  const waitForContentMs = opts.waitForContentMs ?? 5000;
   try {
     // Use domcontentloaded — Cloudflare's challenge keeps the network busy
     // indefinitely, so 'networkidle' never fires. After the initial load we
@@ -45,6 +49,12 @@ export async function browserFetch(url, opts = {}) {
         { timeout: 25_000 }
       );
     }
+
+    // Give client-side JS a moment to populate (Algolia search hits, dynamic
+    // pyramid blocks, etc.). Pre-rendered server content is unaffected — this
+    // is just an extra grace period.
+    if (waitForContentMs > 0) await page.waitForTimeout(waitForContentMs);
+
     const status = response?.status() ?? 0;
     const text = await page.content();
     return {
