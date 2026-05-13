@@ -27,4 +27,8 @@ pnpm-lock.yaml
 *.njsproj
 *.sln
 *.sw?
+.env
 *.env
+
+# enrichment script output — never commit (may contain product data)
+fragrantica-enrichment-report.txt
