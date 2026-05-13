@@ -25,12 +25,13 @@ import fs from 'node:fs/promises';
 config();
 
 function parseArgs(argv) {
-  const args = { dryRun: false, force: false, limit: null, fromBrand: null, skipImages: false };
+  const args = { dryRun: false, force: false, limit: null, fromBrand: null, skipImages: false, onlyMissingImages: false };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') args.dryRun = true;
     else if (a === '--force') args.force = true;
     else if (a === '--skip-images') args.skipImages = true;
+    else if (a === '--only-missing-images') args.onlyMissingImages = true;
     else if (a === '--limit') { args.limit = parseInt(argv[++i], 10); }
     else if (a === '--from-brand') { args.fromBrand = argv[++i]; }
     else if (a.startsWith('--')) { console.error(`Unknown flag: ${a}`); process.exit(2); }
@@ -78,7 +79,15 @@ async function loadProductsToProcess(supabase, args) {
     if (data.length < 1000) break;
     from += 1000;
   }
-  return args.limit ? all.slice(0, args.limit) : all;
+
+  // --only-missing-images: keep products whose image_url is empty OR points
+  // outside our Supabase bucket. These are the ones that show the fallback
+  // placeholder on the frontend (external URLs are blocked by our CSP).
+  let filtered = all;
+  if (args.onlyMissingImages) {
+    filtered = filtered.filter((p) => !p.image_url || !p.image_url.includes('supabase.co'));
+  }
+  return args.limit ? filtered.slice(0, args.limit) : filtered;
 }
 
 // Use service-role for the DB client — RLS on `products` requires admin

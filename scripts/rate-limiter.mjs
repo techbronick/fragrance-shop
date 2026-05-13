@@ -13,8 +13,8 @@ function sleep(ms) {
 
 export function createRateLimitedFetcher({
   fetchImpl = globalThis.fetch,
-  minDelayMs = 5000,
-  maxDelayMs = 10000,
+  minDelayMs = 2000,
+  maxDelayMs = 4000,
   backoffOn = [429, 403],
   userAgents = [
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15',

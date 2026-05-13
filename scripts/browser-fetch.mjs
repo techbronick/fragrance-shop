@@ -43,7 +43,7 @@ export async function browserFetch(url, opts = {}) {
   // Default: 5s post-load wait so client-side renders (e.g. Algolia search
   // results) have time to populate the DOM before we grab page.content().
   // Caller can pass { waitForContentMs: 0 } when fetching pre-rendered pages.
-  const waitForContentMs = opts.waitForContentMs ?? 5000;
+  const waitForContentMs = opts.waitForContentMs ?? 2000;
   try {
     // Use domcontentloaded — Cloudflare's challenge keeps the network busy
     // indefinitely, so 'networkidle' never fires. After the initial load we

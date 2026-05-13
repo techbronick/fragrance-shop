@@ -227,6 +227,20 @@ export function parsePerfumePage(html) {
     if (!out[currentBucket].includes(text)) out[currentBucket].push(text);
   }
 
+  // Fallback: some Fragrantica pages list notes without Top/Middle/Base
+  // bucketing headings (e.g. Louis Vuitton's exclusive line). If we found
+  // zero notes via bucketing but the page does have .pyramid-note-label
+  // entries, dump them all into notesTop as a flat list.
+  const totalBucketed = out.notesTop.length + out.notesMid.length + out.notesBase.length;
+  if (totalBucketed === 0) {
+    $('.pyramid-note-label').each((_, el) => {
+      const text = $(el).text().trim();
+      if (text && text.length <= 60 && !out.notesTop.includes(text)) {
+        out.notesTop.push(text);
+      }
+    });
+  }
+
   // 4) Year, gender, concentration — visible text scan.
   const bodyText = $('body').text();
   let yearMatch = bodyText.match(/launched in (\d{4})/i) ||
