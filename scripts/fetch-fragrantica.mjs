@@ -81,7 +81,12 @@ async function loadProductsToProcess(supabase, args) {
   return args.limit ? all.slice(0, args.limit) : all;
 }
 
-const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY);
+// Use service-role for the DB client — RLS on `products` requires admin
+// privileges for UPDATE. With the anon key, UPDATEs return success but the
+// data is unchanged (silent RLS reject). The service-role key is also
+// required for image upload, so this is consistent.
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+const supabase = createClient(process.env.VITE_SUPABASE_URL, supabaseKey);
 const products = await loadProductsToProcess(supabase, args);
 console.log(`Loaded ${products.length} products to process.`);
 
@@ -160,19 +165,26 @@ async function processOne(p, idx) {
   }
 
   // 4) Write to DB.
-  const updates = {
+  // Only include fields the parser actually populated. NULLs would either
+  // wipe out previously-correct data OR fail NOT-NULL constraints on
+  // columns like `family` and `concentration` that the schema marks
+  // NOT NULL. last_parsed_at is always set.
+  const rawUpdates = {
     description: data.description || null,
-    notes_top: data.notesTop,
-    notes_mid: data.notesMid,
-    notes_base: data.notesBase,
+    notes_top: data.notesTop?.length ? data.notesTop : null,
+    notes_mid: data.notesMid?.length ? data.notesMid : null,
+    notes_base: data.notesBase?.length ? data.notesBase : null,
     concentration: data.concentration,
     family: data.family,
     launch_year: data.year,
     gender: data.gender,
     rating: data.rating,
     review_count: data.reviewCount,
-    last_parsed_at: nowIso(),
   };
+  const updates = { last_parsed_at: nowIso() };
+  for (const [k, v] of Object.entries(rawUpdates)) {
+    if (v !== null && v !== undefined) updates[k] = v;
+  }
   if (newImageUrl) updates.image_url = newImageUrl;
 
   if (!args.dryRun) {

@@ -195,32 +195,37 @@ export function parsePerfumePage(html) {
     if (rc) out.reviewCount = parseInt(rc, 10) || null;
   }
 
-  // 3) Notes pyramid — use the <pyramid-level-new notes="top|middle|base"> custom
-  //    elements that Fragrantica renders. Note labels carry class "pyramid-note-label".
-  function extractNotes(container) {
-    const notes = [];
-    container.find('.pyramid-note-label').each((_, el) => {
-      const text = $(el).text().trim();
-      if (text && !notes.includes(text)) notes.push(text);
-    });
-    return notes;
+  // 3) Notes pyramid — Fragrantica rebuilt this section to be a flat sequence
+  //    of "Top Notes" / "Middle Notes" / "Base Notes" <h4> headings followed by
+  //    .pyramid-note-label elements until the next heading. We walk every
+  //    .pyramid-note-label in document order and bucket it by the most recent
+  //    heading we passed.
+  function getBucketFromHeading(text) {
+    const t = text.toLowerCase();
+    if (/(^|\s)top\s+notes?\b/.test(t)) return 'notesTop';
+    if (/(^|\s)(middle|heart)\s+notes?\b/.test(t)) return 'notesMid';
+    if (/(^|\s)base\s+notes?\b/.test(t)) return 'notesBase';
+    return null;
   }
 
-  $('pyramid-level-new[notes="top"]').each((_, el) => {
-    out.notesTop = [...out.notesTop, ...extractNotes($(el))].filter(
-      (v, i, a) => a.indexOf(v) === i
-    );
-  });
-  $('pyramid-level-new[notes="middle"]').each((_, el) => {
-    out.notesMid = [...out.notesMid, ...extractNotes($(el))].filter(
-      (v, i, a) => a.indexOf(v) === i
-    );
-  });
-  $('pyramid-level-new[notes="base"]').each((_, el) => {
-    out.notesBase = [...out.notesBase, ...extractNotes($(el))].filter(
-      (v, i, a) => a.indexOf(v) === i
-    );
-  });
+  // Find every heading + note label in document order. The pyramid section
+  // emits headings as <h4> with text exactly "Top Notes" / "Middle Notes" /
+  // "Base Notes" (case may vary), followed by note labels with class
+  // ".pyramid-note-label".
+  let currentBucket = null;
+  const pyramidNodes = $('h4, .pyramid-note-label').toArray();
+  for (const el of pyramidNodes) {
+    const node = $(el);
+    if (node.is('h4')) {
+      const bucket = getBucketFromHeading(node.text().trim());
+      if (bucket) currentBucket = bucket;
+      continue;
+    }
+    if (!currentBucket) continue;
+    const text = node.text().trim();
+    if (!text || text.length > 60) continue;
+    if (!out[currentBucket].includes(text)) out[currentBucket].push(text);
+  }
 
   // 4) Year, gender, concentration — visible text scan.
   const bodyText = $('body').text();

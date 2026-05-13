@@ -9,7 +9,15 @@
 // the context passes, subsequent navigations to the same origin reuse
 // the cf_clearance cookie.
 
-import { chromium } from 'playwright';
+// playwright-extra wraps Playwright so we can register the stealth plugin,
+// which patches ~10 navigator.* and JS quirks that Cloudflare's bot
+// detection samples (navigator.webdriver, plugins length, permission queries,
+// WebGL renderer, etc.). Without it, Cloudflare blocks /perfume/ pages with
+// a 403 challenge that never auto-resolves in headless chromium.
+import { chromium } from 'playwright-extra';
+import stealth from 'puppeteer-extra-plugin-stealth';
+
+chromium.use(stealth());
 
 let browser = null;
 let context = null;
@@ -28,6 +36,10 @@ async function ensureBrowser() {
 export async function browserFetch(url, opts = {}) {
   await ensureBrowser();
   const page = await context.newPage();
+  // Override the per-page default for all waitFor* operations so subsequent
+  // calls don't silently use Playwright's 30s default when the challenge or
+  // a slow Algolia render needs longer.
+  page.setDefaultTimeout(60_000);
   // Default: 5s post-load wait so client-side renders (e.g. Algolia search
   // results) have time to populate the DOM before we grab page.content().
   // Caller can pass { waitForContentMs: 0 } when fetching pre-rendered pages.
@@ -41,19 +53,22 @@ export async function browserFetch(url, opts = {}) {
       timeout: 30_000,
     });
 
-    // If we landed on a Cloudflare challenge page, wait for it to redirect.
-    const initialContent = await page.content();
-    if (initialContent.includes('Just a moment') || initialContent.includes('cf-browser-verification')) {
-      await page.waitForFunction(
-        () => !document.title.includes('Just a moment') && document.body.innerText.length > 5000,
-        { timeout: 25_000 }
-      );
-    }
-
-    // Give client-side JS a moment to populate (Algolia search hits, dynamic
-    // pyramid blocks, etc.). Pre-rendered server content is unaffected — this
-    // is just an extra grace period.
+    // Unconditional grace period after navigation. Cloudflare's JS challenge
+    // resolves itself in well under 5s in a real browser; client-side renders
+    // (Algolia search hits, pyramid blocks) need a moment too. Polling for
+    // title changes was flaky — a flat wait is more reliable.
     if (waitForContentMs > 0) await page.waitForTimeout(waitForContentMs);
+
+    // Defensive check: if the page is STILL on the Cloudflare interstitial
+    // after the grace period, give it one more chance.
+    const title = await page.title();
+    if (title.includes('Just a moment')) {
+      await page.waitForFunction(
+        () => !document.title.includes('Just a moment'),
+        null,
+        { timeout: 30_000 }
+      ).catch(() => {/* ignore — caller will see the bad response */});
+    }
 
     const status = response?.status() ?? 0;
     const text = await page.content();
