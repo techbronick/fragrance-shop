@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import { parseSearchResults, pickBestMatch } from './fragrantica-client.mjs';
+import { parseSearchResults, pickBestMatch, parsePerfumePage } from './fragrantica-client.mjs';
 
 test('parseSearchResults extracts at least one result from the fixture', async () => {
   const html = await fs.readFile('scripts/fixtures/search-result.html', 'utf8');
@@ -39,4 +39,18 @@ test('pickBestMatch returns null when no candidate clears the threshold', () => 
   ];
   const best = pickBestMatch(candidates, 'Tom Ford', 'Black Orchid', 0.85);
   assert.equal(best, null);
+});
+
+test('parsePerfumePage extracts core fields from the perfume fixture', async () => {
+  const html = await fs.readFile('scripts/fixtures/perfume-page.html', 'utf8');
+  const data = parsePerfumePage(html);
+
+  assert.ok(data.description && data.description.length > 50, 'description too short');
+  assert.ok(Array.isArray(data.notesTop), 'notesTop should be an array');
+  assert.ok(Array.isArray(data.notesMid), 'notesMid should be an array');
+  assert.ok(Array.isArray(data.notesBase), 'notesBase should be an array');
+  assert.ok(data.imageUrl && data.imageUrl.startsWith('http'), 'imageUrl missing');
+  // At least one note set must produce results on Tom Ford / Black Orchid.
+  const totalNotes = data.notesTop.length + data.notesMid.length + data.notesBase.length;
+  assert.ok(totalNotes > 0, 'no notes extracted at all');
 });

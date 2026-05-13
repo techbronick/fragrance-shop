@@ -138,6 +138,110 @@ function similarity(a, b) {
   return 1 - levenshtein(aN, bN) / longer;
 }
 
+export function parsePerfumePage(html) {
+  const $ = cheerio.load(html);
+  const out = {
+    description: '',
+    notesTop: [],
+    notesMid: [],
+    notesBase: [],
+    concentration: null,
+    family: null,
+    year: null,
+    gender: null,
+    rating: null,
+    reviewCount: null,
+    imageUrl: null,
+  };
+
+  // 1) JSON-LD (rare on Fragrantica modern pages but worth checking).
+  $('script[type="application/ld+json"]').each((_, el) => {
+    const raw = $(el).contents().text();
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      const items = Array.isArray(data) ? data : [data];
+      for (const item of items) {
+        if (!out.imageUrl && item.image) {
+          out.imageUrl = Array.isArray(item.image) ? item.image[0] : item.image;
+        }
+        if (!out.description && item.description) out.description = item.description;
+        if (item.aggregateRating) {
+          out.rating = parseFloat(item.aggregateRating.ratingValue) || null;
+          out.reviewCount = parseInt(item.aggregateRating.reviewCount || item.aggregateRating.ratingCount, 10) || null;
+        }
+      }
+    } catch { /* skip malformed JSON-LD */ }
+  });
+
+  // 2) Microdata — Fragrantica's primary structure.
+  if (!out.description) {
+    out.description = $('[itemprop="description"]').first().text().trim() || '';
+  }
+  if (!out.imageUrl) {
+    const imgSrc = $('[itemprop="image"]').first().attr('src') ||
+                   $('[itemprop="image"]').first().attr('content') ||
+                   $('meta[property="og:image"]').attr('content');
+    if (imgSrc) out.imageUrl = imgSrc.startsWith('//') ? `https:${imgSrc}` : imgSrc;
+  }
+  if (!out.rating) {
+    const rv = $('[itemprop="ratingValue"]').first().text().trim();
+    if (rv) out.rating = parseFloat(rv) || null;
+  }
+  if (!out.reviewCount) {
+    const rc = $('[itemprop="ratingCount"]').first().attr('content') ||
+               $('[itemprop="reviewCount"]').first().attr('content') ||
+               $('[itemprop="ratingCount"]').first().text().replace(/[^0-9]/g, '');
+    if (rc) out.reviewCount = parseInt(rc, 10) || null;
+  }
+
+  // 3) Notes pyramid — use the <pyramid-level-new notes="top|middle|base"> custom
+  //    elements that Fragrantica renders. Note labels carry class "pyramid-note-label".
+  function extractNotes(container) {
+    const notes = [];
+    container.find('.pyramid-note-label').each((_, el) => {
+      const text = $(el).text().trim();
+      if (text && !notes.includes(text)) notes.push(text);
+    });
+    return notes;
+  }
+
+  $('pyramid-level-new[notes="top"]').each((_, el) => {
+    out.notesTop = [...out.notesTop, ...extractNotes($(el))].filter(
+      (v, i, a) => a.indexOf(v) === i
+    );
+  });
+  $('pyramid-level-new[notes="middle"]').each((_, el) => {
+    out.notesMid = [...out.notesMid, ...extractNotes($(el))].filter(
+      (v, i, a) => a.indexOf(v) === i
+    );
+  });
+  $('pyramid-level-new[notes="base"]').each((_, el) => {
+    out.notesBase = [...out.notesBase, ...extractNotes($(el))].filter(
+      (v, i, a) => a.indexOf(v) === i
+    );
+  });
+
+  // 4) Year, gender, concentration — visible text scan.
+  const bodyText = $('body').text();
+  let yearMatch = bodyText.match(/launched in (\d{4})/i) ||
+                   bodyText.match(/year of launch[^0-9]{0,10}(\d{4})/i) ||
+                   bodyText.match(/(\d{4})\s*release/i) ||
+                   bodyText.match(/release year[^0-9]{0,10}(\d{4})/i);
+  if (yearMatch) out.year = parseInt(yearMatch[1], 10);
+
+  const lower = bodyText.toLowerCase();
+  if (lower.includes('for women and men') || lower.includes('shared / unisex') || lower.includes('unisex')) out.gender = 'unisex';
+  else if (lower.includes('for women')) out.gender = 'female';
+  else if (lower.includes('for men')) out.gender = 'male';
+
+  for (const c of ['Eau de Parfum', 'Eau de Toilette', 'Eau de Cologne', 'Eau Fraiche', 'Parfum', 'Extrait']) {
+    if (bodyText.includes(c)) { out.concentration = c; break; }
+  }
+
+  return out;
+}
+
 export function pickBestMatch(candidates, brand, name, threshold = 0.85) {
   if (!candidates?.length) return null;
   const query = `${brand} ${name}`;
