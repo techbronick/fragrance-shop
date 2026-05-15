@@ -32,3 +32,7 @@ pnpm-lock.yaml
 
 # enrichment script output — never commit (may contain product data)
 fragrantica-enrichment-report.txt
+
+# dev tooling — kept in the working project, not the deploy repo
+/scripts/
+supabase/.temp/
