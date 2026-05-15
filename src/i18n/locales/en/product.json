@@ -12,6 +12,10 @@
     "noVariants": "No variants available.",
     "select": "Select size"
   },
+  "description": {
+    "readMore": "Read more",
+    "readLess": "Read less"
+  },
   "purchase": {
     "addToCart": "Add to cart",
     "add": "Add",

@@ -12,6 +12,10 @@
     "noVariants": "Nu există variante disponibile.",
     "select": "Alege mărimea"
   },
+  "description": {
+    "readMore": "Citește mai mult",
+    "readLess": "Citește mai puțin"
+  },
   "purchase": {
     "addToCart": "Adaugă în coș",
     "add": "Adaugă",

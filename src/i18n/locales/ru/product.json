@@ -12,6 +12,10 @@
     "noVariants": "Нет доступных вариантов.",
     "select": "Выберите размер"
   },
+  "description": {
+    "readMore": "Читать далее",
+    "readLess": "Свернуть"
+  },
   "purchase": {
     "addToCart": "Добавить в корзину",
     "add": "Добавить",

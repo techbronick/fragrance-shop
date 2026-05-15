@@ -5,6 +5,7 @@ import { Product, SKU } from "@/types/database";
 import { formatProductPrice } from "@/utils/formatPrice";
 import { ShippingEstimate } from "@/components/ShippingEstimate";
 import { SizeSelector } from "@/components/product/SizeSelector";
+import { useLayoutEffect, useRef, useState } from "react";
 
 type Props = {
   product: Product;
@@ -30,6 +31,26 @@ export function PurchaseBlock({
   const oos = !!selectedSku && selectedSku.stock <= 0;
   const buttonText = oos ? t('purchase.order') : t('purchase.addToCart');
 
+  // Read-more state: only render the toggle when the description actually
+  // overflows the 2-line clamp. Measured against scroll/client-height after
+  // layout; recomputed on resize (line count changes with viewport width).
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [canExpand, setCanExpand] = useState(false);
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = descRef.current;
+      if (!el) return;
+      // Measure the clamped state — temporarily ensure clamp is applied.
+      const wasExpanded = expanded;
+      if (wasExpanded) return; // keep current state; user already opened it
+      setCanExpand(el.scrollHeight > el.clientHeight + 1);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [product.description, expanded]);
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -40,9 +61,24 @@ export function PurchaseBlock({
           {product.name}
         </h1>
         {product.description && (
-          <p className="text-body text-text-muted line-clamp-2">
-            {product.description}
-          </p>
+          <>
+            <p
+              ref={descRef}
+              className={`text-body text-text-muted ${expanded ? "" : "line-clamp-2"}`}
+            >
+              {product.description}
+            </p>
+            {(canExpand || expanded) && (
+              <button
+                type="button"
+                onClick={() => setExpanded((v) => !v)}
+                aria-expanded={expanded}
+                className="text-caption text-text-muted hover:text-text underline underline-offset-2 mt-1 duration-instant ease-default"
+              >
+                {expanded ? t("description.readLess") : t("description.readMore")}
+              </button>
+            )}
+          </>
         )}
       </div>
 
