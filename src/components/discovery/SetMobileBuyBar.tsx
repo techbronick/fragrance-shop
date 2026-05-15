@@ -34,6 +34,7 @@ export function SetMobileBuyBar({ config, quantity, onAddToCart, watchRef }: Pro
 
   return (
     <div
+      data-mobile-bottom-bar
       className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-paper border-t border-border"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >

@@ -258,6 +258,7 @@ export function SetBuilder() {
       </div>
 
       <div
+        data-mobile-bottom-bar
         className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-paper border-t border-border shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.18)]"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >

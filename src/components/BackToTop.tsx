@@ -10,16 +10,33 @@ import { ArrowUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const SHOW_AFTER_PX = 600; // ~one viewport on most phones
+const GAP_ABOVE_BAR_PX = 16;
 
 export const BackToTop = () => {
   const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
+  // Measured height of any sticky mobile bottom bar in the DOM
+  // (product MobileBuyBar, discovery buy/build bars, checkout submit bar —
+  // each tagged with data-mobile-bottom-bar). 0 when no bar is present, so
+  // the button reverts to its baseline corner position.
+  const [bottomBarHeight, setBottomBarHeight] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > SHOW_AFTER_PX);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const measureBar = () => {
+      const bar = document.querySelector<HTMLElement>("[data-mobile-bottom-bar]");
+      return bar ? bar.getBoundingClientRect().height : 0;
+    };
+    const update = () => {
+      setVisible(window.scrollY > SHOW_AFTER_PX);
+      setBottomBarHeight(measureBar());
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   const handleClick = () => {
@@ -47,8 +64,12 @@ export const BackToTop = () => {
           : "opacity-0 translate-y-2 pointer-events-none",
       ].join(" ")}
       style={{
-        // respect iOS safe-area at the bottom of the viewport
-        bottom: "max(1.5rem, env(safe-area-inset-bottom))",
+        // When a sticky mobile buy-bar is present, sit above it with a small
+        // gap; otherwise use the baseline corner with iOS safe-area padding.
+        bottom:
+          bottomBarHeight > 0
+            ? `${bottomBarHeight + GAP_ABOVE_BAR_PX}px`
+            : "max(1.5rem, env(safe-area-inset-bottom))",
       }}
     >
       <ArrowUp size={20} aria-hidden="true" />
