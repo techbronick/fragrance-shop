@@ -56,28 +56,48 @@ Toast.displayName = ToastPrimitives.Root.displayName
 const ToastAction = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Action>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
->(({ className, onPointerDown, onTouchStart, ...props }, ref) => (
-  <ToastPrimitives.Action
-    ref={ref}
-    className={cn(
-      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
-      className
-    )}
-    // Radix Toast.Root has swipe-to-dismiss tracking on touch devices; it
-    // consumes the first touch on any child, so without these handlers a
-    // tap on the action button needs a second tap to actually fire onClick.
-    // Stopping propagation here lets the first tap go straight to click.
-    onPointerDown={(e) => {
-      e.stopPropagation();
-      onPointerDown?.(e);
-    }}
-    onTouchStart={(e) => {
-      e.stopPropagation();
-      onTouchStart?.(e);
-    }}
-    {...props}
-  />
-))
+>(({ className, onPointerDown, onTouchStart, onClick, onPointerUp, ...props }, ref) => {
+  // Radix Toast.Root's swipe-tracking on touch devices was eating the first
+  // tap on the action button (the synthetic click got cancelled by the
+  // pointerdown swipe handler higher up the tree). The fix here is two-part:
+  //
+  //   1. stopPropagation on pointerdown/touchstart so the swipe handler
+  //      never starts on a tap that lands on the button.
+  //   2. Trigger the caller's onClick from BOTH pointerup AND click, with a
+  //      short timestamp lockout so it never fires twice on desktop (where
+  //      both events normally pair up). Pointerup fires before click and
+  //      isn't cancelled by Radix, so the first tap always navigates.
+  const firedAtRef = React.useRef(0);
+  const trigger = (e: React.SyntheticEvent) => {
+    if (Date.now() - firedAtRef.current < 400) return;
+    firedAtRef.current = Date.now();
+    onClick?.(e as React.MouseEvent<HTMLButtonElement>);
+  };
+  return (
+    <ToastPrimitives.Action
+      ref={ref}
+      className={cn(
+        "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
+        className
+      )}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        onPointerDown?.(e);
+      }}
+      onTouchStart={(e) => {
+        e.stopPropagation();
+        onTouchStart?.(e);
+      }}
+      onPointerUp={(e) => {
+        e.stopPropagation();
+        if (e.button === 0) trigger(e);
+        onPointerUp?.(e);
+      }}
+      onClick={trigger}
+      {...props}
+    />
+  );
+})
 ToastAction.displayName = ToastPrimitives.Action.displayName
 
 const ToastClose = React.forwardRef<
