@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { brandImageFileName } from './brandImageKey';
 
 export type StorageBucket = 'product-images' | 'discovery-sets-images' | 'brand-images';
 
@@ -44,8 +45,9 @@ export const uploadImageToStorage = async (
     // For other buckets, add timestamp and random string for uniqueness
     let finalFileName: string;
     if (bucket === 'brand-images' && fileName) {
-      // Ensure .webp extension for brand images
-      finalFileName = `${fileName}.webp`;
+      // ASCII-fold the brand name so the storage key is valid (e.g. "Chloé"
+      // → "Chloe.webp"); the read path applies the same fold.
+      finalFileName = brandImageFileName(fileName);
     } else {
       const timestamp = Date.now();
       const randomString = Math.random().toString(36).substring(2, 15);

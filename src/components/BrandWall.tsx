@@ -4,6 +4,14 @@ import { useMemo } from "react";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { useBrandList } from "@/hooks/useProducts";
 import { brandPath } from "@/utils/slugs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { getCachedBrandImageUrl } from "@/utils/brandImages";
+
+// Same fallback the BrandCard component uses, so an unmapped brand image
+// degrades identically across the site.
+const fallbackBrandImage =
+  "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=400&h=400&q=75&fm=webp";
 
 function shuffle<T>(arr: T[]): T[] {
   const out = [...arr];
@@ -27,8 +35,8 @@ export function BrandWall() {
   // Duplicate for seamless looping.
   const loop = [...brands, ...brands];
 
-  // Speed scales with brand count so each name spends roughly the same time on screen.
-  // Tuned so 8 brands ≈ 160s loop (adjust the multiplier if speed feels off).
+  // Speed scales with brand count so each card spends roughly the same time
+  // on screen regardless of how many brands there are.
   const animationDuration = `${brands.length * 20}s`;
 
   return (
@@ -58,20 +66,44 @@ export function BrandWall() {
           style={{ animationDuration }}
         >
           {loop.map((name, i) => (
-            <div key={`${name}-${i}`} className="flex items-center shrink-0">
-              <Link
-                to={href(brandPath(name))}
-                className="px-10 md:px-16 text-h3 md:text-h2-md font-light tracking-[0.22em] text-text-muted hover:text-text-strong transition-colors duration-quick ease-default whitespace-nowrap"
-              >
-                {name.toUpperCase()}
-              </Link>
-              <span
-                className="text-mocha/40 select-none text-h3 md:text-h2-md font-light"
-                aria-hidden="true"
-              >
-                ·
-              </span>
-            </div>
+            <Link
+              key={`${name}-${i}`}
+              to={href(brandPath(name))}
+              aria-label={name}
+              className="group/bw shrink-0 w-40 md:w-48 mx-2 md:mx-3"
+            >
+              {/* Same card layout, border + hover effects as BrandCard */}
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-2">
+                  <div className="aspect-square rounded bg-muted mb-2 overflow-hidden relative">
+                    <img
+                      src={getCachedBrandImageUrl(name)}
+                      alt={name}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = fallbackBrandImage;
+                      }}
+                    />
+                    {/* Desktop hover overlay — marquee pauses on hover via the
+                        outer group, so the card sits still while shown */}
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 md:group-hover/bw:opacity-100 transition-opacity duration-300">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="text-xs font-medium"
+                        tabIndex={-1}
+                      >
+                        {t("brandWall.shopBrand")}
+                      </Button>
+                    </div>
+                  </div>
+                  <h3 className="text-sm font-medium text-center group-hover/bw:text-primary transition-colors truncate">
+                    {name}
+                  </h3>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </div>
