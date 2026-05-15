@@ -157,7 +157,7 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
         result = await skuUtils.updateSKU(sku.id, formData);
         if (result.error) {
           console.error('SKU update failed:', result.error);
-          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+          throw new Error(`${result.error.message}${result.error.details ? `: ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
         }
         if (!result.data) {
           throw new Error('Update returned no row. RLS likely rejected the UPDATE. Verify is_admin() in SQL editor.');
@@ -167,7 +167,7 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
         result = await skuUtils.createSKU(formData);
         if (result.error) {
           console.error('SKU insert failed:', result.error);
-          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+          throw new Error(`${result.error.message}${result.error.details ? `: ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
         }
         if (!result.data) {
           throw new Error('Insert returned no row. RLS likely rejected the INSERT.');
@@ -210,7 +210,7 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
   // Inline mode skips the outer Card chrome (we're nested inside ProductForm's Card already).
   const FormContent = (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Product Selection — hidden when productId or hideProductPicker is set */}
+      {/* Product Selection: hidden when productId or hideProductPicker is set */}
       {!productId && !hideProductPicker && (
             <div className="space-y-2">
               <Label htmlFor="product_id">Product *</Label>

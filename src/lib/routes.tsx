@@ -61,9 +61,9 @@ export const routes: RouteRecord[] = [
           { index: true, element: <Index /> },
           { path: "shop", element: <Shop /> },
           { path: "brand/:slug", element: <Brand /> },
-          // Slug route — primary
+          // Slug route: primary
           { path: "product/:brandSlugParam/:productSlugParam", element: <Product /> },
-          // Legacy UUID route — redirects to slug inside Product.tsx
+          // Legacy UUID route: redirects to slug inside Product.tsx
           { path: "product/:idOrBrandSlug", element: <Product /> },
           { path: "discovery-sets", element: <DiscoverySets /> },
           { path: "discovery-sets/builder", element: <DiscoverySets /> },

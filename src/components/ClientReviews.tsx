@@ -10,7 +10,7 @@ const reviews = [
     name: "Maria Popescu",
     rating: 5,
     comment: "Am descoperit la modestshop parfumul perfect pentru mine. Setul discovery 5×2ml mi-a permis să încerc câteva variante reale, fără presiune, înainte să mă decid pe Baccarat Rouge 540. Pachetul a venit împachetat impecabil, ca un cadou. Comand fără ezitare.",
-    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 2,
@@ -23,14 +23,14 @@ const reviews = [
     id: 3,
     name: "Elena Gheorghe",
     rating: 5,
-    comment: "Caut de mult parfumuri rare și pe modestshop am găsit branduri pe care nu le mai văzusem nicăieri în Moldova: Hormone Paris, AUM, Ex Nihilo. Mostrele de 2ml sunt salvarea mea — nu mai cumpăr orb un flacon de 100ml. Mulțumesc!",
+    comment: "Caut de mult parfumuri rare și pe modestshop am găsit branduri pe care nu le mai văzusem nicăieri în Moldova: Hormone Paris, AUM, Ex Nihilo. Mostrele de 2ml sunt salvarea mea: nu mai cumpăr orb un flacon de 100ml. Mulțumesc!",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
     id: 4,
     name: "Cristian Munteanu",
     rating: 5,
-    comment: "Am luat un set discovery pentru ziua soției — 8 mostre alese personalizat din mai multe case de niche. Ambalajul singur părea de bijuterie. Zile întregi a încercat câte unul. Cea mai bună idee de cadou din ultimii ani.",
+    comment: "Am luat un set discovery pentru ziua soției: 8 mostre alese personalizat din mai multe case de niche. Ambalajul singur părea de bijuterie. Zile întregi a încercat câte unul. Cea mai bună idee de cadou din ultimii ani.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   },
   {
@@ -44,7 +44,7 @@ const reviews = [
     id: 6,
     name: "Bogdan Stoica",
     rating: 5,
-    comment: "Înainte să dau câteva mii de lei pe un flacon de Le Labo Santal 33, am luat un sample de 2ml de pe modestshop. Mi s-a părut corect. Tot ce e niche se poate testa întâi în mostră — singurul mod inteligent de a cumpăra parfum în 2026.",
+    comment: "Înainte să dau câteva mii de lei pe un flacon de Le Labo Santal 33, am luat un sample de 2ml de pe modestshop. Mi s-a părut corect. Tot ce e niche se poate testa întâi în mostră: singurul mod inteligent de a cumpăra parfum în 2026.",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=75&fm=webp"
   }
 ];

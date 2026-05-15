@@ -3,7 +3,7 @@ import { useProducts } from "./useProducts";
 import { useAllSKUs } from "./useAllSKUs";
 
 /**
- * Customer-facing product list — products that have at least one SKU,
+ * Customer-facing product list: products that have at least one SKU,
  * regardless of stock or price. Out-of-stock products remain visible so
  * customers can browse them; the UI surfaces stock state separately.
  */

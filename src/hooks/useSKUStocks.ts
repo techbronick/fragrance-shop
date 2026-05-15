@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 /**
  * Fetch current stock values for a list of SKU ids, returned as an array of
  * numbers aligned with the sorted input ids. A SKU missing from the DB is
- * treated as 0 stock (safer — pushes aggregate to "backorder").
+ * treated as 0 stock (safer: pushes aggregate to "backorder").
  *
  * The query key uses the sorted id list so callers that produce the same
  * set of ids in different orders share a cache entry.

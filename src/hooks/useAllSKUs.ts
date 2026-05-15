@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { SKU } from "@/types/database";
 
 // Columns sufficient to compute price/stock/size aggregates and to identify
-// SKUs by id+product. We deliberately avoid `select('*')` here — the full row
+// SKUs by id+product. We deliberately avoid `select('*')` here: the full row
 // is ~5x larger and the catalog has 14k+ rows, which dominates page load on
 // shop/brand views.
 const ALL_SKU_COLUMNS = "id, product_id, price, stock, size_ml, label";

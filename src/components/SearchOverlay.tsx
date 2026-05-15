@@ -18,7 +18,7 @@ export function SearchOverlay({ open, onOpenChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const href = useLocalizedHref();
-  // Only fetch when the overlay is opened — avoids the home page paying the
+  // Only fetch when the overlay is opened: avoids the home page paying the
   // cost on initial paint.
   const { data: products = [] } = useSearchableProducts(open);
 

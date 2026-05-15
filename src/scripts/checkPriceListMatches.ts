@@ -94,12 +94,12 @@ async function main() {
 
   console.log(`=== MATCHED (${matched.length}/${priceList.length}) ===`);
   for (const m of matched) {
-    console.log(`  ✓ ${m.entry.brand} — ${m.entry.name}  (db: "${m.product.brand}" / "${m.product.name}", id=${m.product.id})`);
+    console.log(`  ✓ ${m.entry.brand}: ${m.entry.name}  (db: "${m.product.brand}" / "${m.product.name}", id=${m.product.id})`);
   }
 
   console.log(`\n=== MISSING (${missing.length}/${priceList.length}) ===`);
   for (const m of missing) {
-    console.log(`  ✗ ${m.brand} — ${m.name}`);
+    console.log(`  ✗ ${m.brand}: ${m.name}`);
   }
 
   // Also list brands present in DB that are relevant

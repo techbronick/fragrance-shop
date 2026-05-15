@@ -193,7 +193,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
     if (!skuId) return null;
     // Search the FULL SKU list (not just `availableSKUs`, which is filtered by current
     // form volume). A saved slot can reference a SKU at a different size than the
-    // form's current volume — we still need to render it correctly.
+    // form's current volume: we still need to render it correctly.
     return allSKUs.find(sku => sku.id === skuId) || availableSKUs.find(sku => sku.id === skuId);
   };
 
@@ -250,7 +250,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
         result = await discoverySetUtils.updateConfig(configId, formData);
         if (result.error) {
           console.error('discovery set config update failed:', result.error);
-          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+          throw new Error(`${result.error.message}${result.error.details ? `: ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
         }
         if (!result.data) {
           throw new Error('Update returned no row. RLS likely rejected the UPDATE. Verify is_admin() in SQL editor.');
@@ -259,7 +259,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
         result = await discoverySetUtils.createConfig(formData);
         if (result.error) {
           console.error('discovery set config insert failed:', result.error);
-          throw new Error(`${result.error.message}${result.error.details ? ` — ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
+          throw new Error(`${result.error.message}${result.error.details ? `: ${result.error.details}` : ''}${result.error.hint ? ` (${result.error.hint})` : ''}`);
         }
         if (!result.data) {
           throw new Error('Insert returned no row. RLS likely rejected the INSERT.');
@@ -269,7 +269,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
 
       // Save config items for predefined sets
       if (!formData.is_customizable && configId) {
-        // Remove existing items first — surface any error so we don't leave the config half-deleted.
+        // Remove existing items first: surface any error so we don't leave the config half-deleted.
         const { data: existingItems, error: getErr } = await discoverySetUtils.getConfigItems(configId);
         if (getErr) throw new Error(`Failed to load existing items: ${getErr.message}`);
         if (existingItems) {
@@ -277,7 +277,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
             const { data: removedRows, error: removeErr } = await discoverySetUtils.removeConfigItem(item.id);
             if (removeErr) {
               console.error(`config item delete failed (slot ${item.slot_index + 1}):`, removeErr);
-              throw new Error(`Failed to remove slot ${item.slot_index + 1}: ${removeErr.message}${removeErr.details ? ` — ${removeErr.details}` : ''}`);
+              throw new Error(`Failed to remove slot ${item.slot_index + 1}: ${removeErr.message}${removeErr.details ? `: ${removeErr.details}` : ''}`);
             }
             if (!removedRows || removedRows.length === 0) {
               throw new Error(`Delete returned 0 rows for slot ${item.slot_index + 1}. RLS likely rejected the DELETE.`);
@@ -285,7 +285,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
           }
         }
 
-        // Add new items — surface any error per slot.
+        // Add new items: surface any error per slot.
         for (const item of selectedItems) {
           if (item.skuId) {
             const { data: addedRow, error: addErr } = await discoverySetUtils.addConfigItem({
@@ -295,7 +295,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
             });
             if (addErr) {
               console.error(`config item insert failed (slot ${item.slotIndex + 1}):`, addErr);
-              throw new Error(`Failed to add slot ${item.slotIndex + 1}: ${addErr.message}${addErr.details ? ` — ${addErr.details}` : ''}`);
+              throw new Error(`Failed to add slot ${item.slotIndex + 1}: ${addErr.message}${addErr.details ? `: ${addErr.details}` : ''}`);
             }
             if (!addedRow) {
               throw new Error(`Insert returned no row for slot ${item.slotIndex + 1}. RLS likely rejected the INSERT.`);
@@ -343,7 +343,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
               </Label>
               {formData.is_customizable ? (
                 <p className="text-sm text-muted-foreground">
-                  Set personalizabil — clienții aleg conținutul ({formData.total_slots} sloturi × {formData.volume_ml}ml).
+                  Set personalizabil: clienții aleg conținutul ({formData.total_slots} sloturi × {formData.volume_ml}ml).
                 </p>
               ) : selectedItems.filter(i => i.skuId).length === 0 ? (
                 <p className="text-sm text-muted-foreground">
@@ -358,7 +358,7 @@ const DiscoverySetForm: React.FC<DiscoverySetFormProps> = ({ config, onSuccess, 
                       const sizeMl = s?.size_ml ? `${s.size_ml}ml` : '';
                       return (
                         <li key={i.slotIndex}>
-                          {s?.products?.brand ? `${s.products.brand} — ${s.products.name}` : 'Produs necunoscut'}
+                          {s?.products?.brand ? `${s.products.brand}: ${s.products.name}` : 'Produs necunoscut'}
                           {sizeMl ? ` · ${sizeMl}` : ''}
                         </li>
                       );

@@ -38,7 +38,7 @@ export const useProducts = () => {
   });
 };
 /**
- * Fetches the N most recently created products. Targeted query — doesn't pull
+ * Fetches the N most recently created products. Targeted query: doesn't pull
  * the entire products table just to slice the top 8 client-side. Used on the
  * homepage's New Arrivals carousel.
  */
@@ -59,7 +59,7 @@ export const useNewestProducts = (limit = 8) => {
 
 /**
  * Returns the list of distinct brand names from the products table. ~300 short
- * strings — much lighter than fetching the full products row to derive brand
+ * strings: much lighter than fetching the full products row to derive brand
  * names client-side. Used by the homepage BrandWall marquee.
  */
 export const useBrandList = () => {

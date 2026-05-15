@@ -259,7 +259,7 @@ const Admin = () => {
       const { data, error } = await productUtils.deleteProduct(productId);
       if (error) {
         console.error('product delete failed:', error);
-        throw new Error(`${error.message}${error.details ? ` — ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
+        throw new Error(`${error.message}${error.details ? `: ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
       }
       if (!data || data.length === 0) {
         throw new Error('Delete returned 0 rows. RLS likely rejected the DELETE.');
@@ -287,7 +287,7 @@ const Admin = () => {
       const { data, error } = await skuUtils.deleteSKU(skuId);
       if (error) {
         console.error('SKU delete failed:', error);
-        throw new Error(`${error.message}${error.details ? ` — ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
+        throw new Error(`${error.message}${error.details ? `: ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
       }
       if (!data || data.length === 0) {
         throw new Error('Delete returned 0 rows. RLS likely rejected the DELETE.');
@@ -331,7 +331,7 @@ const Admin = () => {
       const { data, error } = await discoverySetUtils.deleteConfig(configId);
       if (error) {
         console.error('discovery set config delete failed:', error);
-        throw new Error(`${error.message}${error.details ? ` — ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
+        throw new Error(`${error.message}${error.details ? `: ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
       }
       if (!data || data.length === 0) {
         throw new Error('Delete returned 0 rows. RLS likely rejected the DELETE.');

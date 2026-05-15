@@ -17,7 +17,7 @@ const buttonVariants = cva(
         primary:   "bg-mocha text-paper hover:bg-mocha-hover",
         secondary: "bg-surface text-text border border-border hover:bg-surface-2",
         ghost:     "bg-transparent text-text hover:bg-surface-2",
-        // shadcn legacy aliases — point them at the new variants so old call sites still work
+        // shadcn legacy aliases: point them at the new variants so old call sites still work
         default:     "bg-mocha text-paper hover:bg-mocha-hover",
         outline:     "bg-surface text-text border border-border hover:bg-surface-2",
         link:        "bg-transparent text-mocha underline-offset-4 hover:underline",

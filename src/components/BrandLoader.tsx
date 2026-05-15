@@ -1,6 +1,6 @@
 /**
  * Branded full-screen loader for in-app data fetches. Renders the same brand
- * visuals as the splash but skips the timed reveal — content appears instantly
+ * visuals as the splash but skips the timed reveal: content appears instantly
  * and only the continuous cues (rotating gold hand, scent wisps, dots) animate.
  *
  * Use on pages that gate their entire UI on a single fetch (PDP, set detail,

@@ -169,10 +169,10 @@ const OrderDetails = () => {
       if (error) {
         // Surface RLS / constraint / network errors with full context
         console.error('Order status update failed:', error);
-        throw new Error(`${error.message}${error.details ? ` — ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
+        throw new Error(`${error.message}${error.details ? `: ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
       }
       if (!data || data.length === 0) {
-        // No rows updated — typically a silent RLS rejection on UPDATE.
+        // No rows updated: typically a silent RLS rejection on UPDATE.
         throw new Error(
           'Update returned 0 rows. This usually means RLS rejected the UPDATE. ' +
           'Verify the current user is in admin_users (run `SELECT is_admin();` in SQL Editor).'
@@ -211,7 +211,7 @@ const OrderDetails = () => {
         .select();
       if (error) {
         console.error('Order shipping update failed:', error);
-        throw new Error(`${error.message}${error.details ? ` — ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
+        throw new Error(`${error.message}${error.details ? `: ${error.details}` : ''}${error.hint ? ` (${error.hint})` : ''}`);
       }
       if (!data || data.length === 0) {
         throw new Error(

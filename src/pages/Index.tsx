@@ -16,7 +16,7 @@ import { organizationJsonLd, websiteJsonLd } from "@/utils/jsonLd";
 const Index = () => {
   const { t, i18n } = useTranslation('home');
   const localizedHref = useLocalizedHref();
-  // Fetch only the 8 newest products directly — no client-side sort over
+  // Fetch only the 8 newest products directly: no client-side sort over
   // 2k+ rows, no companion 14k-SKU pull (each ProductCard fetches its own
   // SKUs lazily via useSKUs).
   const { data: newArrivals = [] } = useNewestProducts(8);

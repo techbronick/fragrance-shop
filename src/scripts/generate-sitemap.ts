@@ -19,6 +19,29 @@ const STATIC_PATHS: Array<{ p: string; priority: number }> = [
   { p: "/careers", priority: 0.3 },
 ];
 
+async function fetchAll<T>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  client: any,
+  table: string,
+  columns: string,
+): Promise<T[]> {
+  const pageSize = 1000;
+  const all: T[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await client
+      .from(table)
+      .select(columns)
+      .range(from, from + pageSize - 1);
+    if (error) throw error;
+    if (!data || data.length === 0) break;
+    all.push(...(data as T[]));
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+  return all;
+}
+
 (async () => {
   const url = process.env.VITE_SUPABASE_URL;
   const key = process.env.VITE_SUPABASE_ANON_KEY;
@@ -27,35 +50,40 @@ const STATIC_PATHS: Array<{ p: string; priority: number }> = [
   }
   const client = createClient(url, key);
 
-  const [{ data: products = [] }, { data: skus = [] }, { data: configs = [] }] = await Promise.all([
-    client.from("products").select("id,brand,name,updated_at"),
-    client.from("skus").select("product_id"),
-    client.from("discovery_set_configs").select("id,name,updated_at,is_active"),
+  const [products, skus, configs] = await Promise.all([
+    fetchAll<{ id: string; brand: string; name: string; updated_at: string }>(client, "products", "id,brand,name,updated_at"),
+    fetchAll<{ product_id: string }>(client, "skus", "product_id"),
+    fetchAll<{ id: string; name: string; updated_at: string; is_active: boolean }>(client, "discovery_set_configs", "id,name,updated_at,is_active"),
   ]);
 
-  const productIdsWithSkus = new Set((skus ?? []).map((s: any) => s.product_id));
-  const visibleProducts = (products ?? []).filter((p: any) => productIdsWithSkus.has(p.id));
-  const visibleSets = (configs ?? []).filter((c: any) => c.is_active);
-  const brands = Array.from(new Set(visibleProducts.map((p: any) => p.brand))) as string[];
+  const productIdsWithSkus = new Set(skus.map((s) => s.product_id));
+  const visibleProducts = products.filter((p) => productIdsWithSkus.has(p.id));
+  const visibleSets = configs.filter((c) => c.is_active);
+  const brands = Array.from(new Set(visibleProducts.map((p) => p.brand)));
+
+  console.log(
+    `[sitemap] DB rows: products: ${products.length}, skus: ${skus.length}, configs: ${configs.length}. ` +
+      `Visible: products: ${visibleProducts.length}, brands: ${brands.length}, sets: ${visibleSets.length}.`,
+  );
 
   type UrlEntry = { path: string; lastmod: string; priority: number };
   const entries: UrlEntry[] = [];
 
   STATIC_PATHS.forEach(({ p, priority }) =>
-    entries.push({ path: p, lastmod: new Date().toISOString(), priority })
+    entries.push({ path: p, lastmod: new Date().toISOString(), priority }),
   );
-  visibleProducts.forEach((p: any) =>
+  visibleProducts.forEach((p) =>
     entries.push({
       path: `/product/${brandSlug(p.brand)}/${productSlug(p.name)}`,
       lastmod: p.updated_at,
       priority: 0.8,
-    })
+    }),
   );
   brands.forEach((b) =>
-    entries.push({ path: `/brand/${brandSlug(b)}`, lastmod: new Date().toISOString(), priority: 0.7 })
+    entries.push({ path: `/brand/${brandSlug(b)}`, lastmod: new Date().toISOString(), priority: 0.7 }),
   );
-  visibleSets.forEach((c: any) =>
-    entries.push({ path: `/discovery-set/${setSlug(c.name)}`, lastmod: c.updated_at, priority: 0.7 })
+  visibleSets.forEach((c) =>
+    entries.push({ path: `/discovery-set/${setSlug(c.name)}`, lastmod: c.updated_at, priority: 0.7 }),
   );
 
   const xml =

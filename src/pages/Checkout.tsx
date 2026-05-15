@@ -72,7 +72,7 @@ const Checkout = () => {
   const [touched, setTouched] = useState<Partial<Record<keyof ShippingAddress, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
 
-  // Auto-save on every change (silent — no checkbox per Q1)
+  // Auto-save on every change (silent: no checkbox per Q1)
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(shippingAddress));

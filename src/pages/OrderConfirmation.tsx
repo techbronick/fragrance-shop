@@ -109,7 +109,7 @@ const OrderConfirmation = () => {
 
       <main className="flex-1">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12">
-          {/* Headline — celebration mode vs detail mode */}
+          {/* Headline: celebration mode vs detail mode */}
           {isPlaced ? (
             <div className="text-center max-w-2xl mx-auto pt-8 mb-12">
               <div className="inline-flex items-center justify-center h-12 w-12 mb-6">
@@ -236,8 +236,8 @@ const OrderConfirmation = () => {
               {t('sections.contact')}
             </p>
             <div className="space-y-0">
-              <Row label={t('contact.email')} value={order.customer_email || '—'} />
-              <Row label={t('contact.phone')} value={order.customer_phone || '—'} />
+              <Row label={t('contact.email')} value={order.customer_email || ': '} />
+              <Row label={t('contact.phone')} value={order.customer_phone || ': '} />
             </div>
           </section>
 

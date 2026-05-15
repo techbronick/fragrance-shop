@@ -10,7 +10,7 @@ type Props = {
 
 export function SizeSelector({ skus, selectedSkuId, onChange, className }: Props) {
   const { t } = useTranslation("product");
-  // Dedup by (size_ml, price) — preserves current Product.tsx behavior
+  // Dedup by (size_ml, price): preserves current Product.tsx behavior
   const seen = new Set<string>();
   const unique = skus
     .filter((s) => {

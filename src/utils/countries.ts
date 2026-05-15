@@ -21,7 +21,7 @@ export function getLocalizedCountryOptions(t: TFunction) {
     a.label.localeCompare(b.label),
   );
 
-  // Moldova first — it's the default and most common destination
+  // Moldova first: it's the default and most common destination
   const mdOption = {
     code: MD_ENTRY.code,
     label: getCountryLabel(MD_ENTRY.code, t),

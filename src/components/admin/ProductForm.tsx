@@ -202,7 +202,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
       return;
     }
 
-    // Check for duplicate sizes — but allow the SKU being edited to keep its current size.
+    // Check for duplicate sizes: but allow the SKU being edited to keep its current size.
     const isDuplicate = skus.some(
       (sku, i) => sku.size_ml === currentSKU.size_ml && i !== editingSKUIndex,
     );
@@ -295,7 +295,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         productResult = await productUtils.updateProduct(product.id, formData);
         if (productResult.error) {
           console.error('product update failed:', productResult.error);
-          throw new Error(`${productResult.error.message}${productResult.error.details ? ` — ${productResult.error.details}` : ''}${productResult.error.hint ? ` (${productResult.error.hint})` : ''}`);
+          throw new Error(`${productResult.error.message}${productResult.error.details ? `: ${productResult.error.details}` : ''}${productResult.error.hint ? ` (${productResult.error.hint})` : ''}`);
         }
         if (!productResult.data) {
           throw new Error('Update returned no row. RLS likely rejected the UPDATE. Verify is_admin() in SQL editor.');
@@ -305,7 +305,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
         productResult = await productUtils.createProduct(formData);
         if (productResult.error) {
           console.error('product insert failed:', productResult.error);
-          throw new Error(`${productResult.error.message}${productResult.error.details ? ` — ${productResult.error.details}` : ''}${productResult.error.hint ? ` (${productResult.error.hint})` : ''}`);
+          throw new Error(`${productResult.error.message}${productResult.error.details ? `: ${productResult.error.details}` : ''}${productResult.error.hint ? ` (${productResult.error.hint})` : ''}`);
         }
         if (!productResult.data) {
           throw new Error('Insert returned no row. RLS likely rejected the INSERT.');
@@ -624,7 +624,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
               )}
             </div>
 
-            {/* SKU Form — reuses the standalone SKUForm component.
+            {/* SKU Form: reuses the standalone SKUForm component.
                 Editing existing product → direct DB save (independent of parent product save).
                 Creating new product → stage into local state, batch-save with the product. */}
             {showSKUForm && (
@@ -637,7 +637,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSuccess, onCancel 
                     hideProductPicker
                     onCancel={resetSKUForm}
                     onSuccess={async () => {
-                      // Direct-to-DB path (existing product) — refresh and close.
+                      // Direct-to-DB path (existing product): refresh and close.
                       await loadSKUs();
                       resetSKUForm();
                     }}
