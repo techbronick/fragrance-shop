@@ -110,8 +110,11 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           {product.name}
         </h3>
 
-        {sortedSkus.length > 0 && activeSkuId && (
-          <div onClick={(e) => e.stopPropagation()}>
+        {/* min-h-9 reserves the SKU-select row even before SKUs arrive,
+            so the card stays the same height across the async load and
+            doesn't reflow inside a carousel or grid. */}
+        <div className="min-h-9" onClick={(e) => e.stopPropagation()}>
+          {sortedSkus.length > 0 && activeSkuId && (
             <Select value={activeSkuId} onValueChange={setSelectedSkuId}>
               <SelectTrigger
                 className="h-9 px-2 text-caption w-full"
@@ -127,8 +130,8 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
                 ))}
               </SelectContent>
             </Select>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className="flex items-center justify-between gap-2 pt-1">
           {selectedSKU && (

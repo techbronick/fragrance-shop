@@ -8,6 +8,8 @@ import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
 import ClientReviews from "@/components/ClientReviews";
 import { DiscoveryCTA } from "@/components/home/DiscoveryCTA";
 import { useNewestProducts } from "@/hooks/useProducts";
+import { useSKUsByProductIds } from "@/hooks/useSKUs";
+import { useMemo } from "react";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { JsonLd } from "@/components/JsonLd";
@@ -17,9 +19,13 @@ const Index = () => {
   const { t, i18n } = useTranslation('home');
   const localizedHref = useLocalizedHref();
   // Fetch only the 8 newest products directly: no client-side sort over
-  // 2k+ rows, no companion 14k-SKU pull (each ProductCard fetches its own
-  // SKUs lazily via useSKUs).
+  // 2k+ rows, no companion 14k-SKU pull.
   const { data: newArrivals = [] } = useNewestProducts(8);
+  // Batch-fetch the SKUs for those 8 products and hand the map down to the
+  // carousel: every ProductCard reads from the prop, so all rows render at
+  // the same final height and the carousel doesn't reflow as data streams in.
+  const newArrivalIds = useMemo(() => newArrivals.map((p) => p.id), [newArrivals]);
+  const { skusByProduct: newArrivalSkus } = useSKUsByProductIds(newArrivalIds);
 
   return (
     <div className="min-h-screen flex flex-col bg-paper">
@@ -53,7 +59,7 @@ const Index = () => {
                 {t('newArrivals.viewAll')}
               </Link>
             </div>
-            <NewArrivalsCarousel products={newArrivals} />
+            <NewArrivalsCarousel products={newArrivals} skusByProduct={newArrivalSkus} />
           </section>
         )}
 
