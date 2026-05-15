@@ -46,7 +46,8 @@
   },
   "rating": {
     "review_one": "recenzie",
-    "review_other": "recenzii"
+    "review_few": "recenzii",
+    "review_other": "de recenzii"
   },
   "notFound": {
     "title": "Produs indisponibil",
