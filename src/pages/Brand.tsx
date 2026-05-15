@@ -1,5 +1,6 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSessionState } from "@/hooks/useSessionState";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,8 @@ import { BrandLoader } from "@/components/BrandLoader";
 import { usePricedProducts } from "@/hooks/usePricedProducts";
 import { useAllSKUs, buildMinPriceMap, buildInStockMap, buildSkusByProductMap } from "@/hooks/useAllSKUs";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
-import { ProductsView } from "@/components/shop/ProductsView";
+import { ProductsView, SortKey } from "@/components/shop/ProductsView";
+import { Filters, EMPTY_FILTERS } from "@/components/shop/FilterSidebar";
 import { brandSlug } from "@/utils/slugs";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/utils/jsonLd";
@@ -21,6 +23,15 @@ const Brand = () => {
   const { t: tCommon, i18n } = useTranslation("common");
   const { data: products = [], isLoading: productsLoading } = usePricedProducts();
   const { data: allSkus = [] } = useAllSKUs();
+
+  // Live filter / sort / search state so the toolbar actually works on the
+  // brand page (it was wired to no-op handlers before). State is keyed per
+  // history entry via useSessionState so a user who scrolls / filters,
+  // opens a product, then hits Back lands on the same view they left.
+  const location = useLocation();
+  const [filters, setFilters] = useSessionState<Filters>(`brand:${location.key}:filters`, EMPTY_FILTERS);
+  const [sort, setSort] = useSessionState<SortKey>(`brand:${location.key}:sort`, "featured");
+  const [query, setQuery] = useSessionState<string>(`brand:${location.key}:query`, "");
 
   // Render as soon as products land; SKU-derived data (price, stock) hydrates
   // on the next tick.
@@ -66,12 +77,12 @@ const Brand = () => {
           <p className="text-caption text-text-muted mt-1 mb-8">{t("count.products", { count: brandProducts.length })}</p>
           <ProductsView
             products={brandProducts}
-            filters={{ brand: [brandName], family: [], gender: "all", inStock: false }}
-            onFiltersChange={() => {}}
-            sort="featured"
-            onSortChange={() => {}}
-            query=""
-            onQueryChange={() => {}}
+            filters={filters}
+            onFiltersChange={setFilters}
+            sort={sort}
+            onSortChange={setSort}
+            query={query}
+            onQueryChange={setQuery}
             priceByProduct={priceByProduct}
             inStockByProduct={inStockByProduct}
             skusByProduct={skusByProduct}

@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigationType } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -44,12 +44,45 @@ const PageLoader = () => (
   </div>
 );
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
+// Save scroll position when leaving a history entry; on Back/Forward (POP)
+// restore it. On a fresh navigation (PUSH/REPLACE) scroll to top as before.
+// This preserves the user's place in long product/brand lists when they
+// view a product detail and hit Back.
+const ScrollRestoration = () => {
+  const location = useLocation();
+  const navType = useNavigationType();
+  const SCROLL_PREFIX = "scroll:";
 
   useEffect(() => {
+    // Effect cleanup runs with the OLD location.key — that's exactly when
+    // we want to snapshot the scroll position of the page being left.
+    return () => {
+      try {
+        sessionStorage.setItem(
+          SCROLL_PREFIX + location.key,
+          String(window.scrollY),
+        );
+      } catch {
+        /* ignore */
+      }
+    };
+  }, [location.key]);
+
+  useEffect(() => {
+    if (navType === "POP") {
+      try {
+        const saved = sessionStorage.getItem(SCROLL_PREFIX + location.key);
+        if (saved != null) {
+          // Defer one frame so the new page's DOM is in place before scrolling.
+          requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10) || 0));
+          return;
+        }
+      } catch {
+        /* fall through to scrollTo top */
+      }
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [location.key, navType]);
 
   return null;
 };
@@ -61,7 +94,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollToTop />
+          <ScrollRestoration />
           <Routes>
             <Route path="/" element={<Navigate to="/ro" replace />} />
             <Route path="/:lang" element={<LanguageGate />}>

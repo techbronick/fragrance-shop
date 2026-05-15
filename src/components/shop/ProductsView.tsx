@@ -1,5 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSessionState } from "@/hooks/useSessionState";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -112,8 +114,14 @@ export function ProductsView({
   skusByProduct,
 }: Props) {
   const { t } = useTranslation('shop');
+  const location = useLocation();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  // Persist visibleCount per history entry so Back-navigation lands the user
+  // on the same number of rendered products they had before leaving.
+  const [visibleCount, setVisibleCount] = useSessionState<number>(
+    `list:${location.key}:visibleCount`,
+    PAGE_SIZE,
+  );
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const filtered = useMemo(
