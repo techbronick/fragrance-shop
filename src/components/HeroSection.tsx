@@ -29,26 +29,30 @@ const HeroSection = () => {
       <div className="absolute inset-0 hidden md:block bg-gradient-to-tr from-black/65 via-black/20 to-transparent pointer-events-none" />
 
       {/* Mobile: TOP-anchored content. Desktop: BOTTOM-anchored (existing). */}
-      <div className="absolute inset-x-0 top-0 px-5 sm:px-6 pt-6 sm:pt-8 md:hidden">
+      <div className="absolute inset-x-0 top-0 px-5 sm:px-6 pt-8 sm:pt-12 md:hidden">
         <div className="max-w-md">
           <h1 className="text-h1 font-light text-paper leading-[1.1] tracking-[-0.01em]">
             {t('hero.tagline')}
           </h1>
-          <p className="text-body text-paper/85 mt-3 max-w-xs">
+          <p className="text-body text-paper/85 mt-4 max-w-xs">
             {t('hero.subhead')}
           </p>
-          <div className="flex flex-row flex-wrap justify-center gap-3 mt-6">
+          {/* Each CTA takes half the row via flex-1 — bigger thumb target,
+              left-aligned to match the heading, no wrap surprises on narrow
+              phones. */}
+          <div className="flex gap-3 mt-7">
             <Button
               variant="primary"
-              size="md"
+              size="lg"
+              className="flex-1"
               onClick={() => navigate(localizedHref('/shop'))}
             >
               {t('hero.ctaShop')}
             </Button>
             <Button
               variant="ghost"
-              size="md"
-              className="text-paper hover:bg-paper/10 border border-paper/40"
+              size="lg"
+              className="flex-1 text-paper hover:bg-paper/10 border border-paper/40"
               onClick={() => navigate(localizedHref('/discovery-sets'))}
             >
               {t('hero.ctaDiscovery')}

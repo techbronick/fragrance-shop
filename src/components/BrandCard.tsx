@@ -1,7 +1,4 @@
 // src/components/BrandCard.tsx
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { getCachedBrandImageUrl } from "@/utils/brandImages";
 
 export type BrandViewMode = "card" | "compact";
@@ -58,59 +55,42 @@ export const BrandCard = ({
     );
   }
   
-  // Card View (existing)
+  // Card view — mirrors ProductCard's stylistic so brand and product cards
+  // sit alongside each other on the shop page with a consistent rhythm:
+  // same outer wrapper (rounded-lg border, hover scale + shadow), same
+  // image-area treatment (aspect-square + inner group-hover zoom), same
+  // content typography (text-caption muted, text-body with mocha hover).
   return (
-    <Card
-      className="group cursor-pointer hover:shadow-lg h-full flex flex-col"
+    <div
+      className="group cursor-pointer rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={onClick}
     >
-      <CardContent className="p-2 flex flex-col h-full">
-        {/* Fixed aspect-ratio image container */}
-        <div className="aspect-square rounded bg-muted mb-2 flex items-center justify-center overflow-hidden relative">
-          <img
-            src={getCachedBrandImageUrl(brand)}
-            alt={brand}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = fallbackBrandImage;
-            }}
-          />
-          
-          {/* Desktop: CTA on hover | Mobile: no hover overlay */}
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity duration-300">
-            <Button 
-              variant="secondary" 
-              size="sm"
-              className="text-xs font-medium"
-              tabIndex={-1}
-            >
-              Shop brand
-            </Button>
-          </div>
+      <div className="aspect-square bg-white overflow-hidden">
+        <img
+          src={getCachedBrandImageUrl(brand)}
+          alt={brand}
+          className="w-full h-full object-cover transition-transform duration-slow ease-default group-hover:scale-105 will-change-transform"
+          loading="lazy"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = fallbackBrandImage;
+          }}
+        />
+      </div>
+      <div className="p-3 space-y-1">
+        <h3 className="text-body line-clamp-2 transition-colors duration-instant group-hover:text-mocha">
+          {brand}
+        </h3>
+        <div className="text-caption text-text-muted">
+          {productCount} {productCount === 1 ? 'produs' : 'produse'}
         </div>
-        
-        {/* Fixed content area */}
-        <div className="flex-1 flex flex-col justify-between min-h-0">
-          <h3 className="text-sm font-medium text-center group-hover:text-primary transition-colors line-clamp-2 md:line-clamp-1">
-            {brand}
-          </h3>
-          
-          <div className="flex justify-center mt-1">
-            <Badge variant="secondary" className="text-[10px] px-2 py-0.5">
-              {productCount} {productCount === 1 ? 'produs' : 'produse'}
-            </Badge>
-          </div>
-          
-          {tags.length > 0 && (
-            <p className="text-[10px] text-muted-foreground text-center mt-1.5 line-clamp-1">
-              {tags.slice(0, 3).join(" • ")}
-            </p>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+        {tags.length > 0 && (
+          <p className="text-caption text-text-muted line-clamp-1">
+            {tags.slice(0, 3).join(" • ")}
+          </p>
+        )}
+      </div>
+    </div>
   );
 };
 
