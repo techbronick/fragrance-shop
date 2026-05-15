@@ -41,7 +41,7 @@ export function PurchaseBlock({
     const measure = () => {
       const el = descRef.current;
       if (!el) return;
-      // Measure the clamped state — temporarily ensure clamp is applied.
+      // Measure the clamped state: temporarily ensure clamp is applied.
       const wasExpanded = expanded;
       if (wasExpanded) return; // keep current state; user already opened it
       setCanExpand(el.scrollHeight > el.clientHeight + 1);

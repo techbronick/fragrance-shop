@@ -195,7 +195,7 @@ export function ProductsView({
       </aside>
 
       <div className="flex-1 min-w-0">
-        {/* Toolbar — sticky below the app header on mobile/tablet so the
+        {/* Toolbar: sticky below the app header on mobile/tablet so the
             user can refilter, re-sort, or search without scrolling back
             up. Becomes a regular flow element at lg+ where the sidebar
             handles filtering. The negative margins + padding extend the

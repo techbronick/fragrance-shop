@@ -23,7 +23,7 @@ const HeroSection = () => {
         decoding="async"
       />
 
-      {/* Mobile: top-down gradient — content sits in the dark upper zone, bottle remains uncovered below. */}
+      {/* Mobile: top-down gradient: content sits in the dark upper zone, bottle remains uncovered below. */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/30 to-transparent md:hidden pointer-events-none" />
       {/* Desktop: existing diagonal pulling darkness to bottom-left where the tagline sits. */}
       <div className="absolute inset-0 hidden md:block bg-gradient-to-tr from-black/65 via-black/20 to-transparent pointer-events-none" />
@@ -37,7 +37,7 @@ const HeroSection = () => {
           <p className="text-body text-paper/85 mt-4 max-w-xs">
             {t('hero.subhead')}
           </p>
-          {/* Each CTA takes half the row via flex-1 — bigger thumb target,
+          {/* Each CTA takes half the row via flex-1: bigger thumb target,
               left-aligned to match the heading, no wrap surprises on narrow
               phones. */}
           <div className="flex gap-3 mt-7">

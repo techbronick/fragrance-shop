@@ -77,7 +77,7 @@ const ProductListCard = ({ product, skus: skusProp }: ProductListCardProps) => {
       className="group cursor-pointer flex gap-4 sm:gap-6 p-4 rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.005] hover:shadow-md will-change-transform"
       onClick={handleProductClick}
     >
-      {/* Image — plain img (no IntersectionObserver) so it's reliably visible at the
+      {/* Image: plain img (no IntersectionObserver) so it's reliably visible at the
           small fixed sizes used in list view. */}
       <div className="shrink-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-white rounded-lg p-2 sm:p-3 md:p-4 overflow-hidden">
         <img

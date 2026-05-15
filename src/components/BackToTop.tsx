@@ -1,6 +1,6 @@
 // src/components/BackToTop.tsx
 //
-// Floating "scroll to top" button. Mounted once at app level — it
+// Floating "scroll to top" button. Mounted once at app level: it
 // self-manages visibility (appears after the user has scrolled past
 // one viewport) and is invisible otherwise, so it costs nothing on
 // short pages. Smooth-scrolls to top on click.
@@ -16,7 +16,7 @@ export const BackToTop = () => {
   const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
   // Measured height of any sticky mobile bottom bar in the DOM
-  // (product MobileBuyBar, discovery buy/build bars, checkout submit bar —
+  // (product MobileBuyBar, discovery buy/build bars, checkout submit bar:
   // each tagged with data-mobile-bottom-bar). 0 when no bar is present, so
   // the button reverts to its baseline corner position.
   const [bottomBarHeight, setBottomBarHeight] = useState(0);

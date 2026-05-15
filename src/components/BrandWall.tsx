@@ -85,7 +85,7 @@ export function BrandWall() {
                         (e.target as HTMLImageElement).src = fallbackBrandImage;
                       }}
                     />
-                    {/* Desktop hover overlay — marquee pauses on hover via the
+                    {/* Desktop hover overlay: marquee pauses on hover via the
                         outer group, so the card sits still while shown */}
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 md:group-hover/bw:opacity-100 transition-opacity duration-300">
                       <Button

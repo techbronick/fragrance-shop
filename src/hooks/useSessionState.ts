@@ -3,7 +3,7 @@
 // useState-backed by sessionStorage, keyed by the caller. Used to preserve
 // list-view state (filters, sort, query, visibleCount) across navigations
 // so that a user returning to a page via the browser Back button lands on
-// the same view they left — not at the top of a freshly-reset list.
+// the same view they left: not at the top of a freshly-reset list.
 //
 // Keys should be scoped per history entry (e.g. include `useLocation().key`)
 // so unrelated visits to the same path don't bleed state into each other.
@@ -41,7 +41,7 @@ export function useSessionState<T>(key: string, initial: T): [T, React.Dispatch<
     try {
       sessionStorage.setItem(PREFIX + key, JSON.stringify(value));
     } catch {
-      /* quota / disabled — ignore */
+      /* quota / disabled: ignore */
     }
   }, [key, value]);
 

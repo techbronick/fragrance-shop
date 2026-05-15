@@ -55,7 +55,7 @@ export const BrandCard = ({
     );
   }
   
-  // Card view — mirrors ProductCard's stylistic so brand and product cards
+  // Card view: mirrors ProductCard's stylistic so brand and product cards
   // sit alongside each other on the shop page with a consistent rhythm:
   // same outer wrapper (rounded-lg border, hover scale + shadow), same
   // image-area treatment (aspect-square + inner group-hover zoom), same

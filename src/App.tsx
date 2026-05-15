@@ -55,7 +55,7 @@ const ScrollRestoration = () => {
   const SCROLL_PREFIX = "scroll:";
 
   useEffect(() => {
-    // Effect cleanup runs with the OLD location.key — that's exactly when
+    // Effect cleanup runs with the OLD location.key: that's exactly when
     // we want to snapshot the scroll position of the page being left.
     return () => {
       try {
