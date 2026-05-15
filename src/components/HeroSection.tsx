@@ -23,41 +23,49 @@ const HeroSection = () => {
         decoding="async"
       />
 
-      {/* Mobile: top-down gradient: content sits in the dark upper zone, bottle remains uncovered below. */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/30 to-transparent md:hidden pointer-events-none" />
+      {/* Mobile: dark top AND bottom, clear middle. The heading sits in the
+          dark top band, the bottle stays uncovered in the middle, and the
+          CTAs sit in the dark bottom band: no overlap with the focal
+          subject, and the buttons land in the natural thumb zone. */}
+      <div
+        className="absolute inset-0 md:hidden pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 38%, rgba(0,0,0,0.05) 58%, rgba(0,0,0,0.6) 100%)",
+        }}
+      />
       {/* Desktop: existing diagonal pulling darkness to bottom-left where the tagline sits. */}
       <div className="absolute inset-0 hidden md:block bg-gradient-to-tr from-black/65 via-black/20 to-transparent pointer-events-none" />
 
-      {/* Mobile: TOP-anchored content. Desktop: BOTTOM-anchored (existing). */}
-      <div className="absolute inset-x-0 top-0 px-5 sm:px-6 pt-8 sm:pt-12 md:hidden">
-        <div className="max-w-md">
+      {/* Mobile: heading docked top, CTAs docked bottom (thumb zone). The
+          flex container spans the full hero height so justify-between
+          keeps the bottle free of either block. */}
+      <div className="absolute inset-0 md:hidden flex flex-col justify-between px-5 sm:px-6 pt-8 sm:pt-12 pb-8 sm:pb-10 pointer-events-none">
+        <div className="max-w-md pointer-events-auto">
           <h1 className="text-h1 font-light text-paper leading-[1.1] tracking-[-0.01em]">
             {t('hero.tagline')}
           </h1>
           <p className="text-body text-paper/85 mt-4 max-w-xs">
             {t('hero.subhead')}
           </p>
-          {/* Each CTA takes half the row via flex-1: bigger thumb target,
-              left-aligned to match the heading, no wrap surprises on narrow
-              phones. */}
-          <div className="flex gap-3 mt-7">
-            <Button
-              variant="primary"
-              size="lg"
-              className="flex-1"
-              onClick={() => navigate(localizedHref('/shop'))}
-            >
-              {t('hero.ctaShop')}
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="flex-1 text-paper hover:bg-paper/10 border border-paper/40"
-              onClick={() => navigate(localizedHref('/discovery-sets'))}
-            >
-              {t('hero.ctaDiscovery')}
-            </Button>
-          </div>
+        </div>
+        <div className="flex gap-3 pointer-events-auto">
+          <Button
+            variant="primary"
+            size="lg"
+            className="flex-1"
+            onClick={() => navigate(localizedHref('/shop'))}
+          >
+            {t('hero.ctaShop')}
+          </Button>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="flex-1 text-paper hover:bg-paper/10 border border-paper/40"
+            onClick={() => navigate(localizedHref('/discovery-sets'))}
+          >
+            {t('hero.ctaDiscovery')}
+          </Button>
         </div>
       </div>
 
