@@ -28,8 +28,9 @@ export function BrandWall() {
   const { t } = useTranslation("common");
   const href = useLocalizedHref();
   const { data: brandNames = [] } = useBrandList();
-  const { data: products = [] } = usePricedProducts();
-  const { data: allSkus = [] } = useAllSKUs();
+  const { data: products = [], isLoading: productsLoading } = usePricedProducts();
+  const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
+  const stockReady = !productsLoading && !skusLoading;
 
   // Brands with at least one product that has at least one in-stock SKU.
   // Both queries are cached app-wide, so this doesn't trigger fresh fetches
@@ -46,17 +47,15 @@ export function BrandWall() {
     return set;
   }, [products, allSkus]);
 
-  // Shuffle once for variety, then stable-sort so in-stock brands lead.
-  // Array.prototype.sort is stable in modern engines, so the shuffled order
-  // is preserved within each group (in-stock first, out-of-stock after).
+  // Show in-stock brands only. While stock data is still loading we fall
+  // back to the full list to avoid flashing an empty section on a cold
+  // home page; once loaded, the filter takes over.
   const brands = useMemo(() => {
-    const shuffled = shuffle(brandNames);
-    return shuffled.sort((a, b) => {
-      const aIn = inStockBrands.has(a) ? 0 : 1;
-      const bIn = inStockBrands.has(b) ? 0 : 1;
-      return aIn - bIn;
-    });
-  }, [brandNames, inStockBrands]);
+    const pool = stockReady
+      ? brandNames.filter((b) => inStockBrands.has(b))
+      : brandNames;
+    return shuffle(pool);
+  }, [brandNames, inStockBrands, stockReady]);
 
   if (brands.length === 0) return null;
 
