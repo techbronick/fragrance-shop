@@ -41,17 +41,20 @@ export function BrandWall() {
 
   return (
     <section className="relative w-full bg-surface border-y border-border">
-      {/* Eyebrow label */}
+      {/* Eyebrow label: clickable, jumps to the brands view of the shop. */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-14 md:pt-20 pb-8 md:pb-10 flex items-center justify-center gap-4">
         <span className="h-px w-12 md:w-16 bg-border" aria-hidden="true" />
-        <p className="text-caption uppercase tracking-[0.22em] text-text-muted">
+        <Link
+          to={href("/shop?view=brands")}
+          className="text-caption uppercase tracking-[0.22em] text-text-muted hover:text-text-strong duration-instant ease-default"
+        >
           {t("brandWall.eyebrow")}
-        </p>
+        </Link>
         <span className="h-px w-12 md:w-16 bg-border" aria-hidden="true" />
       </div>
 
       {/* Marquee */}
-      <div className="relative overflow-hidden pb-14 md:pb-20 group">
+      <div className="relative overflow-hidden pb-8 md:pb-10 group">
         <div
           className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-40 z-10 bg-gradient-to-r from-surface to-transparent"
           aria-hidden="true"
@@ -106,6 +109,16 @@ export function BrandWall() {
             </Link>
           ))}
         </div>
+      </div>
+
+      {/* Prominent CTA to the full brands listing on the shop. */}
+      <div className="flex justify-center pb-14 md:pb-20">
+        <Link
+          to={href("/shop?view=brands")}
+          className="text-caption uppercase tracking-[0.12em] text-text-muted hover:text-text-strong underline underline-offset-4 duration-instant ease-default"
+        >
+          {t("brandWall.viewAll")}
+        </Link>
       </div>
     </section>
   );
