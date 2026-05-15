@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { useBrandList } from "@/hooks/useProducts";
+import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useAllSKUs } from "@/hooks/useAllSKUs";
 import { brandPath } from "@/utils/slugs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,9 +28,35 @@ export function BrandWall() {
   const { t } = useTranslation("common");
   const href = useLocalizedHref();
   const { data: brandNames = [] } = useBrandList();
+  const { data: products = [] } = usePricedProducts();
+  const { data: allSkus = [] } = useAllSKUs();
 
-  // Shuffled fresh on every mount.
-  const brands = useMemo(() => shuffle(brandNames), [brandNames]);
+  // Brands with at least one product that has at least one in-stock SKU.
+  // Both queries are cached app-wide, so this doesn't trigger fresh fetches
+  // if other parts of the home have already warmed them.
+  const inStockBrands = useMemo(() => {
+    const stockedProductIds = new Set<string>();
+    for (const sku of allSkus) {
+      if (sku.stock > 0) stockedProductIds.add(sku.product_id);
+    }
+    const set = new Set<string>();
+    for (const p of products) {
+      if (stockedProductIds.has(p.id)) set.add(p.brand);
+    }
+    return set;
+  }, [products, allSkus]);
+
+  // Shuffle once for variety, then stable-sort so in-stock brands lead.
+  // Array.prototype.sort is stable in modern engines, so the shuffled order
+  // is preserved within each group (in-stock first, out-of-stock after).
+  const brands = useMemo(() => {
+    const shuffled = shuffle(brandNames);
+    return shuffled.sort((a, b) => {
+      const aIn = inStockBrands.has(a) ? 0 : 1;
+      const bIn = inStockBrands.has(b) ? 0 : 1;
+      return aIn - bIn;
+    });
+  }, [brandNames, inStockBrands]);
 
   if (brands.length === 0) return null;
 

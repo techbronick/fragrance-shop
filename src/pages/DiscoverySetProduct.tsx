@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useDiscoverySetConfigsWithItems } from "@/hooks/useDiscoverySets";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { ProductImage } from "@/components/product/ProductImage";
@@ -87,6 +88,14 @@ const DiscoverySetProduct = () => {
     toast({
       title: tCommon('toast.addedToCart'),
       description: config.name,
+      action: (
+        <ToastAction
+          altText={tCommon('toast.goToCheckout')}
+          onClick={() => navigate(href('/checkout'))}
+        >
+          {tCommon('toast.goToCheckout')}
+        </ToastAction>
+      ),
     });
     setIsAdding(false);
   };
