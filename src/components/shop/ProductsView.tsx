@@ -195,8 +195,14 @@ export function ProductsView({
       </aside>
 
       <div className="flex-1 min-w-0">
-        {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+        {/* Toolbar — sticky below the app header on mobile/tablet so the
+            user can refilter, re-sort, or search without scrolling back
+            up. Becomes a regular flow element at lg+ where the sidebar
+            handles filtering. The negative margins + padding extend the
+            blurred backdrop edge-to-edge across the page container's
+            built-in padding. */}
+        <div className="sticky top-14 md:top-16 z-20 -mx-4 sm:-mx-6 md:-mx-8 px-4 sm:px-6 md:px-8 py-3 mb-4 bg-paper/95 backdrop-blur-sm border-b border-border/50 lg:static lg:mx-0 lg:px-0 lg:py-0 lg:bg-transparent lg:backdrop-blur-none lg:border-b-0">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <Input
             placeholder={t('search.productsPlaceholder')}
             value={query}
@@ -245,6 +251,7 @@ export function ProductsView({
             >
               {t('filters.open')}{activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
             </Button>
+          </div>
           </div>
         </div>
 
