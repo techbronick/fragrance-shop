@@ -17,6 +17,7 @@ import OptimizedImage from "@/components/ui/optimized-image";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { productPath } from "@/utils/slugs";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -44,6 +45,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
   const [, setImageError] = useState(false);
   const { addItem } = useCart();
   const { isAnimating, triggerAnimation } = useButtonAnimation();
+  const { toast } = useToast();
 
   const handleProductClick = () => {
     navigate(href(productPath(product)));
@@ -62,6 +64,10 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
       sizeLabel: selectedSKU.label,
       quantity: 1,
       price: Math.round(selectedSKU.price / 100),
+    });
+    toast({
+      title: tCommon('toast.addedToCart'),
+      description: `${product.name} · ${selectedSKU.label}`,
     });
     triggerAnimation();
   };

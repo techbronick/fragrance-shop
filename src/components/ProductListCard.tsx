@@ -17,6 +17,7 @@ import { useButtonAnimation } from "@/hooks/useButtonAnimation";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { productPath } from "@/utils/slugs";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ProductListCardProps {
   product: Product;
@@ -42,6 +43,7 @@ const ProductListCard = ({ product, skus: skusProp }: ProductListCardProps) => {
 
   const { addItem } = useCart();
   const { isAnimating, triggerAnimation } = useButtonAnimation();
+  const { toast } = useToast();
 
   const handleProductClick = () => {
     navigate(href(productPath(product)));
@@ -60,6 +62,10 @@ const ProductListCard = ({ product, skus: skusProp }: ProductListCardProps) => {
       sizeLabel: selectedSKU.label,
       quantity: 1,
       price: Math.round(selectedSKU.price / 100),
+    });
+    toast({
+      title: tCommon('toast.addedToCart'),
+      description: `${product.name} · ${selectedSKU.label}`,
     });
     triggerAnimation();
   };
