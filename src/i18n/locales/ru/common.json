@@ -45,6 +45,7 @@
   },
   "toast": {
     "addedToCart": "Добавлено в корзину",
+    "goToCheckout": "К оформлению",
     "setAddedToCart": "Набор добавлен в корзину",
     "samplesRemoved_one": "{{count}} образец удалён",
     "samplesRemoved_few": "{{count}} образца удалены",

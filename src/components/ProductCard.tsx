@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { productPath } from "@/utils/slugs";
 import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 interface ProductCardProps {
   product: Product;
@@ -68,6 +69,14 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
     toast({
       title: tCommon('toast.addedToCart'),
       description: `${product.name} · ${selectedSKU.label}`,
+      action: (
+        <ToastAction
+          altText={tCommon('toast.goToCheckout')}
+          onClick={() => navigate(href('/checkout'))}
+        >
+          {tCommon('toast.goToCheckout')}
+        </ToastAction>
+      ),
     });
     triggerAnimation();
   };

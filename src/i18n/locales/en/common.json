@@ -43,6 +43,7 @@
   },
   "toast": {
     "addedToCart": "Added to cart",
+    "goToCheckout": "Checkout",
     "setAddedToCart": "Set added to cart",
     "samplesRemoved_one": "{{count}} sample removed",
     "samplesRemoved_other": "{{count}} samples removed",

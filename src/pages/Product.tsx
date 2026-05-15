@@ -7,6 +7,7 @@ import { useProducts } from "@/hooks/useProducts";
 import { useSKUs } from "@/hooks/useSKUs";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { PageMeta } from "@/hooks/usePageMeta";
@@ -94,6 +95,14 @@ const Product = () => {
     toast({
       title: t('toast.addedToCart'),
       description: `${product.name} · ${selectedSku.size_ml}ml`,
+      action: (
+        <ToastAction
+          altText={t('toast.goToCheckout')}
+          onClick={() => navigate(href('/checkout'))}
+        >
+          {t('toast.goToCheckout')}
+        </ToastAction>
+      ),
     });
   };
 

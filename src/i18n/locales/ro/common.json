@@ -44,6 +44,7 @@
   },
   "toast": {
     "addedToCart": "Adăugat în coș",
+    "goToCheckout": "Finalizează",
     "setAddedToCart": "Set adăugat în coș",
     "samplesRemoved_one": "{{count}} mostră eliminată",
     "samplesRemoved_other": "{{count}} mostre eliminate",
