@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import {
   Sparkles,
   Package,
@@ -264,6 +265,10 @@ const About = () => {
               </Card>
             </div>
           </div>
+        </section>
+
+        <section className="container mx-auto px-4 pb-16 md:pb-24">
+          <ExploreDestinations tiles={["brands", "products", "discoverySets"]} />
         </section>
       </main>
 

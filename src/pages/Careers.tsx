@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent } from "@/components/ui/card";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import {
   Briefcase,
   Users,
@@ -400,6 +401,10 @@ const Careers = () => {
               </Card>
             </div>
           </div>
+        </section>
+
+        <section className="container mx-auto px-4 pb-16 md:pb-24">
+          <ExploreDestinations tiles={["brands", "products", "discoverySets"]} />
         </section>
       </main>
 

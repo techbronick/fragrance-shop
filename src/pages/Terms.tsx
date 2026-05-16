@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import {
   FileText,
   Building2,
@@ -420,6 +421,10 @@ const Terms = () => {
               </Card>
             </div>
           </div>
+        </section>
+
+        <section className="container mx-auto px-4 pb-16 md:pb-24">
+          <ExploreDestinations tiles={["brands", "products", "discoverySets"]} />
         </section>
       </main>
 

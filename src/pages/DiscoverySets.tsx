@@ -8,6 +8,7 @@ import { useDiscoverySetConfigs } from "@/hooks/useDiscoverySets";
 import { PredefinedSetsGrid } from "@/components/discovery/PredefinedSetsGrid";
 import { SetBuilder } from "@/components/discovery/SetBuilder";
 import { RecommendationWizard } from "@/components/discovery/RecommendationWizard";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 
 const DiscoverySets = () => {
   const location = useLocation();
@@ -70,6 +71,8 @@ const DiscoverySets = () => {
 
           {view === 'builder' && <SetBuilder />}
           {view === 'recommend' && <RecommendationWizard />}
+
+          <ExploreDestinations tiles={["brands", "products", "newest"]} />
         </div>
       </main>
 
