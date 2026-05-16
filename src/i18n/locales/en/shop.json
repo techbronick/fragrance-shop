@@ -74,7 +74,22 @@
     "metaDescription": "Fragrances by {{brand}} at ModestShop.",
     "eyebrow": "Brand",
     "notFound": "Brand not found",
-    "back": "Back to shop"
+    "back": "Back to shop",
+    "destinations": {
+      "eyebrow": "Continue exploring",
+      "similarBrands": {
+        "title": "Similar brands",
+        "body": "Curated houses from historic names to rare niche"
+      },
+      "allProducts": {
+        "title": "All fragrances",
+        "body": "Browse the full collection"
+      },
+      "discoverySets": {
+        "title": "Discovery sets",
+        "body": "Build your own kit with 2 or 3 samples"
+      }
+    }
   },
   "brands": {
     "empty": "No brands found for \"{{query}}\".",

@@ -11,6 +11,7 @@ import { useAllSKUs, buildMinPriceMap, buildInStockMap, buildSkusByProductMap } 
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { ProductsView, SortKey } from "@/components/shop/ProductsView";
 import { Filters, EMPTY_FILTERS } from "@/components/shop/FilterSidebar";
+import { BrandPageDestinations } from "@/components/brand/BrandPageDestinations";
 import { brandSlug } from "@/utils/slugs";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/utils/jsonLd";
@@ -87,6 +88,7 @@ const Brand = () => {
             inStockByProduct={inStockByProduct}
             skusByProduct={skusByProduct}
           />
+          <BrandPageDestinations currentBrand={brandName} />
         </div>
       </main>
       <Footer />

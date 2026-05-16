@@ -78,7 +78,22 @@
     "metaDescription": "Парфюмерия {{brand}} в ModestShop.",
     "eyebrow": "Бренд",
     "notFound": "Бренд не найден",
-    "back": "Назад в магазин"
+    "back": "Назад в магазин",
+    "destinations": {
+      "eyebrow": "Продолжайте знакомство",
+      "similarBrands": {
+        "title": "Похожие бренды",
+        "body": "Кураторские дома от исторических имён до редких ниш"
+      },
+      "allProducts": {
+        "title": "Все ароматы",
+        "body": "Смотреть всю коллекцию"
+      },
+      "discoverySets": {
+        "title": "Discovery-наборы",
+        "body": "Соберите свой набор из 2 или 3 пробников"
+      }
+    }
   },
   "brands": {
     "empty": "Нет брендов для «{{query}}».",
