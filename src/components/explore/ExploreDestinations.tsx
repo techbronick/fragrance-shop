@@ -29,22 +29,27 @@ interface Props {
 }
 
 // 2x2 image collage that fills the tile. Pads with blank cells if the
-// caller couldn't supply four images (loading or sparse data).
-function Collage({ urls }: { urls: string[] }) {
+// caller couldn't supply four images. `fit="contain"` (for product
+// bottles on white) keeps the whole bottle visible with padding;
+// `fit="cover"` (for ambient brand images) crops to fill the cell.
+function Collage({ urls, fit = "cover" }: { urls: string[]; fit?: "cover" | "contain" }) {
   const cells: (string | null)[] = [
     ...urls.slice(0, 4),
     ...Array(Math.max(0, 4 - urls.length)).fill(null),
   ];
   return (
-    <div className="grid grid-cols-2 gap-0.5 w-full h-full bg-mocha-soft">
+    <div className="grid grid-cols-2 grid-rows-2 gap-0.5 w-full h-full bg-mocha-soft">
       {cells.map((u, i) => (
-        <div key={i} className="aspect-square overflow-hidden bg-white">
+        <div key={i} className="overflow-hidden bg-white">
           {u && (
             <img
               src={u}
               alt=""
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-slow ease-default group-hover/tile:scale-105"
+              className={
+                "w-full h-full transition-transform duration-slow ease-default group-hover/tile:scale-105 " +
+                (fit === "contain" ? "object-contain p-2" : "object-cover")
+              }
             />
           )}
         </div>
@@ -64,7 +69,7 @@ function Tile({ href, visual, title, body }: TileProps) {
   return (
     <Link
       to={href}
-      className="group/tile relative block overflow-hidden rounded-lg border border-border bg-surface aspect-[4/5] hover:border-mocha/40 hover:shadow-md transition-[border-color,box-shadow] duration-instant ease-default"
+      className="group/tile relative block overflow-hidden rounded-lg border border-border bg-surface aspect-square md:aspect-[4/5] hover:border-mocha/40 hover:shadow-md transition-[border-color,box-shadow] duration-instant ease-default"
     >
       <div className="absolute inset-0">{visual}</div>
       <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 bg-gradient-to-t from-black/75 via-black/40 to-transparent text-white">
@@ -159,7 +164,7 @@ export function ExploreDestinations({
           <Tile
             key="products"
             href={href("/shop")}
-            visual={<Collage urls={productImages} />}
+            visual={<Collage urls={productImages} fit="contain" />}
             title={t("destinations.products.title")}
             body={t("destinations.products.body")}
           />
@@ -187,7 +192,7 @@ export function ExploreDestinations({
           <Tile
             key="moreFromBrand"
             href={href(`/brand/${brandSlug(brandFocus)}`)}
-            visual={<Collage urls={brandFocusImages} />}
+            visual={<Collage urls={brandFocusImages} fit="contain" />}
             title={t("destinations.moreFromBrand.title", { brand: brandFocus })}
             body={t("destinations.moreFromBrand.body")}
           />
@@ -197,7 +202,7 @@ export function ExploreDestinations({
           <Tile
             key="newest"
             href={href("/shop?sort=newest")}
-            visual={<Collage urls={newestImages} />}
+            visual={<Collage urls={newestImages} fit="contain" />}
             title={t("destinations.newest.title")}
             body={t("destinations.newest.body")}
           />
