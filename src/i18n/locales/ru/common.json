@@ -59,7 +59,11 @@
     "errorGeneric": "Произошла ошибка. Попробуйте ещё раз."
   },
   "price": {
-    "byOrder": "Под заказ"
+    "byOrder": "Под заказ",
+    "from": "От"
+  },
+  "reviews": {
+    "viewProduct": "К аромату"
   },
   "languageSwitcher": {
     "label": "Язык",

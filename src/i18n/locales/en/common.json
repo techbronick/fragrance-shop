@@ -55,7 +55,11 @@
     "errorGeneric": "An error occurred. Please try again."
   },
   "price": {
-    "byOrder": "By request"
+    "byOrder": "By request",
+    "from": "From"
+  },
+  "reviews": {
+    "viewProduct": "View perfume"
   },
   "languageSwitcher": {
     "label": "Language",

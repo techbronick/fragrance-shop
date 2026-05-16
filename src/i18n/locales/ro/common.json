@@ -56,7 +56,11 @@
     "errorGeneric": "A apărut o eroare. Încearcă din nou."
   },
   "price": {
-    "byOrder": "La comandă"
+    "byOrder": "La comandă",
+    "from": "De la"
+  },
+  "reviews": {
+    "viewProduct": "Vezi parfumul"
   },
   "languageSwitcher": {
     "label": "Limbă",

@@ -5,9 +5,11 @@ import { Star, ArrowRight } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { productPath } from "@/utils/slugs";
+import { formatPrice } from "@/utils/formatPrice";
 
 // Each testimonial is tied to a specific perfume the customer talks about.
 // Reviews whose product is out of stock or has no price at runtime are
@@ -71,25 +73,56 @@ type ProductWithStock = {
   skus: { stock: number; price: number }[];
 };
 
-// Inline product-chip rendered below each review. Whole chip is the link.
+// Inline product card rendered below each review. The whole card is the
+// link; the right-aligned CTA is decorative but provides a strong visual
+// affordance ("Vezi parfumul") since a bare arrow tested as too quiet.
 function ReviewProductChip({ product }: { product: ProductWithStock }) {
   const href = useLocalizedHref();
+  const { t } = useTranslation("common");
+  // "Starting from" price: cheapest in-stock SKU. We rely on the parent's
+  // filter (only buyable products land here) to guarantee at least one
+  // qualifying SKU, but the fallback to null keeps it safe either way.
+  const fromPriceBani = useMemo(() => {
+    const buyable = (product.skus ?? []).filter((s) => s.stock > 0 && s.price > 0);
+    if (buyable.length === 0) return null;
+    return buyable.reduce((min, s) => (s.price < min ? s.price : min), buyable[0].price);
+  }, [product.skus]);
+
   return (
     <Link
       to={href(productPath(product))}
-      className="mt-4 flex items-center gap-3 rounded-lg border border-border bg-surface px-3 py-2 hover:border-text-muted transition-colors duration-instant ease-default"
+      aria-label={`${t("reviews.viewProduct")}: ${product.brand} ${product.name}`}
+      className="group/chip mt-4 block rounded-lg border border-border bg-paper p-3 hover:border-mocha/40 hover:shadow-sm transition-[border-color,box-shadow] duration-instant ease-default"
     >
-      <img
-        src={product.image_url ?? ""}
-        alt={product.name}
-        loading="lazy"
-        className="w-12 h-12 rounded object-cover bg-white shrink-0"
-      />
-      <div className="flex-1 min-w-0">
-        <div className="text-caption text-text-muted uppercase tracking-[0.06em] truncate">{product.brand}</div>
-        <div className="text-body text-text-strong truncate">{product.name}</div>
+      <div className="flex items-start gap-4">
+        <div className="w-20 h-20 rounded bg-white shrink-0 overflow-hidden">
+          <img
+            src={product.image_url ?? ""}
+            alt={product.name}
+            loading="lazy"
+            className="w-full h-full object-contain p-2"
+          />
+        </div>
+        <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+          <div className="text-caption uppercase tracking-[0.06em] text-text-muted truncate">
+            {product.brand}
+          </div>
+          <div className="text-body text-text-strong line-clamp-2">
+            {product.name}
+          </div>
+          {fromPriceBani != null && (
+            <div className="text-caption text-text-muted">
+              {t("price.from")} {formatPrice(fromPriceBani)}
+            </div>
+          )}
+        </div>
       </div>
-      <ArrowRight className="h-4 w-4 text-text-muted shrink-0" />
+      <div className="mt-3 flex justify-end">
+        <span className="inline-flex items-center gap-1.5 text-caption uppercase tracking-[0.08em] text-mocha group-hover/chip:gap-2 transition-[gap] duration-instant ease-default">
+          {t("reviews.viewProduct")}
+          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+        </span>
+      </div>
     </Link>
   );
 }
