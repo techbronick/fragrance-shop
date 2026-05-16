@@ -76,21 +76,29 @@
     "metaDescription": "Parfumuri {{brand}} la ModestShop.",
     "eyebrow": "Brand",
     "notFound": "Brand inexistent",
-    "back": "Înapoi la magazin",
-    "destinations": {
-      "eyebrow": "Continuă explorarea",
-      "similarBrands": {
-        "title": "Branduri similare",
-        "body": "Case curatoriate de la nume istorice la nișe rare"
-      },
-      "allProducts": {
-        "title": "Toate parfumurile",
-        "body": "Vezi întreaga colecție"
-      },
-      "discoverySets": {
-        "title": "Seturi discovery",
-        "body": "Construiește-ți propriul set cu 2 sau 3 mostre"
-      }
+    "back": "Înapoi la magazin"
+  },
+  "destinations": {
+    "eyebrow": "Continuă explorarea",
+    "brands": {
+      "title": "Branduri",
+      "body": "Case curatoriate, de la nume istorice la nișe rare"
+    },
+    "products": {
+      "title": "Toate parfumurile",
+      "body": "Vezi întreaga colecție"
+    },
+    "discoverySets": {
+      "title": "Seturi discovery",
+      "body": "Construiește-ți propriul set cu 2 sau 3 mostre"
+    },
+    "moreFromBrand": {
+      "title": "Mai mult de la {{brand}}",
+      "body": "Vezi toate parfumurile brandului"
+    },
+    "newest": {
+      "title": "Cele mai noi",
+      "body": "Recent adăugate în catalog"
     }
   },
   "brands": {

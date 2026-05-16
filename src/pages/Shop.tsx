@@ -10,6 +10,7 @@ import { useAllSKUs, buildMinPriceMap, buildInStockMap, buildSkusByProductMap } 
 import { ProductsView, SortKey } from "@/components/shop/ProductsView";
 import { BrandsView } from "@/components/shop/BrandsView";
 import { Filters } from "@/components/shop/FilterSidebar";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/utils/jsonLd";
 
@@ -155,6 +156,19 @@ const Shop = () => {
             />
           ) : (
             <BrandsView products={products} />
+          )}
+
+          {!isLoading && products.length > 0 && (
+            <ExploreDestinations
+              // On the products view we skip the "products" tile (you're
+              // already on it) and lead with brands; on the brands view we
+              // do the opposite.
+              tiles={
+                view === "brands"
+                  ? ["products", "newest", "discoverySets"]
+                  : ["brands", "newest", "discoverySets"]
+              }
+            />
           )}
         </div>
       </main>

@@ -74,21 +74,29 @@
     "metaDescription": "Fragrances by {{brand}} at ModestShop.",
     "eyebrow": "Brand",
     "notFound": "Brand not found",
-    "back": "Back to shop",
-    "destinations": {
-      "eyebrow": "Continue exploring",
-      "similarBrands": {
-        "title": "Similar brands",
-        "body": "Curated houses from historic names to rare niche"
-      },
-      "allProducts": {
-        "title": "All fragrances",
-        "body": "Browse the full collection"
-      },
-      "discoverySets": {
-        "title": "Discovery sets",
-        "body": "Build your own kit with 2 or 3 samples"
-      }
+    "back": "Back to shop"
+  },
+  "destinations": {
+    "eyebrow": "Continue exploring",
+    "brands": {
+      "title": "Brands",
+      "body": "Curated houses, from historic names to rare niche"
+    },
+    "products": {
+      "title": "All fragrances",
+      "body": "Browse the full collection"
+    },
+    "discoverySets": {
+      "title": "Discovery sets",
+      "body": "Build your own kit with 2 or 3 samples"
+    },
+    "moreFromBrand": {
+      "title": "More from {{brand}}",
+      "body": "See every fragrance from this house"
+    },
+    "newest": {
+      "title": "Newest",
+      "body": "Recently added to the catalog"
     }
   },
   "brands": {
