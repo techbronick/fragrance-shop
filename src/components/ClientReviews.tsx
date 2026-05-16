@@ -94,7 +94,7 @@ function ReviewProductChip({ product }: { product: ProductWithStock }) {
       aria-label={`${t("reviews.viewProduct")}: ${product.brand} ${product.name}`}
       className="group/chip mt-4 block rounded-lg border border-border bg-paper p-3 hover:border-mocha/40 hover:shadow-sm transition-[border-color,box-shadow] duration-instant ease-default"
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-end gap-4">
         <div className="w-28 h-28 rounded bg-white shrink-0 overflow-hidden">
           <img
             src={product.image_url ?? ""}
