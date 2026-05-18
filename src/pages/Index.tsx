@@ -7,6 +7,7 @@ import { BrandWall } from "@/components/BrandWall";
 import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
 import ClientReviews from "@/components/ClientReviews";
 import { DiscoveryCTA } from "@/components/home/DiscoveryCTA";
+import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import { useNewestProducts } from "@/hooks/useProducts";
 import { useSKUsByProductIds } from "@/hooks/useSKUs";
 import { useMemo } from "react";
@@ -72,6 +73,11 @@ const Index = () => {
             {t('reviews.title')}
           </h2>
           <ClientReviews />
+        </section>
+
+        {/* Explore destinations */}
+        <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mb-16 md:mb-24">
+          <ExploreDestinations tiles={["brands", "products", "discoverySets"]} />
         </section>
       </main>
 
