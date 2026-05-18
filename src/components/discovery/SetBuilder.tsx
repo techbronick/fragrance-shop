@@ -22,7 +22,7 @@ export function SetBuilder() {
   const href = useLocalizedHref();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: products = [] } = usePricedProducts();
-  const { data: allSkus = [] } = useAllSKUs();
+  const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
   const priceByProduct = useMemo(() => buildMinPriceMap(allSkus), [allSkus]);
   const { data: configs = [] } = useDiscoverySetConfigs();
   const { addItem } = useCart();
@@ -125,6 +125,38 @@ export function SetBuilder() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalSlots]);
+
+  // Only products that have a buyable SKU at the currently-selected set
+  // volume can fill a slot. We filter the catalog here so the customer
+  // never sees something they can't actually pick at this volume, and
+  // we'll prune any prefilled selections (e.g. quiz-recommended products
+  // missing that size) below.
+  const eligibleProducts = useMemo(() => {
+    if (skusLoading) return products;
+    const ids = new Set<string>();
+    for (const s of allSkus) {
+      if (s.size_ml === volumeMl && s.stock > 0 && s.price > 0) ids.add(s.product_id);
+    }
+    return products.filter(p => ids.has(p.id));
+  }, [products, allSkus, volumeMl, skusLoading]);
+
+  // Prune selectedIds whenever the eligible pool changes (volume switch,
+  // SKU data finally landing, prefill from the quiz). Don't prune while
+  // SKU data is loading or we'd wipe everything during the loading flash.
+  useEffect(() => {
+    if (skusLoading) return;
+    const eligibleIds = new Set(eligibleProducts.map(p => p.id));
+    setSelectedIds(prev => {
+      const filtered = prev.filter(id => eligibleIds.has(id));
+      if (filtered.length !== prev.length) {
+        toast({
+          title: t('toast.samplesRemoved', { count: prev.length - filtered.length }),
+        });
+      }
+      return filtered;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eligibleProducts, skusLoading]);
 
   const productIndex = useMemo(() => {
     return new Map(products.map(p => [p.id, p]));
@@ -236,7 +268,7 @@ export function SetBuilder() {
       <div className="mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 lg:gap-12">
         <div className="min-w-0">
           <SetCatalogPane
-            products={products}
+            products={eligibleProducts}
             priceByProduct={priceByProduct}
             selectedIds={new Set(selectedIds)}
             onToggle={toggleProduct}
