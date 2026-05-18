@@ -5,6 +5,7 @@ import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useAllSKUs } from "@/hooks/useAllSKUs";
 import ProductCard from "@/components/ProductCard";
 import { Product } from "@/types/database";
 
@@ -70,6 +71,17 @@ export function RecommendationWizard() {
   const href = useLocalizedHref();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data: products = [] } = usePricedProducts();
+  const { data: allSkus = [] } = useAllSKUs();
+
+  // Quiz results should only ever suggest things the customer can buy
+  // right now: products with at least one in-stock + priced SKU. The
+  // catalog hook intentionally keeps OOS items visible elsewhere, so
+  // we apply the buyable filter just here at the recommendation source.
+  const buyableProducts = useMemo(() => {
+    const buyableIds = new Set<string>();
+    for (const s of allSkus) if (s.stock > 0 && s.price > 0) buyableIds.add(s.product_id);
+    return products.filter((p) => buyableIds.has(p.id));
+  }, [products, allSkus]);
 
   const step = searchParams.get('step') || '1';
   const occasion = (searchParams.get('occasion') as Occasion) || null;
@@ -101,8 +113,8 @@ export function RecommendationWizard() {
   };
 
   const results = useMemo(
-    () => recommendProducts(products, occasion, notes, fav),
-    [products, occasion, notes, fav]
+    () => recommendProducts(buyableProducts, occasion, notes, fav),
+    [buyableProducts, occasion, notes, fav]
   );
 
   const summary = useMemo(() => {
