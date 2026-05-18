@@ -1,13 +1,16 @@
 
+// Romanian/continental price format: "." for thousands, "," for decimals.
+// 250000 bani -> "2.500,00 Lei". Built manually instead of toLocaleString
+// because locale output is implementation-dependent (Node and various
+// browsers ship subtly different group/decimal separators for ro-MD).
 export const formatPrice = (priceInBani: number): string => {
-  const lei = priceInBani / 100;
-  // Format with comma as decimal separator and space as thousands separator
-  const formatted = lei.toLocaleString('ro-MD', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).replace('.', ',').replace(/\s/g, ' ');
-
-  return `${formatted} Lei`;
+  const cents = Math.round(priceInBani);
+  const sign = cents < 0 ? '-' : '';
+  const abs = Math.abs(cents);
+  const integerPart = Math.floor(abs / 100).toString();
+  const fractionalPart = (abs % 100).toString().padStart(2, '0');
+  const withThousands = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `${sign}${withThousands},${fractionalPart} Lei`;
 };
 
 /**
