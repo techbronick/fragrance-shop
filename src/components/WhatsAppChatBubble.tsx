@@ -39,12 +39,12 @@ export const WhatsAppChatBubble = () => {
       className={[
         "fixed left-6 z-40",
         "h-14 w-14 rounded-full",
-        "bg-[#25D366] text-white",
+        "bg-mocha hover:bg-mocha-hover text-paper",
         "shadow-lg hover:shadow-xl",
         "flex items-center justify-center",
-        "transition-[transform,box-shadow] duration-quick ease-default",
+        "transition-[transform,box-shadow,background-color] duration-quick ease-default",
         "hover:scale-[1.06] active:scale-95",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mocha focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
       ].join(" ")}
       style={{
         bottom:
