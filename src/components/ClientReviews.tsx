@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { Star, ArrowRight } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -221,6 +222,58 @@ const ClientReviews = () => {
       />
     ));
   };
+
+  // While the products query is in flight, render shimmer review cards
+  // so the reviews section reserves space instead of disappearing while
+  // we decide which reviews are buyable.
+  if (isLoading) {
+    const SkeletonReview = () => (
+      <Card className="h-full">
+        <CardContent className="p-6">
+          <div className="flex items-center space-x-4 mb-4">
+            <Skeleton className="h-10 w-10 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-32 rounded-sm" />
+              <Skeleton className="h-3 w-24 rounded-sm" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-full rounded-sm" />
+            <Skeleton className="h-4 w-5/6 rounded-sm" />
+            <Skeleton className="h-4 w-3/4 rounded-sm" />
+          </div>
+          <div className="mt-4 flex items-end gap-4 rounded-lg border border-border bg-paper p-3">
+            <Skeleton className="w-28 h-28 rounded" />
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-3 w-1/3 rounded-sm" />
+              <Skeleton className="h-4 w-2/3 rounded-sm" />
+              <Skeleton className="h-3 w-1/4 rounded-sm" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+    if (isMobile) {
+      return (
+        <div className="w-full max-w-full overflow-hidden">
+          <div className="flex space-x-4 px-4 overflow-x-hidden">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex-shrink-0 w-80">
+                <SkeletonReview />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <SkeletonReview key={i} />
+        ))}
+      </div>
+    );
+  }
 
   if (visibleReviews.length === 0) return null;
 

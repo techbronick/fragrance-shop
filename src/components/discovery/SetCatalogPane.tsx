@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Check } from "lucide-react";
 import { Product } from "@/types/database";
 import { Filters, FilterSidebar, EMPTY_FILTERS } from "@/components/shop/FilterSidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type SortKey = 'featured' | 'price-asc' | 'price-desc' | 'name' | 'newest';
 
@@ -16,6 +17,7 @@ type Props = {
   selectedIds: Set<string>;
   onToggle: (productId: string) => void;
   canAddMore: boolean;
+  isLoading?: boolean;
 };
 
 const PAGE_SIZE = 24;
@@ -67,7 +69,7 @@ function applySort(
   }
 }
 
-export function SetCatalogPane({ products, priceByProduct, selectedIds, onToggle, canAddMore }: Props) {
+export function SetCatalogPane({ products, priceByProduct, selectedIds, onToggle, canAddMore, isLoading }: Props) {
   const { t } = useTranslation("discovery");
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
   const [query, setQuery] = useState("");
@@ -126,7 +128,21 @@ export function SetCatalogPane({ products, priceByProduct, selectedIds, onToggle
           </div>
         </div>
 
-        {sorted.length === 0 ? (
+        {isLoading && products.length === 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="bg-surface border border-border rounded-lg">
+                <div className="aspect-square bg-white p-3 sm:p-4 md:p-5 rounded-t-lg">
+                  <Skeleton className="w-full h-full rounded-md" />
+                </div>
+                <div className="p-3 space-y-1">
+                  <Skeleton className="h-3 w-1/2 rounded-sm" />
+                  <Skeleton className="h-4 w-3/4 rounded-sm" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : sorted.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-h3 md:text-h3-md font-medium text-text-strong">
               {t('builder.catalog.empty')}

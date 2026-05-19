@@ -21,7 +21,7 @@ export function SetBuilder() {
   const { t: tD } = useTranslation("discovery");
   const href = useLocalizedHref();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: products = [] } = usePricedProducts();
+  const { data: products = [], isLoading: productsLoading } = usePricedProducts();
   const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
   const priceByProduct = useMemo(() => buildMinPriceMap(allSkus), [allSkus]);
   const { data: configs = [] } = useDiscoverySetConfigs();
@@ -273,6 +273,7 @@ export function SetBuilder() {
             selectedIds={new Set(selectedIds)}
             onToggle={toggleProduct}
             canAddMore={selectedIds.length < totalSlots}
+            isLoading={productsLoading || skusLoading}
           />
         </div>
         <div className="hidden lg:block">

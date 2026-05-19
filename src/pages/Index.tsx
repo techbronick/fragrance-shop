@@ -21,7 +21,7 @@ const Index = () => {
   const localizedHref = useLocalizedHref();
   // Fetch only the 8 newest products directly: no client-side sort over
   // 2k+ rows, no companion 14k-SKU pull.
-  const { data: newArrivals = [] } = useNewestProducts(8);
+  const { data: newArrivals = [], isLoading: newArrivalsLoading } = useNewestProducts(8);
   // Batch-fetch the SKUs for those 8 products and hand the map down to the
   // carousel: every ProductCard reads from the prop, so all rows render at
   // the same final height and the carousel doesn't reflow as data streams in.
@@ -47,7 +47,7 @@ const Index = () => {
         <BrandWall />
 
         {/* New Arrivals */}
-        {newArrivals.length > 0 && (
+        {(newArrivalsLoading || newArrivals.length > 0) && (
           <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-16 md:mt-24 mb-16 md:mb-24">
             <div className="flex items-baseline justify-between mb-8">
               <h2 className="text-caption uppercase tracking-[0.06em] text-text-muted font-normal m-0">
@@ -60,7 +60,11 @@ const Index = () => {
                 {t('newArrivals.viewAll')}
               </Link>
             </div>
-            <NewArrivalsCarousel products={newArrivals} skusByProduct={newArrivalSkus} />
+            <NewArrivalsCarousel
+              products={newArrivals}
+              skusByProduct={newArrivalSkus}
+              isLoading={newArrivalsLoading}
+            />
           </section>
         )}
 

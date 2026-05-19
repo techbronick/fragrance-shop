@@ -8,6 +8,7 @@ import { useAllSKUs } from "@/hooks/useAllSKUs";
 import { brandPath } from "@/utils/slugs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getCachedBrandImageUrl } from "@/utils/brandImages";
 
 // Same fallback the BrandCard component uses, so an unmapped brand image
@@ -27,7 +28,7 @@ function shuffle<T>(arr: T[]): T[] {
 export function BrandWall() {
   const { t } = useTranslation("common");
   const href = useLocalizedHref();
-  const { data: brandNames = [] } = useBrandList();
+  const { data: brandNames = [], isLoading: brandsLoading } = useBrandList();
   const { data: products = [], isLoading: productsLoading } = usePricedProducts();
   const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
   const stockReady = !productsLoading && !skusLoading;
@@ -56,6 +57,35 @@ export function BrandWall() {
       : brandNames;
     return shuffle(pool);
   }, [brandNames, inStockBrands, stockReady]);
+
+  // Show a static row of skeleton tiles while the brand list query is
+  // still in flight, so the home doesn't render a blank gap between the
+  // hero and the next section.
+  if (brandsLoading && brandNames.length === 0) {
+    return (
+      <section className="relative w-full bg-surface border-y border-border">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pt-14 md:pt-20 pb-8 md:pb-10 flex items-center justify-center gap-4">
+          <span className="h-px w-12 md:w-16 bg-border" aria-hidden="true" />
+          <Skeleton className="h-3 w-40 rounded-sm" />
+          <span className="h-px w-12 md:w-16 bg-border" aria-hidden="true" />
+        </div>
+        <div className="pb-14 md:pb-20 overflow-hidden">
+          <div className="flex gap-4 md:gap-6 px-4 sm:px-6 md:px-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="shrink-0 w-40 md:w-48">
+                <Card>
+                  <CardContent className="p-2">
+                    <Skeleton className="aspect-square w-full rounded mb-2" />
+                    <Skeleton className="h-4 w-2/3 mx-auto rounded-sm" />
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (brands.length === 0) return null;
 

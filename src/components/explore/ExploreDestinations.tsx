@@ -8,6 +8,7 @@ import { useAllSKUs } from "@/hooks/useAllSKUs";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { getCachedBrandImageUrl } from "@/utils/brandImages";
 import { brandSlug } from "@/utils/slugs";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export type DestinationTile =
   | "brands"          // Branduri (link to brands view)
@@ -32,7 +33,15 @@ interface Props {
 // caller couldn't supply four images. `fit="contain"` (for product
 // bottles on white) keeps the whole bottle visible with padding;
 // `fit="cover"` (for ambient brand images) crops to fill the cell.
-function Collage({ urls, fit = "cover" }: { urls: string[]; fit?: "cover" | "contain" }) {
+function Collage({
+  urls,
+  fit = "cover",
+  loading = false,
+}: {
+  urls: string[];
+  fit?: "cover" | "contain";
+  loading?: boolean;
+}) {
   const cells: (string | null)[] = [
     ...urls.slice(0, 4),
     ...Array(Math.max(0, 4 - urls.length)).fill(null),
@@ -41,7 +50,7 @@ function Collage({ urls, fit = "cover" }: { urls: string[]; fit?: "cover" | "con
     <div className="grid grid-cols-2 grid-rows-2 gap-0.5 w-full h-full bg-mocha-soft">
       {cells.map((u, i) => (
         <div key={i} className="overflow-hidden bg-white">
-          {u && (
+          {u ? (
             <img
               src={u}
               alt=""
@@ -51,7 +60,9 @@ function Collage({ urls, fit = "cover" }: { urls: string[]; fit?: "cover" | "con
                 (fit === "contain" ? "object-contain p-2" : "object-cover")
               }
             />
-          )}
+          ) : loading ? (
+            <Skeleton className="w-full h-full rounded-none" />
+          ) : null}
         </div>
       ))}
     </div>
@@ -95,10 +106,11 @@ export function ExploreDestinations({
 }: Props) {
   const { t } = useTranslation("shop");
   const href = useLocalizedHref();
-  const { data: brandNames = [] } = useBrandList();
-  const { data: products = [] } = usePricedProducts();
-  const { data: allSkus = [] } = useAllSKUs();
-  const { data: newestProducts = [] } = useNewestProducts(12);
+  const { data: brandNames = [], isLoading: brandsLoading } = useBrandList();
+  const { data: products = [], isLoading: productsLoading } = usePricedProducts();
+  const { data: allSkus = [], isLoading: skusLoading } = useAllSKUs();
+  const { data: newestProducts = [], isLoading: newestLoading } = useNewestProducts(12);
+  const dataLoading = brandsLoading || productsLoading || skusLoading || newestLoading;
 
   const stockedProductIds = useMemo(() => {
     const s = new Set<string>();
@@ -154,7 +166,7 @@ export function ExploreDestinations({
           <Tile
             key="brands"
             href={href("/shop?view=brands")}
-            visual={<Collage urls={brandImages} />}
+            visual={<Collage urls={brandImages} loading={dataLoading} />}
             title={t("destinations.brands.title")}
             body={t("destinations.brands.body")}
           />
@@ -164,7 +176,7 @@ export function ExploreDestinations({
           <Tile
             key="products"
             href={href("/shop")}
-            visual={<Collage urls={productImages} fit="contain" />}
+            visual={<Collage urls={productImages} fit="contain" loading={dataLoading} />}
             title={t("destinations.products.title")}
             body={t("destinations.products.body")}
           />
@@ -192,7 +204,7 @@ export function ExploreDestinations({
           <Tile
             key="moreFromBrand"
             href={href(`/brand/${brandSlug(brandFocus)}`)}
-            visual={<Collage urls={brandFocusImages} fit="contain" />}
+            visual={<Collage urls={brandFocusImages} fit="contain" loading={dataLoading} />}
             title={t("destinations.moreFromBrand.title", { brand: brandFocus })}
             body={t("destinations.moreFromBrand.body")}
           />
@@ -202,7 +214,7 @@ export function ExploreDestinations({
           <Tile
             key="newest"
             href={href("/shop?sort=newest")}
-            visual={<Collage urls={newestImages} fit="contain" />}
+            visual={<Collage urls={newestImages} fit="contain" loading={dataLoading} />}
             title={t("destinations.newest.title")}
             body={t("destinations.newest.body")}
           />
