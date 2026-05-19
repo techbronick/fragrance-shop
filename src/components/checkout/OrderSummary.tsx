@@ -14,6 +14,7 @@ type Totals = {
   vat: number;
   total: number;
   taxIncluded: number;
+  shippingMode: 'free' | 'tbd';
 };
 
 type Props = {
@@ -93,7 +94,14 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
       {/* Subtotal / Shipping / VAT */}
       <div className="border-t border-border pt-4 space-y-2">
         <Row label={tc('summary.subtotal')} value={totals.subtotal > 0 ? formatCheckoutPrice(totals.subtotal) : byOrder} />
-        <Row label={tc('summary.shipping')} value={formatCheckoutPrice(totals.shipping)} />
+        <Row
+          label={tc('summary.shipping')}
+          value={
+            totals.shippingMode === 'free'
+              ? tc('summary.shippingFree')
+              : tc('summary.shippingTbd')
+          }
+        />
         {country !== 'MD' && vatRate !== null && (
           <Row
             label={tc('summary.vat', { rate: vatRatePercent })}
@@ -101,6 +109,9 @@ export function OrderSummary({ items, totals, country, mdlPerEur }: Props) {
           />
         )}
         <ShippingEstimateForCart />
+        <p className="text-caption text-text-muted pt-2 leading-relaxed">
+          {tc('summary.shippingPolicy')}
+        </p>
       </div>
 
       {/* Total */}

@@ -22,7 +22,23 @@ import { CreateOrderInput } from "@/types/orders";
 
 const STORAGE_KEY = 'checkout_shipping_v1';
 const TAX_RATE = 0.15;
-const FLAT_SHIPPING_BANI = 5000; // 50 Lei (B+C decision: flat shipping for now)
+
+// Shipping policy: free inside Chișinău (city limits), confirmed by the
+// shop on WhatsApp for any other address (incl. international). The total
+// shown reflects subtotal + VAT only; the actual shipping cost is added
+// during WhatsApp confirmation, in line with the offsite payment model.
+export type ShippingMode = 'free' | 'tbd';
+
+function isInChisinau(city: string): boolean {
+  const norm = (city || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .trim();
+  return ['chisinau', 'kishinev', 'кишинев', 'кишинёв']
+    .map((n) => n.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''))
+    .includes(norm);
+}
 
 function loadSavedAddress(): ShippingAddress {
   try {
@@ -88,15 +104,19 @@ const Checkout = () => {
       (sum, item) => sum + item.price * 100 * item.quantity,
       0,
     );
-    const shipping = FLAT_SHIPPING_BANI;
     const country = shippingAddress.country;
+    // In-Chișinău orders ship free; everything else is "calculated at
+    // confirmation" (the shop adjusts the final amount on WhatsApp).
+    const shippingMode: ShippingMode =
+      country === 'MD' && isInChisinau(shippingAddress.city) ? 'free' : 'tbd';
+    const shipping = 0;
     const vat = calculateVatBani(subtotal, country);
     const total = subtotal + shipping + vat;
     const taxIncluded = country === 'MD'
       ? Math.round(total * (TAX_RATE / (1 + TAX_RATE)))
       : 0;
-    return { subtotal, shipping, vat, total, taxIncluded };
-  }, [items, shippingAddress.country]);
+    return { subtotal, shipping, vat, total, taxIncluded, shippingMode };
+  }, [items, shippingAddress.country, shippingAddress.city]);
 
   const onBlur = (field: keyof ShippingAddress) => {
     setTouched(prev => ({ ...prev, [field]: true }));
