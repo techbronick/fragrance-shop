@@ -62,6 +62,10 @@
   "reviews": {
     "viewProduct": "Vezi parfumul"
   },
+  "whatsapp": {
+    "chatLabel": "Chat pe WhatsApp",
+    "defaultMessage": "Salut! Aș dori informații."
+  },
   "languageSwitcher": {
     "label": "Limbă",
     "ro": "RO",

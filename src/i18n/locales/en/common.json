@@ -61,6 +61,10 @@
   "reviews": {
     "viewProduct": "View perfume"
   },
+  "whatsapp": {
+    "chatLabel": "Chat on WhatsApp",
+    "defaultMessage": "Hi! I'd like some info."
+  },
   "languageSwitcher": {
     "label": "Language",
     "ro": "RO",

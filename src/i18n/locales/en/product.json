@@ -20,10 +20,27 @@
     "addToCart": "Add to cart",
     "add": "Add",
     "added": "Added",
-    "order": "Order (7–14 days)",
+    "order": "Order (7-14 days)",
     "orderShort": "Order",
     "decreaseQty": "Decrease quantity",
-    "increaseQty": "Increase quantity"
+    "increaseQty": "Increase quantity",
+    "contactWhatsapp": "Contact us on WhatsApp",
+    "whatsappOosMessage": "Hi! I'm interested in {{brand}} {{name}} ({{size}}). Is it available?"
+  },
+  "policy": {
+    "warranty": {
+      "title": "Warranty",
+      "body": "All products in our online store are original."
+    },
+    "shipping": {
+      "title": "Payment and shipping",
+      "inCity": "Within the city: free delivery.",
+      "outsideCity": "Outside the city, shipping cost is calculated at order confirmation.",
+      "timeline": "Any perfume you choose ships within 7 business days from order placement.",
+      "whatsapp": "For more information, contact us on <wa>WhatsApp</wa>.",
+      "waMessage": "Hi! I'd like info about an order.",
+      "retailNote": "Prices are valid for the online store only and may differ from retail."
+    }
   },
   "details": {
     "concentration": "Concentration",

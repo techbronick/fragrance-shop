@@ -17,6 +17,7 @@ import { PurchaseBlock } from "@/components/product/PurchaseBlock";
 import { MobileBuyBar } from "@/components/product/MobileBuyBar";
 import { NotesSection } from "@/components/product/NotesSection";
 import { DetailsSection } from "@/components/product/DetailsSection";
+import { ProductPolicyAccordion } from "@/components/product/ProductPolicyAccordion";
 import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
 import { SKU } from "@/types/database";
 import { findProductByPath, productPath, UUID_RE, brandSlug, productSlug } from "@/utils/slugs";
@@ -154,6 +155,7 @@ const Product = () => {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 pb-24 md:pb-32 space-y-16">
           <NotesSection product={product} />
           <DetailsSection product={product} />
+          <ProductPolicyAccordion />
           <ExploreDestinations
             tiles={["moreFromBrand", "brands", "discoverySets"]}
             brandFocus={product.brand}

@@ -65,6 +65,10 @@
   "reviews": {
     "viewProduct": "К аромату"
   },
+  "whatsapp": {
+    "chatLabel": "Чат в WhatsApp",
+    "defaultMessage": "Здравствуйте! Хотел бы получить информацию."
+  },
   "languageSwitcher": {
     "label": "Язык",
     "ro": "RO",

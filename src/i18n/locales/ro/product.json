@@ -20,10 +20,27 @@
     "addToCart": "Adaugă în coș",
     "add": "Adaugă",
     "added": "Adăugat",
-    "order": "Comandă (7–14 zile)",
+    "order": "Comandă (7-14 zile)",
     "orderShort": "Comandă",
     "decreaseQty": "Scade cantitatea",
-    "increaseQty": "Crește cantitatea"
+    "increaseQty": "Crește cantitatea",
+    "contactWhatsapp": "Contactează-ne pe WhatsApp",
+    "whatsappOosMessage": "Salut! Sunt interesat de {{brand}} {{name}} ({{size}}). Este disponibil?"
+  },
+  "policy": {
+    "warranty": {
+      "title": "Condiții de garanție",
+      "body": "Toate produsele prezentate în magazinul nostru online sunt originale."
+    },
+    "shipping": {
+      "title": "Plata și livrarea",
+      "inCity": "Pentru comenzi în raza orașului: livrare gratuită.",
+      "outsideCity": "În afara orașului, costul livrării va fi calculat la confirmarea comenzii.",
+      "timeline": "Orice parfum pe care îl alegeți va fi livrat în termen de 7 zile lucrătoare din momentul plasării comenzii.",
+      "whatsapp": "Pentru informații suplimentare, contactează-ne pe <wa>WhatsApp</wa>.",
+      "waMessage": "Salut! Aș dori informații despre o comandă.",
+      "retailNote": "Prețul este valabil doar pentru magazinul online și poate diferi de prețurile din magazinele cu amănuntul."
+    }
   },
   "details": {
     "concentration": "Concentrație",

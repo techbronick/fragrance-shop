@@ -23,6 +23,7 @@ import FAQ from "./pages/FAQ";
 import Login from "./pages/Login";
 import Brand from "./pages/Brand";
 import { BackToTop } from "./components/BackToTop";
+import { WhatsAppChatBubble } from "./components/WhatsAppChatBubble";
 
 const Admin = lazy(() => import("./pages/Admin"));
 const DiscoverySetProduct = lazy(() => import("./pages/DiscoverySetProduct"));
@@ -97,6 +98,7 @@ const App = () => (
         <BrowserRouter>
           <ScrollRestoration />
           <BackToTop />
+          <WhatsAppChatBubble />
           <Routes>
             <Route path="/" element={<Navigate to="/ro" replace />} />
             <Route path="/:lang" element={<LanguageGate />}>
