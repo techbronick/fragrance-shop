@@ -52,11 +52,11 @@ export const BackToTop = () => {
       // padding. z-40 keeps it under modal dialogs but above page content.
       className={[
         "fixed bottom-6 right-6 z-40",
-        "h-11 w-11 rounded-full",
-        "bg-text-strong text-paper",
+        "h-14 w-14 rounded-full",
+        "bg-mocha hover:bg-mocha-hover text-paper",
         "shadow-md hover:shadow-lg",
         "flex items-center justify-center",
-        "transition-[opacity,transform,box-shadow] duration-quick ease-default",
+        "transition-[opacity,transform,box-shadow,background-color] duration-quick ease-default",
         "hover:scale-[1.06] active:scale-95",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mocha focus-visible:ring-offset-2 focus-visible:ring-offset-paper",
         visible
@@ -72,7 +72,7 @@ export const BackToTop = () => {
             : "max(1.5rem, env(safe-area-inset-bottom))",
       }}
     >
-      <ArrowUp size={20} aria-hidden="true" />
+      <ArrowUp size={24} aria-hidden="true" />
     </button>
   );
 };
