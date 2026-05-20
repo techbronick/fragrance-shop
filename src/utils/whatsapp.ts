@@ -4,7 +4,9 @@
 // Phone number is intentionally hard-coded (not env) because it's the
 // public contact, not a secret: same as the tel: link on /contact.
 
-export const WHATSAPP_NUMBER = "37360123456";
+// Moldova mobile 069269204 -> international wa.me format (373 + number
+// without the leading 0).
+export const WHATSAPP_NUMBER = "37369269204";
 
 export function whatsappLink(message?: string): string {
   const base = `https://wa.me/${WHATSAPP_NUMBER}`;
