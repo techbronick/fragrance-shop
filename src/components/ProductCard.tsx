@@ -92,7 +92,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
       className="group cursor-pointer h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={handleProductClick}
     >
-      <div className="aspect-square bg-white p-[12%]">
+      <div className="aspect-square shrink-0 bg-white p-[12%]">
         <OptimizedImage
           src={product.image_url || fallbackImage}
           alt={`Parfum ${product.name} de la ${product.brand}`}
@@ -105,7 +105,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
         />
       </div>
       <div className="p-3 space-y-2 flex flex-col flex-1">
-        <div className="text-caption text-text-muted">{product.brand}</div>
+        <div className="text-caption text-text-muted truncate">{product.brand}</div>
         {/* min-h-[2lh] reserves exactly two text lines so a one-line name
             and a two-line name produce the same card height across a grid
             or carousel row. */}

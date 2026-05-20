@@ -65,7 +65,7 @@ export const BrandCard = ({
       className="group cursor-pointer h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={onClick}
     >
-      <div className="aspect-square bg-white overflow-hidden">
+      <div className="aspect-square shrink-0 bg-white overflow-hidden">
         <img
           src={getCachedBrandImageUrl(brand)}
           alt={brand}
