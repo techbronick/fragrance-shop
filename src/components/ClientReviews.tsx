@@ -93,7 +93,7 @@ function ReviewProductChip({ product }: { product: ProductWithStock }) {
     <Link
       to={href(productPath(product))}
       aria-label={`${t("reviews.viewProduct")}: ${product.brand} ${product.name}`}
-      className="group/chip mt-4 block rounded-lg border border-border bg-paper p-3 hover:border-mocha/40 hover:shadow-sm transition-[border-color,box-shadow] duration-instant ease-default"
+      className="group/chip block rounded-lg border border-border bg-paper p-3 hover:border-mocha/40 hover:shadow-sm transition-[border-color,box-shadow] duration-instant ease-default"
     >
       <div className="flex items-end gap-4">
         <div className="w-28 h-28 rounded bg-white shrink-0 overflow-hidden">
@@ -298,8 +298,8 @@ const ClientReviews = () => {
                   className="review-card flex-shrink-0 w-80 snap-start"
                   style={{ touchAction: 'pan-x' }}
                 >
-                  <Card className="h-full">
-                    <CardContent className="p-6">
+                  <Card className="h-full flex flex-col">
+                    <CardContent className="p-6 flex flex-col flex-1">
                       <div className="flex items-center space-x-4 mb-4">
                         <Avatar>
                           <AvatarImage src={review.image} alt={review.name} />
@@ -313,7 +313,11 @@ const ClientReviews = () => {
                         </div>
                       </div>
                       <p className="text-muted-foreground leading-relaxed">{review.comment}</p>
-                      {product && <ReviewProductChip product={product} />}
+                      {product && (
+                        <div className="mt-auto pt-4">
+                          <ReviewProductChip product={product} />
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -333,8 +337,8 @@ const ClientReviews = () => {
           const product = inStockById.get(review.productId);
           return (
             <CarouselItem key={review.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 review-card">
-              <Card className="h-full">
-                <CardContent className="p-6">
+              <Card className="h-full flex flex-col">
+                <CardContent className="p-6 flex flex-col flex-1">
                   <div className="flex items-center space-x-4 mb-4">
                     <Avatar>
                       <AvatarImage src={review.image} alt={review.name} />
@@ -348,7 +352,11 @@ const ClientReviews = () => {
                     </div>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">{review.comment}</p>
-                  {product && <ReviewProductChip product={product} />}
+                  {product && (
+                    <div className="mt-auto pt-4">
+                      <ReviewProductChip product={product} />
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </CarouselItem>
