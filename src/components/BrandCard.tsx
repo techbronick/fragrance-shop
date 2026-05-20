@@ -62,7 +62,7 @@ export const BrandCard = ({
   // content typography (text-caption muted, text-body with mocha hover).
   return (
     <div
-      className="group cursor-pointer rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
+      className="group cursor-pointer h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={onClick}
     >
       <div className="aspect-square bg-white overflow-hidden">
@@ -77,8 +77,10 @@ export const BrandCard = ({
           }}
         />
       </div>
-      <div className="p-3 space-y-1">
-        <h3 className="text-body line-clamp-2 transition-colors duration-instant group-hover:text-mocha">
+      <div className="p-3 space-y-1 flex flex-col flex-1">
+        {/* Reserve two lines so single-word and multi-word brand names
+            produce the same card height in a grid row. */}
+        <h3 className="text-body line-clamp-2 min-h-[2lh] transition-colors duration-instant group-hover:text-mocha">
           {brand}
         </h3>
         <div className="text-caption text-text-muted">

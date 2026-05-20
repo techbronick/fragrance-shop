@@ -89,7 +89,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
 
   return (
     <div
-      className="group cursor-pointer rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
+      className="group cursor-pointer h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={handleProductClick}
     >
       <div className="aspect-square bg-white p-[12%]">
@@ -104,9 +104,12 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           onError={handleImageError}
         />
       </div>
-      <div className="p-3 space-y-2">
+      <div className="p-3 space-y-2 flex flex-col flex-1">
         <div className="text-caption text-text-muted">{product.brand}</div>
-        <h3 className="text-body line-clamp-2 transition-colors duration-instant group-hover:text-mocha">
+        {/* min-h-[2lh] reserves exactly two text lines so a one-line name
+            and a two-line name produce the same card height across a grid
+            or carousel row. */}
+        <h3 className="text-body line-clamp-2 min-h-[2lh] transition-colors duration-instant group-hover:text-mocha">
           {product.name}
         </h3>
 
@@ -133,7 +136,9 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-2 pt-1">
+        {/* mt-auto pins the price/button row to the bottom so the row
+            aligns across cards of differing content height. */}
+        <div className="flex items-center justify-between gap-2 pt-1 mt-auto min-h-9">
           {selectedSKU && (
             <p className="text-body">{formatProductPrice(selectedSKU.price, tCommon('price.byOrder'))}</p>
           )}
