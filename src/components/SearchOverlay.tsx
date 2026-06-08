@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
 import { useSearchableProducts } from "@/hooks/useProducts";
 import { useTranslation } from "react-i18next";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
@@ -52,7 +52,7 @@ export function SearchOverlay({ open, onOpenChange }: Props) {
       <DialogContent
         className="max-w-[600px] p-0 gap-0 bg-surface"
       >
-        <form onSubmit={submit} className="flex items-center gap-3 px-6 py-4 border-b border-border">
+        <form onSubmit={submit} className="flex items-center gap-3 px-6 py-4 border-b border-border pr-12">
           <Search className="text-text-muted shrink-0" />
           <input
             ref={inputRef}
@@ -62,14 +62,6 @@ export function SearchOverlay({ open, onOpenChange }: Props) {
             placeholder={t("search.placeholder")}
             className="flex-1 bg-transparent outline-none text-body text-text placeholder:text-text-faint"
           />
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            className="text-text-muted hover:text-text duration-instant ease-default"
-            aria-label={t("search.close")}
-          >
-            <X />
-          </button>
         </form>
 
         {results.length > 0 && (

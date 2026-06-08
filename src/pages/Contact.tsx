@@ -141,10 +141,10 @@ const Contact = () => {
                           <div className="flex-1">
                             <h3 className="font-medium mb-1">{tStatic("contact.phone")}</h3>
                             <a
-                              href="tel:+37360123456"
+                              href="tel:+37369269204"
                               className="text-primary hover:underline text-caption"
                             >
-                              +373 60 123 456
+                              +373 69 269 204
                             </a>
                             <p className="text-caption text-muted-foreground mt-1">
                               {tStatic("contact.phoneHours")}
@@ -198,15 +198,17 @@ const Contact = () => {
                         <div className="flex items-start space-x-4">
                           <Clock className="h-6 w-6 text-mocha flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h3 className="font-medium mb-2">{tStatic("contact.schedule")}</h3>
+                            <h3 className="font-medium mb-1">{tStatic("contact.scheduleOnline")}</h3>
+                            <p className="text-caption text-muted-foreground mb-4">{tStatic("contact.scheduleOnlineNote")}</p>
+                            <h3 className="font-medium mb-2">{tStatic("contact.schedulePhysical")}</h3>
                             <div className="space-y-1 text-caption text-muted-foreground">
                               <div className="flex justify-between">
                                 <span>{tStatic("contact.weekdays")}</span>
-                                <span className="font-medium">10:00 - 18:00</span>
+                                <span className="font-medium">10:00 - 20:00</span>
                               </div>
                               <div className="flex justify-between">
                                 <span>{tStatic("contact.saturday")}</span>
-                                <span className="font-medium">10:00 - 16:00</span>
+                                <span className="font-medium">11:00 - 18:00</span>
                               </div>
                               <div className="flex justify-between">
                                 <span>{tStatic("contact.sunday")}</span>

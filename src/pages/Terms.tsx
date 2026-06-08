@@ -104,7 +104,7 @@ const Terms = () => {
                           </div>
                           <div className="flex items-center space-x-2">
                             <Phone className="h-4 w-4 text-primary" />
-                            <span>Telefon: <a href="tel:+37360123456" className="text-primary hover:underline">+373 60 123 456</a></span>
+                            <span>Telefon: <a href="tel:+37369269204" className="text-primary hover:underline">+373 69 269 204</a></span>
                           </div>
                           <div className="flex items-center space-x-2">
                             <Instagram className="h-4 w-4 text-primary" />

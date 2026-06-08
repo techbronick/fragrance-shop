@@ -102,9 +102,11 @@ export function localBusinessJsonLd() {
     "image": `${SITE}/logo.png`,
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Strada Alexei Şciusev 82",
       "addressCountry": "MD",
       "addressLocality": "Chișinău",
     },
+    "telephone": "+37369269204",
     "url": SITE,
     "priceRange": "$$",
   };

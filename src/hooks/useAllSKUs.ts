@@ -46,10 +46,14 @@ export function buildMinPriceMap(skus: SKU[]): Map<string, number> {
   return map;
 }
 
+// A product is "in stock" for the purpose of the user-facing filter only
+// if it has at least one SKU with BOTH stock > 0 AND price > 0. Products
+// marked stock=1 but price=0 render as "La comandă" — they're not actually
+// buyable on the spot, so they don't satisfy "doar produse în stoc".
 export function buildInStockMap(skus: SKU[]): Map<string, boolean> {
   const map = new Map<string, boolean>();
   for (const sku of skus) {
-    if (sku.stock > 0) map.set(sku.product_id, true);
+    if (sku.stock > 0 && sku.price > 0) map.set(sku.product_id, true);
   }
   return map;
 }
