@@ -66,32 +66,35 @@ export function FilterSidebar({ products, filters, onChange, onClearAll }: Props
 
   return (
     <div className="space-y-8">
-      {/* Brand */}
-      <div>
-        <p className="text-caption uppercase tracking-[0.06em] text-text-muted mb-3">
-          {t('filters.brand')}
-        </p>
-        <div className="space-y-2">
-          {visibleBrands.map(b => (
-            <label key={b} className="flex items-center gap-2 cursor-pointer">
-              <Checkbox
-                checked={filters.brand.includes(b)}
-                onCheckedChange={() => toggleBrand(b)}
-              />
-              <span className="text-body text-text">{b}</span>
-            </label>
-          ))}
+      {/* Brand: hidden when only one distinct brand is present (e.g. on a
+          brand page), where a single-option filter is pointless. */}
+      {allBrands.length > 1 && (
+        <div>
+          <p className="text-caption uppercase tracking-[0.06em] text-text-muted mb-3">
+            {t('filters.brand')}
+          </p>
+          <div className="space-y-2">
+            {visibleBrands.map(b => (
+              <label key={b} className="flex items-center gap-2 cursor-pointer">
+                <Checkbox
+                  checked={filters.brand.includes(b)}
+                  onCheckedChange={() => toggleBrand(b)}
+                />
+                <span className="text-body text-text">{b}</span>
+              </label>
+            ))}
+          </div>
+          {allBrands.length > SECTION_LIMIT && (
+            <button
+              type="button"
+              onClick={() => setBrandsExpanded(e => !e)}
+              className="text-caption text-text-muted hover:text-text mt-2 duration-instant ease-default"
+            >
+              {brandsExpanded ? t('filters.showLess') : t('filters.showAll', { count: allBrands.length })}
+            </button>
+          )}
         </div>
-        {allBrands.length > SECTION_LIMIT && (
-          <button
-            type="button"
-            onClick={() => setBrandsExpanded(e => !e)}
-            className="text-caption text-text-muted hover:text-text mt-2 duration-instant ease-default"
-          >
-            {brandsExpanded ? t('filters.showLess') : t('filters.showAll', { count: allBrands.length })}
-          </button>
-        )}
-      </div>
+      )}
 
       {/* Familie */}
       {allFamilies.length > 0 && (
