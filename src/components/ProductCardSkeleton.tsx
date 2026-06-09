@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // (NewArrivalsCarousel, brand grids, etc.) so the layout doesn't pop.
 export function ProductCardSkeleton() {
   return (
-    <div className="h-full flex flex-col rounded-lg border border-border bg-surface">
+    <div className="w-full h-full flex flex-col rounded-lg border border-border bg-surface">
       <div className="w-full aspect-square shrink-0 bg-white p-[12%]">
         <Skeleton className="w-full h-full rounded-md" />
       </div>

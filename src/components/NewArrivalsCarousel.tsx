@@ -20,7 +20,7 @@ const NewArrivalsCarousel = ({ products, skusByProduct, isLoading }: Props) => {
           {Array.from({ length: 4 }).map((_, i) => (
             <CarouselItem
               key={i}
-              className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 h-auto"
+              className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 flex"
             >
               <ProductCardSkeleton />
             </CarouselItem>
@@ -37,7 +37,7 @@ const NewArrivalsCarousel = ({ products, skusByProduct, isLoading }: Props) => {
         {products.map((product) => (
           <CarouselItem
             key={product.id}
-            className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 h-auto"
+            className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 flex"
           >
             <ProductCard
               product={product}

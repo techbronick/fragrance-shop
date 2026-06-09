@@ -336,8 +336,8 @@ const ClientReviews = () => {
         {visibleReviews.map((review) => {
           const product = inStockById.get(review.productId);
           return (
-            <CarouselItem key={review.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 review-card">
-              <Card className="h-full flex flex-col">
+            <CarouselItem key={review.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 review-card flex">
+              <Card className="h-full w-full flex flex-col">
                 <CardContent className="p-6 flex flex-col flex-1">
                   <div className="flex items-center space-x-4 mb-4">
                     <Avatar>

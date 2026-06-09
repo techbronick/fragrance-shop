@@ -89,7 +89,7 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
 
   return (
     <div
-      className="group cursor-pointer h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
+      className="group cursor-pointer w-full h-full flex flex-col rounded-lg border border-border bg-surface transition-[transform,box-shadow] duration-slow ease-default hover:scale-[1.015] hover:shadow-md will-change-transform"
       onClick={handleProductClick}
     >
       <div className="w-full aspect-square shrink-0 bg-white p-[12%]">
