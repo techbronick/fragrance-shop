@@ -28,6 +28,18 @@ const Index = () => {
   const newArrivalIds = useMemo(() => newArrivals.map((p) => p.id), [newArrivals]);
   const { skusByProduct: newArrivalSkus } = useSKUsByProductIds(newArrivalIds);
 
+  // Float in-stock (stock > 0 AND price > 0) products to the front of the
+  // carousel while keeping newest order within each group, so "Noutăți"
+  // leads with things you can actually buy. Falls back to the raw newest
+  // order until SKUs load.
+  const sortedNewArrivals = useMemo(() => {
+    const buyable = (id: string) =>
+      (newArrivalSkus.get(id) ?? []).some((s) => s.stock > 0 && s.price > 0);
+    const inStock = newArrivals.filter((p) => buyable(p.id));
+    const rest = newArrivals.filter((p) => !buyable(p.id));
+    return [...inStock, ...rest];
+  }, [newArrivals, newArrivalSkus]);
+
   return (
     <div className="min-h-screen flex flex-col bg-paper">
       <PageMeta
@@ -61,7 +73,7 @@ const Index = () => {
               </Link>
             </div>
             <NewArrivalsCarousel
-              products={newArrivals}
+              products={sortedNewArrivals}
               skusByProduct={newArrivalSkus}
               isLoading={newArrivalsLoading}
             />

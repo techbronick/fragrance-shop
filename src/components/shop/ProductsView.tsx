@@ -97,8 +97,26 @@ function applySort(
       );
     case 'featured':
     default:
-      return arr;
+      // Default view: keep the incoming order but float in-stock products
+      // to the top so out-of-stock / "La comandă" items sink below. Stable
+      // partition preserves relative order within each group.
+      return stableInStockFirst(arr, inStockByProduct);
   }
+}
+
+// Stable partition: in-stock items keep their order at the front, OOS items
+// keep their order at the back.
+function stableInStockFirst(
+  products: Product[],
+  inStockByProduct: Map<string, boolean>,
+): Product[] {
+  const inStock: Product[] = [];
+  const outOfStock: Product[] = [];
+  for (const p of products) {
+    if (inStockByProduct.get(p.id)) inStock.push(p);
+    else outOfStock.push(p);
+  }
+  return [...inStock, ...outOfStock];
 }
 
 export function ProductsView({

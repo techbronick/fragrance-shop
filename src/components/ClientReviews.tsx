@@ -50,7 +50,7 @@ const reviews = [
   },
   {
     id: 5,
-    name: "Andreea Diaconu",
+    name: "Andrei Diaconu",
     rating: 5,
     productId: "150dda75-b20c-4e0e-b533-781f30888327", // Attar Collection / Floral Musk
     comment: "Am scris pe Instagram cerând recomandări pentru un parfum feminin de seară. Mi s-a sugerat Attar Collection Floral Musk și a fost o alegere perfectă: mosc cremos, floral fără să fie greoi. La modestshop simți că vorbești cu cineva care chiar cunoaște parfumeria.",
