@@ -104,19 +104,23 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           onError={handleImageError}
         />
       </div>
-      <div className="p-3 space-y-2 flex flex-col flex-1">
-        <div className="text-caption text-text-muted truncate">{product.brand}</div>
-        {/* min-h-[2lh] reserves exactly two text lines so a one-line name
-            and a two-line name produce the same card height across a grid
-            or carousel row. */}
-        <h3 className="text-body line-clamp-2 min-h-[2lh] transition-colors duration-instant group-hover:text-mocha">
+      {/* Every row below is a FIXED-height slot so the brand, name, size
+          selector and price/button line up pixel-for-pixel across every
+          card regardless of name length or whether SKUs have loaded.
+          Three zones: header (brand + 2-line name), then the selector,
+          then the price/action row pinned to the bottom via mt-auto. */}
+      <div className="p-3 flex flex-col flex-1">
+        {/* Header: brand (1 line) + name (exactly 2 lines) */}
+        <div className="text-caption text-text-muted truncate leading-snug h-[1.25rem]">
+          {product.brand}
+        </div>
+        <h3 className="text-body line-clamp-2 h-[2.6rem] leading-snug mt-1 transition-colors duration-instant group-hover:text-mocha">
           {product.name}
         </h3>
 
-        {/* min-h-9 reserves the SKU-select row even before SKUs arrive,
-            so the card stays the same height across the async load and
-            doesn't reflow inside a carousel or grid. */}
-        <div className="min-h-9" onClick={(e) => e.stopPropagation()}>
+        {/* Size selector slot — fixed 36px row, reserved even before SKUs
+            arrive so the layout never reflows. */}
+        <div className="h-9 mt-3" onClick={(e) => e.stopPropagation()}>
           {sortedSkus.length > 0 && activeSkuId && (
             <Select value={activeSkuId} onValueChange={setSelectedSkuId}>
               <SelectTrigger
@@ -136,9 +140,9 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           )}
         </div>
 
-        {/* mt-auto pins the price/button row to the bottom so the row
-            aligns across cards of differing content height. */}
-        <div className="flex items-center justify-between gap-2 pt-1 mt-auto min-h-9">
+        {/* Price + action — pinned to the bottom, fixed 36px row so the
+            CTA sits at the same baseline on every card. */}
+        <div className="flex items-center justify-between gap-2 mt-auto pt-3 h-[3rem]">
           {selectedSKU && (
             <p className="text-body">{formatProductPrice(selectedSKU.price, tCommon('price.byOrder'))}</p>
           )}

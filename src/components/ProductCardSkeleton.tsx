@@ -10,14 +10,19 @@ export function ProductCardSkeleton() {
       <div className="w-full aspect-square shrink-0 bg-white p-[12%]">
         <Skeleton className="w-full h-full rounded-md" />
       </div>
-      <div className="p-3 space-y-2 flex flex-col flex-1">
-        <Skeleton className="h-3 w-1/3 rounded-sm" />
-        {/* Same 2-line reservation as the real card's name. */}
-        <div className="min-h-[2lh]">
+      {/* Mirror ProductCard's fixed-height slots exactly so there's no
+          layout shift when real data replaces the shimmer. */}
+      <div className="p-3 flex flex-col flex-1">
+        <div className="h-[1.25rem] flex items-center">
+          <Skeleton className="h-3 w-1/3 rounded-sm" />
+        </div>
+        <div className="h-[2.6rem] mt-1">
           <Skeleton className="h-4 w-3/4 rounded-sm" />
         </div>
-        <Skeleton className="h-9 w-full rounded-sm" />
-        <div className="flex items-center justify-between gap-2 pt-1 mt-auto min-h-9">
+        <div className="h-9 mt-3">
+          <Skeleton className="h-9 w-full rounded-sm" />
+        </div>
+        <div className="flex items-center justify-between gap-2 mt-auto pt-3 h-[3rem]">
           <Skeleton className="h-4 w-1/3 rounded-sm" />
           <Skeleton className="h-8 w-16 rounded-sm" />
         </div>
