@@ -65,7 +65,7 @@ export function BrandsView({ products }: Props) {
             <p className="text-h2 md:text-h2-md font-medium text-text-strong mb-6">
               {letter}
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr gap-4">
               {brands.map(b => (
                 <BrandCard
                   key={b}

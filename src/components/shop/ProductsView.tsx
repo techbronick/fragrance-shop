@@ -315,7 +315,7 @@ export function ProductsView({
           <>
             <h2 className="sr-only">{t('products.heading', { defaultValue: 'Products' })}</h2>
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-fr gap-4 md:gap-6">
                 {visible.map(p => <ProductCard key={p.id} product={p} skus={skusByProduct.get(p.id) ?? []} />)}
               </div>
             ) : (
