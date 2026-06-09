@@ -8,8 +8,8 @@ import NewArrivalsCarousel from "@/components/NewArrivalsCarousel";
 import ClientReviews from "@/components/ClientReviews";
 import { DiscoveryCTA } from "@/components/home/DiscoveryCTA";
 import { ExploreDestinations } from "@/components/explore/ExploreDestinations";
-import { useNewestProducts } from "@/hooks/useProducts";
-import { useSKUsByProductIds } from "@/hooks/useSKUs";
+import { usePricedProducts } from "@/hooks/usePricedProducts";
+import { useAllSKUs, buildInStockMap, buildSkusByProductMap } from "@/hooks/useAllSKUs";
 import { useMemo } from "react";
 import { PageMeta } from "@/hooks/usePageMeta";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
@@ -19,26 +19,53 @@ import { organizationJsonLd, websiteJsonLd } from "@/utils/jsonLd";
 const Index = () => {
   const { t, i18n } = useTranslation('home');
   const localizedHref = useLocalizedHref();
-  // Fetch only the 8 newest products directly: no client-side sort over
-  // 2k+ rows, no companion 14k-SKU pull.
-  const { data: newArrivals = [], isLoading: newArrivalsLoading } = useNewestProducts(8);
-  // Batch-fetch the SKUs for those 8 products and hand the map down to the
-  // carousel: every ProductCard reads from the prop, so all rows render at
-  // the same final height and the carousel doesn't reflow as data streams in.
-  const newArrivalIds = useMemo(() => newArrivals.map((p) => p.id), [newArrivals]);
-  const { skusByProduct: newArrivalSkus } = useSKUsByProductIds(newArrivalIds);
+  // "Noutăți" should only ever show products you can actually buy
+  // (stock > 0 AND price > 0), spread across different brands and
+  // shuffled, rather than the literal newest rows (which are mostly
+  // "La comandă" right now). Both queries are cached app-wide so the
+  // BrandWall above warms them.
+  const { data: pricedProducts = [], isLoading: pricedLoading } = usePricedProducts();
+  const { data: allSkus = [] } = useAllSKUs();
+  const newArrivalSkus = useMemo(() => buildSkusByProductMap(allSkus), [allSkus]);
 
-  // Float in-stock (stock > 0 AND price > 0) products to the front of the
-  // carousel while keeping newest order within each group, so "Noutăți"
-  // leads with things you can actually buy. Falls back to the raw newest
-  // order until SKUs load.
   const sortedNewArrivals = useMemo(() => {
-    const buyable = (id: string) =>
-      (newArrivalSkus.get(id) ?? []).some((s) => s.stock > 0 && s.price > 0);
-    const inStock = newArrivals.filter((p) => buyable(p.id));
-    const rest = newArrivals.filter((p) => !buyable(p.id));
-    return [...inStock, ...rest];
-  }, [newArrivals, newArrivalSkus]);
+    const inStockMap = buildInStockMap(allSkus); // requires stock>0 && price>0
+    const buyable = pricedProducts.filter((p) => inStockMap.get(p.id));
+    if (buyable.length === 0) return [];
+
+    // Group buyable products by brand, shuffle within each brand and the
+    // brand order, then round-robin pick so the carousel leads with a
+    // diverse set of houses instead of 8 of the same brand.
+    const byBrand = new Map<string, typeof buyable>();
+    for (const p of buyable) {
+      const arr = byBrand.get(p.brand);
+      if (arr) arr.push(p);
+      else byBrand.set(p.brand, [p]);
+    }
+    const shuffle = <T,>(a: T[]): T[] => {
+      const out = [...a];
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
+    };
+    const brands = shuffle([...byBrand.keys()]);
+    const pools = brands.map((b) => shuffle(byBrand.get(b)!));
+    const picked: typeof buyable = [];
+    let added = true;
+    while (added && picked.length < 12) {
+      added = false;
+      for (const pool of pools) {
+        const next = pool.shift();
+        if (next) { picked.push(next); added = true; }
+        if (picked.length >= 12) break;
+      }
+    }
+    return picked;
+  }, [pricedProducts, allSkus]);
+
+  const newArrivalsLoading = pricedLoading;
 
   return (
     <div className="min-h-screen flex flex-col bg-paper">
@@ -59,7 +86,7 @@ const Index = () => {
         <BrandWall />
 
         {/* New Arrivals */}
-        {(newArrivalsLoading || newArrivals.length > 0) && (
+        {(newArrivalsLoading || sortedNewArrivals.length > 0) && (
           <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-16 md:mt-24 mb-16 md:mb-24">
             <div className="flex items-baseline justify-between mb-8">
               <h2 className="text-caption uppercase tracking-[0.06em] text-text-muted font-normal m-0">
