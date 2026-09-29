@@ -6,6 +6,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string | null
+          email: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       discovery_recommendations: {
         Row: {
           created_at: string

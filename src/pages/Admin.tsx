@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from '@/components/ui/pagination';
 import {
@@ -26,6 +26,8 @@ import { useToast } from '@/hooks/use-toast';
 import { matchesSearch } from '@/utils/stringUtils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { deleteImageFromStorage } from '@/utils/storage-upload';
 import { useLocalizedHref } from '@/hooks/useLocalizedHref';
 
 const Admin = () => {
@@ -263,6 +265,18 @@ const Admin = () => {
       }
       if (!data || data.length === 0) {
         throw new Error('Delete returned 0 rows. RLS likely rejected the DELETE.');
+      }
+      // Remove the product's uploaded image too, unless another product uses it.
+      const imageUrl: string | undefined = data[0]?.image_url;
+      if (imageUrl?.includes('/product-images/')) {
+        const { count } = await supabase
+          .from('products')
+          .select('id', { count: 'exact', head: true })
+          .eq('image_url', imageUrl);
+        if (!count) {
+          const { error: imgError } = await deleteImageFromStorage(imageUrl, 'product-images');
+          if (imgError) console.warn('product image not removed:', imgError.message);
+        }
       }
       toast({
         title: "Product Deleted",
@@ -692,6 +706,14 @@ const Admin = () => {
                     <div>
                       <h4 className="text-sm font-medium mb-3">Orders by Status</h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {orderStats.statusCounts.pending > 0 && (
+                          <div className="p-3 border rounded-lg">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-muted-foreground">Pending</span>
+                              <Badge variant="secondary">{orderStats.statusCounts.pending}</Badge>
+                            </div>
+                          </div>
+                        )}
                         {orderStats.statusCounts.placed > 0 && (
                           <div className="p-3 border rounded-lg">
                             <div className="flex items-center justify-between">
@@ -873,8 +895,8 @@ const Admin = () => {
                                     <div className="flex-1">
                                       <div className="flex items-center gap-3 mb-2">
                                         <h4 className="font-medium text-lg">{product.name}</h4>
-                                        <Badge variant="outline">{product.family}</Badge>
-                                        <Badge variant="outline">{product.concentration}</Badge>
+                                        {product.family && <Badge variant="outline">{product.family}</Badge>}
+                                        {product.concentration && <Badge variant="outline">{product.concentration}</Badge>}
                                       </div>
                                       <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
                                         {product.description}
@@ -912,14 +934,14 @@ const Admin = () => {
                                             {product.stock_volume} ml in stock
                                           </Badge>
                                         )}
-                                        {product.stock_volume === 0 && (
+                                        {!(product.stock_volume > 0) && productSKUs.length > 0 && productSKUs.every((s) => !(s.stock > 0)) && (
                                           <Badge variant="destructive">No stock</Badge>
                                         )}
                                         {product.gender_neutral && <Badge variant="outline">Unisex</Badge>}
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                      <Button
+                                      <Button aria-label="Edit"
                                         variant="outline"
                                         size="sm"
                                         onClick={() => {
@@ -940,7 +962,7 @@ const Admin = () => {
                                         <Plus className="h-4 w-4" />
                                         SKU
                                       </Button>
-                                      <Button
+                                      <Button aria-label="Delete"
                                         variant="destructive"
                                         size="sm"
                                         onClick={() => handleDeleteProduct(product.id)}
@@ -1020,7 +1042,7 @@ const Admin = () => {
                                                       </div>
                                                     </div>
                                                     <div className="flex items-center gap-2 ml-4">
-                                                      <Button
+                                                      <Button aria-label="Edit SKU"
                                                         variant="outline"
                                                         size="sm"
                                                         onClick={() => {
@@ -1030,7 +1052,7 @@ const Admin = () => {
                                                       >
                                                         <Edit className="h-4 w-4" />
                                                       </Button>
-                                                      <Button
+                                                      <Button aria-label="Delete SKU"
                                                         variant="destructive"
                                                         size="sm"
                                                         onClick={() => handleDeleteSKU(sku.id)}
@@ -1162,7 +1184,7 @@ const Admin = () => {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Button
+                            <Button aria-label="Edit"
                               variant="outline"
                               size="sm"
                               onClick={() => {
@@ -1172,7 +1194,7 @@ const Admin = () => {
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button
+                            <Button aria-label="Delete"
                               variant="destructive"
                               size="sm"
                               onClick={() => handleDeleteConfig(config.id)}
@@ -1238,6 +1260,7 @@ const Admin = () => {
           }}
         >
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+            <DialogTitle className="sr-only">Product editor</DialogTitle>
             <ProductForm
               product={selectedProduct}
               onSuccess={handleProductFormSuccess}
@@ -1257,6 +1280,7 @@ const Admin = () => {
           }}
         >
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogTitle className="sr-only">SKU editor</DialogTitle>
             <SKUForm
               sku={selectedSKU}
               productId={selectedSKU?.product_id}
@@ -1277,6 +1301,7 @@ const Admin = () => {
           }}
         >
           <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+            <DialogTitle className="sr-only">Discovery set editor</DialogTitle>
             <DiscoverySetForm
               config={selectedConfig}
               onSuccess={handleDiscoveryFormSuccess}

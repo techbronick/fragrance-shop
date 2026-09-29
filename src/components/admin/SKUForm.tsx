@@ -125,8 +125,8 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+    e?.preventDefault();
 
     // Inline mode: hand the draft to the parent (ProductForm) and skip the DB write.
     if (onSubmitDraft) {
@@ -208,8 +208,13 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
   }, [products, productSearchQuery]);
 
   // Inline mode skips the outer Card chrome (we're nested inside ProductForm's Card already).
+  // Inside ProductForm this must not be a <form>: nested forms are invalid
+  // HTML, and the browser natively submitted the page on "Create SKU",
+  // reloading the admin and discarding the unsaved product.
+  const embedded = !!onSubmitDraft;
+  const Wrapper = embedded ? 'div' : 'form';
   const FormContent = (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <Wrapper {...(embedded ? {} : { onSubmit: handleSubmit })} className="space-y-6">
       {/* Product Selection: hidden when productId or hideProductPicker is set */}
       {!productId && !hideProductPicker && (
             <div className="space-y-2">
@@ -408,13 +413,17 @@ const SKUForm: React.FC<SKUFormProps> = ({ sku, productId, onSuccess, onCancel, 
                 Cancel
               </Button>
             )}
-            <Button type="submit" disabled={loading || (!hideProductPicker && !formData.product_id)}>
+            <Button
+              type={embedded ? 'button' : 'submit'}
+              onClick={embedded ? handleSubmit : undefined}
+              disabled={loading || (!hideProductPicker && !formData.product_id)}
+            >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               <Save className="mr-2 h-4 w-4" />
               {sku?.id ? 'Update SKU' : 'Create SKU'}
             </Button>
           </div>
-        </form>
+        </Wrapper>
   );
 
   if (hideProductPicker) {

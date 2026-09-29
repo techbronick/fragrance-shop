@@ -487,6 +487,7 @@ export const getOrderStats = async () => {
       ordersToday,
       monthRevenue,
       statusCounts: {
+        pending: statusCounts.pending || 0,
         draft: statusCounts.draft || 0,
         placed: statusCounts.placed || 0,
         paid: statusCounts.paid || 0,

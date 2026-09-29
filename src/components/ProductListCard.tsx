@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useSKUs } from "@/hooks/useSKUs";
 import { formatProductPrice } from "@/utils/formatPrice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import { useButtonAnimation } from "@/hooks/useButtonAnimation";
@@ -113,7 +113,9 @@ const ProductListCard = ({ product, skus: skusProp }: ProductListCardProps) => {
           </div>
 
           <h3 className="text-body line-clamp-2 transition-colors duration-instant group-hover:text-mocha">
+            <Link to={href(productPath(product))} onClick={(e) => e.stopPropagation()} className="hover:underline-offset-2">
             {product.name}
+          </Link>
           </h3>
 
           {product.description && (
