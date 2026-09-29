@@ -9,6 +9,7 @@ type Props = {
   onSubmit: () => void;
   isSubmitting: boolean;
   itemCount: number;
+  submitLabel: string;
 };
 
 export function MobileSubmitBar({
@@ -18,6 +19,7 @@ export function MobileSubmitBar({
   onSubmit,
   isSubmitting,
   itemCount,
+  submitLabel,
 }: Props) {
   const { t: tc } = useTranslation("checkout");
   const { t: tCommon } = useTranslation("common");
@@ -48,7 +50,7 @@ export function MobileSubmitBar({
           onClick={onSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? tc('submitting') : tc('submit')}
+          {isSubmitting ? tc('submitting') : submitLabel}
         </Button>
       </div>
     </div>

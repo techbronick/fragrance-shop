@@ -18,9 +18,13 @@ import {
   ShippingAddress,
   DEFAULT_SHIPPING_ADDRESS,
 } from "@/types/checkout";
-import { CreateOrderInput } from "@/types/orders";
+import { CreateOrderInput, PaymentMethod } from "@/types/orders";
+import { redirectToMaibCheckout, MaibRequestError } from "@/hooks/useMaibPayment";
 
 const STORAGE_KEY = 'checkout_shipping_v1';
+// Card payments (maib) are switched on per environment, so production can keep
+// the WhatsApp-only checkout until maib issues production keys.
+const CARD_PAYMENTS_ENABLED = import.meta.env.VITE_CARD_PAYMENTS === 'on';
 const TAX_RATE = 0.15;
 
 // Shipping policy: free inside Chișinău (city limits), confirmed by the
@@ -77,7 +81,7 @@ function validate(addr: ShippingAddress, tc: TFunction): Errors {
 const Checkout = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("common");
-  const { t: tc } = useTranslation("checkout");
+  const { t: tc, i18n } = useTranslation("checkout");
   const href = useLocalizedHref();
   const { items, clearCart } = useCart();
   const { mutate: createOrder, isPending: isCreatingOrder } = useCreateOrder();
@@ -87,6 +91,9 @@ const Checkout = () => {
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>(loadSavedAddress);
   const [touched, setTouched] = useState<Partial<Record<keyof ShippingAddress, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(CARD_PAYMENTS_ENABLED ? 'card' : 'offline');
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const isSubmitting = isCreatingOrder || isRedirecting;
 
   // Auto-save on every change (silent: no checkbox per Q1)
   useEffect(() => {
@@ -136,7 +143,7 @@ const Checkout = () => {
       return;
     }
 
-    if (items.length === 0) return;
+    if (items.length === 0 || isSubmitting) return;
 
     const orderInput: CreateOrderInput = {
       customer_email: shippingAddress.email,
@@ -152,6 +159,7 @@ const Checkout = () => {
         phone: shippingAddress.phone,
       },
       shipping_method_id: 'standard',
+      payment_method: paymentMethod,
       newsletter_opt_in: false,
     };
 
@@ -163,10 +171,29 @@ const Checkout = () => {
         vatCost: totals.vat,
       },
       {
-        onSuccess: (order) => {
+        onSuccess: async (order) => {
           clearCart();
-          toast({ title: t('toast.orderPlaced') });
-          navigate(href(`/orders/${order.id}?placed=1`));
+          if (paymentMethod !== 'card') {
+            toast({ title: t('toast.orderPlaced') });
+            navigate(href(`/orders/${order.id}?placed=1`));
+            return;
+          }
+          // The order exists; if the payment can't start, the order page
+          // offers a retry, so the customer never loses it.
+          setIsRedirecting(true);
+          try {
+            await redirectToMaibCheckout(order.id, i18n.language);
+          } catch (err) {
+            console.error('Payment init failed:', err);
+            setIsRedirecting(false);
+            const code = err instanceof MaibRequestError ? err.code : '';
+            toast({
+              title: tc('payment.errors.initTitle'),
+              description: tc(code === 'price_mismatch' ? 'payment.errors.priceMismatch' : 'payment.errors.init'),
+              variant: 'destructive',
+            });
+            navigate(href(`/orders/${order.id}?placed=1`));
+          }
         },
         onError: (err: unknown) => {
           console.error('Order creation failed:', err);
@@ -205,8 +232,12 @@ const Checkout = () => {
                 onBlur={onBlur}
                 submitted={submitted}
                 onSubmit={handleSubmit}
-                isSubmitting={isCreatingOrder}
+                isSubmitting={isSubmitting}
                 cartIsEmpty={items.length === 0}
+                cardPaymentsEnabled={CARD_PAYMENTS_ENABLED}
+                paymentMethod={paymentMethod}
+                onPaymentMethodChange={setPaymentMethod}
+                shippingTbd={totals.shippingMode === 'tbd'}
               />
             </div>
             <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start order-first lg:order-none">
@@ -228,8 +259,9 @@ const Checkout = () => {
         country={shippingAddress.country}
         mdlPerEur={mdlPerEur}
         onSubmit={handleSubmit}
-        isSubmitting={isCreatingOrder}
+        isSubmitting={isSubmitting}
         itemCount={items.length}
+        submitLabel={tc(paymentMethod === 'card' ? 'submitCard' : 'submit')}
       />
     </div>
   );

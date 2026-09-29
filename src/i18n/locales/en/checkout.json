@@ -47,5 +47,23 @@
     "backorder": "Made to order: {{min}}–{{max}} business days"
   },
   "submit": "Place order",
-  "submitting": "Processing..."
+  "submitting": "Processing...",
+  "submitCard": "Pay by card",
+  "payment": {
+    "section": "Payment",
+    "card": {
+      "title": "Card online",
+      "description": "Visa or Mastercard, on the secure maib page.",
+      "shippingNote": "You pay for the products now. Delivery outside Chișinău is confirmed and paid separately, on WhatsApp."
+    },
+    "offline": {
+      "title": "Pay on confirmation",
+      "description": "Place the order now and we will contact you on WhatsApp to confirm it and arrange payment."
+    },
+    "errors": {
+      "initTitle": "Payment could not be started",
+      "init": "Your order was saved. You can retry the payment from the order page.",
+      "priceMismatch": "Prices in your cart have changed. Your order was saved; we will contact you on WhatsApp."
+    }
+  }
 }

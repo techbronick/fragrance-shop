@@ -183,6 +183,7 @@ export type Database = {
           customer_name: string | null
           customer_phone: string | null
           id: string
+          payment_method: string
           shipping_address: JSON | null
           shipping_bani: number
           status: string
@@ -198,6 +199,7 @@ export type Database = {
           customer_name?: string | null
           customer_phone?: string | null
           id?: string
+          payment_method?: string
           shipping_address?: JSON | null
           shipping_bani?: number
           status?: string
@@ -213,6 +215,7 @@ export type Database = {
           customer_name?: string | null
           customer_phone?: string | null
           id?: string
+          payment_method?: string
           shipping_address?: JSON | null
           shipping_bani?: number
           status?: string
@@ -222,6 +225,68 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      payments: {
+        Row: {
+          amount_bani: number
+          checkout_id: string
+          checkout_url: string | null
+          created_at: string
+          currency: string
+          id: string
+          order_id: string
+          paid_at: string | null
+          payment_id: string | null
+          provider: string
+          raw: JSON | null
+          refund_id: string | null
+          refunded_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount_bani: number
+          checkout_id: string
+          checkout_url?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          order_id: string
+          paid_at?: string | null
+          payment_id?: string | null
+          provider?: string
+          raw?: JSON | null
+          refund_id?: string | null
+          refunded_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount_bani?: number
+          checkout_id?: string
+          checkout_url?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          order_id?: string
+          paid_at?: string | null
+          payment_id?: string | null
+          provider?: string
+          raw?: JSON | null
+          refund_id?: string | null
+          refunded_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {

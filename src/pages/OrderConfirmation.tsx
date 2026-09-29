@@ -12,6 +12,7 @@ import { useFxRate } from "@/hooks/useFxRate";
 import { useSKUStocks } from "@/hooks/useSKUStocks";
 import { useLocalizedHref } from "@/hooks/useLocalizedHref";
 import { ShippingEstimate } from "@/components/ShippingEstimate";
+import { PaymentStatusPanel } from "@/components/checkout/PaymentStatusPanel";
 import { formatCheckoutPrice } from "@/utils/formatCheckoutPrice";
 import { EU_COUNTRY_LABELS, type EuCountryCode, getVatRate } from "@/utils/vat";
 
@@ -40,7 +41,8 @@ function TotalsRow({ label, value }: { label: string; value: string }) {
 const OrderConfirmation = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const [searchParams] = useSearchParams();
-  const isPlaced = searchParams.get('placed') === '1';
+  const isPaymentReturn = searchParams.get('payment') === 'return';
+  const isPlaced = searchParams.get('placed') === '1' || isPaymentReturn;
 
   const { t, i18n } = useTranslation('order');
   const href = useLocalizedHref();
@@ -93,6 +95,7 @@ const OrderConfirmation = () => {
     ? Math.round(order.total_bani * (TAX_RATE / (1 + TAX_RATE)))
     : 0;
 
+  const isCardOrder = order.payment_method === 'card';
   const orderShortId = order.id.slice(0, 8).toUpperCase();
   const orderDate = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'long' }).format(
     new Date(order.created_at)
@@ -121,9 +124,15 @@ const OrderConfirmation = () => {
               <p className="text-caption text-text-muted">
                 {t('celebration.orderMeta', { id: orderShortId, date: orderDate })}
               </p>
-              <p className="text-body text-text-muted mt-6 max-w-md mx-auto">
-                {t('celebration.subtitle')}
-              </p>
+              {isCardOrder ? (
+                <div className="mt-6">
+                  <PaymentStatusPanel orderId={order.id} orderStatus={order.status} />
+                </div>
+              ) : (
+                <p className="text-body text-text-muted mt-6 max-w-md mx-auto">
+                  {t('celebration.subtitle')}
+                </p>
+              )}
             </div>
           ) : (
             <div className="mb-12">
@@ -139,6 +148,11 @@ const OrderConfirmation = () => {
                 </p>
                 <Badge variant="outline">{t(`status.${order.status}`, { defaultValue: order.status })}</Badge>
               </div>
+              {isCardOrder && order.status !== 'paid' && order.status !== 'refunded' && (
+                <div className="mt-6">
+                  <PaymentStatusPanel orderId={order.id} orderStatus={order.status} />
+                </div>
+              )}
             </div>
           )}
 

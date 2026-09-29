@@ -50,5 +50,16 @@
     "canceled": "Cancelled",
     "cancelled": "Cancelled",
     "refunded": "Refunded"
+  },
+  "payment": {
+    "checking": "Checking payment…",
+    "pending": "Confirming your payment…",
+    "paid": "Payment received. Thank you!",
+    "refunded": "This payment was refunded.",
+    "failed": "The payment did not go through.",
+    "notPaid": "This order has not been paid yet.",
+    "retry": "Retry payment",
+    "redirecting": "Opening the payment page…",
+    "retryFailed": "We could not open the payment page. Please try again."
   }
 }
