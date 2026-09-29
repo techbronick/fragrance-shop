@@ -19,6 +19,7 @@ type Props = {
   onSubmit: () => void;
   isSubmitting: boolean;
   cartIsEmpty: boolean;
+  cardPaymentsEnabled: boolean;
   paymentMethod: PaymentMethod;
   onPaymentMethodChange: (method: PaymentMethod) => void;
   shippingTbd: boolean;
@@ -56,6 +57,7 @@ export function CheckoutForm({
   onSubmit,
   isSubmitting,
   cartIsEmpty,
+  cardPaymentsEnabled,
   paymentMethod,
   onPaymentMethodChange,
   shippingTbd,
@@ -184,6 +186,7 @@ export function CheckoutForm({
       </section>
 
       {/* Payment */}
+      {cardPaymentsEnabled && (
       <section className="space-y-4">
         <p className="text-caption uppercase tracking-[0.06em] text-text-muted">
           {tc('payment.section')}
@@ -216,6 +219,7 @@ export function CheckoutForm({
           <p className="text-caption text-text-muted">{tc('payment.card.shippingNote')}</p>
         )}
       </section>
+      )}
 
       {/* Submit (desktop only) */}
       <Button

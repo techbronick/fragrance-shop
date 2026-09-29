@@ -22,6 +22,9 @@ import { CreateOrderInput, PaymentMethod } from "@/types/orders";
 import { redirectToMaibCheckout, MaibRequestError } from "@/hooks/useMaibPayment";
 
 const STORAGE_KEY = 'checkout_shipping_v1';
+// Card payments (maib) are switched on per environment, so production can keep
+// the WhatsApp-only checkout until maib issues production keys.
+const CARD_PAYMENTS_ENABLED = import.meta.env.VITE_CARD_PAYMENTS === 'on';
 const TAX_RATE = 0.15;
 
 // Shipping policy: free inside Chișinău (city limits), confirmed by the
@@ -88,7 +91,7 @@ const Checkout = () => {
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>(loadSavedAddress);
   const [touched, setTouched] = useState<Partial<Record<keyof ShippingAddress, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(CARD_PAYMENTS_ENABLED ? 'card' : 'offline');
   const [isRedirecting, setIsRedirecting] = useState(false);
   const isSubmitting = isCreatingOrder || isRedirecting;
 
@@ -231,6 +234,7 @@ const Checkout = () => {
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
                 cartIsEmpty={items.length === 0}
+                cardPaymentsEnabled={CARD_PAYMENTS_ENABLED}
                 paymentMethod={paymentMethod}
                 onPaymentMethodChange={setPaymentMethod}
                 shippingTbd={totals.shippingMode === 'tbd'}
