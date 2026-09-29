@@ -34,7 +34,7 @@ Card payments go through maib's hosted checkout page. The browser never sees the
 
 The admin session was created via a one-time magic link generated with the service key; no email was sent. The maib → `/api/maib/callback` delivery can't reach a preview (they're behind Vercel Authentication), so its first real delivery will be in production. The status endpoint covers it if it fails.
 
-**4. Get the code onto `main`** (still to do): the branch `feat/maib-checkout` exists only on this machine, because this machine's GitHub login (`7zt7yt2p94-max`) can't push to `techbronick/fragrance-shop`. Either run `! gh auth login` here as `techbronick` (it works from a phone, like the Vercel login), or add `7zt7yt2p94-max` as a collaborator. Merging is safe before production keys exist, because the card option stays hidden in production.
+**4. Merged to `main`: ✅ done 2026-09-29** ([PR #1](https://github.com/techbronick/fragrance-shop/pull/1), merge `3b974c9`). Production (https://modestshops.vercel.app) is serving it. The card option is hidden there (`VITE_CARD_PAYMENTS` unset), and `/api/maib/*` responds: status 200, unsigned callback 401, refund without admin 403.
 
 **5. Go live, once maib sends production keys:** in Vercel → Environment Variables (Production), replace the three `MAIB_*` keys, set `MAIB_API_BASE=https://api.maibmerchants.md`, add `VITE_CARD_PAYMENTS=on`, and redeploy. Then make one small real purchase and refund it from Admin.
 
