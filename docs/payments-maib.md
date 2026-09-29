@@ -20,25 +20,23 @@ Card payments go through maib's hosted checkout page. The browser never sees the
 
 > ⚠️ **Existing privacy issue (not changed):** the SELECT policy on `orders` is `auth.uid() = user_id OR is_admin() OR user_id IS NULL`, and `order_items` mirrors it. So anyone holding the public anon key (it's in the site's JS) can list **every guest order** with names, emails, phones and addresses. The order confirmation page relies on this. Fix: serve guest order lookups through a server endpoint (like `/api/maib/status`) and drop `OR user_id IS NULL`. Recommended soon, as a separate change.
 
-**2. Vercel env vars** (Project → Settings → Environment Variables, Production + Preview). **None of these may start with `VITE_`**, because that would ship them to the browser.
+**2. Vercel env vars: ✅ done 2026-09-29** for Production + Preview, all marked sensitive: `MAIB_API_BASE` (sandbox), `MAIB_CLIENT_ID`, `MAIB_CLIENT_SECRET`, `MAIB_SIGNATURE_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. **None may start with `VITE_`**, because that would ship them to the browser. `PUBLIC_SITE_URL` is optional; when unset, return/callback URLs use the domain the customer is on.
 
-| Name | Value |
-|---|---|
-| `MAIB_API_BASE` | `https://sandbox.maibmerchants.md` for now; `https://api.maibmerchants.md` with production keys |
-| `MAIB_CLIENT_ID` | from maib |
-| `MAIB_CLIENT_SECRET` | from maib |
-| `MAIB_SIGNATURE_KEY` | from maib |
-| `SUPABASE_URL` | same value as `VITE_SUPABASE_URL` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API → `service_role` |
-| `PUBLIC_SITE_URL` | optional. Leave unset and the return/callback URLs use whichever domain the customer is on; set it (e.g. `https://modestshop.md`) to pin one. |
+**Card-payment switch:** the card option only appears when `VITE_CARD_PAYMENTS=on`. That's set for **Preview only**, so production keeps the WhatsApp-only checkout while the keys are sandbox ones. Otherwise real customers would be sent to maib's test environment.
 
-With the CLI, from an account that can access the `startduck` team: `vercel link` → `vercel env add MAIB_CLIENT_SECRET production` (repeat for each).
+**3. Preview test: ✅ passed 2026-09-29** on a deployed preview against the **real database** + maib sandbox (`scripts/maib/preview-e2e.ts`):
+- test order created as a guest
+- a guest "paid" insert was rejected
+- the preview registered the checkout and the test card paid it
+- the order became `paid`
+- refund without an admin session → 403; admin refund → `refunded`
+- test rows deleted afterwards
 
-**3. Deploy:** merge `feat/maib-checkout` into `main` (Vercel deploys it automatically), or push the branch first to get a preview URL.
+The admin session was created via a one-time magic link generated with the service key; no email was sent. The maib → `/api/maib/callback` delivery can't reach a preview (they're behind Vercel Authentication), so its first real delivery will be in production. The status endpoint covers it if it fails.
 
-**4. Smoke test on the preview/production URL** (sandbox keys, so no real money moves): add a product → checkout → Card → pay with the test card below → you land on the order page with "Plata a fost efectuată" → in Admin, the order is `paid` → *Refund full amount* → order becomes `refunded`.
+**4. Get the code onto `main`** (still to do): the branch `feat/maib-checkout` exists only on this machine, because this machine's GitHub login (`7zt7yt2p94-max`) can't push to `techbronick/fragrance-shop`. Either run `! gh auth login` here as `techbronick` (it works from a phone, like the Vercel login), or add `7zt7yt2p94-max` as a collaborator. Merging is safe before production keys exist, because the card option stays hidden in production.
 
-**5. Switch to production:** once maib certifies the integration, replace the three `MAIB_*` keys with production ones and set `MAIB_API_BASE=https://api.maibmerchants.md`. Redeploy.
+**5. Go live, once maib sends production keys:** in Vercel → Environment Variables (Production), replace the three `MAIB_*` keys, set `MAIB_API_BASE=https://api.maibmerchants.md`, add `VITE_CARD_PAYMENTS=on`, and redeploy. Then make one small real purchase and refund it from Admin.
 
 ## Test card (sandbox)
 
