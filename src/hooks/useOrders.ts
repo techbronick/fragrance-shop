@@ -55,35 +55,23 @@ export const useOrders = (userId?: string) => {
   });
 };
 
-// Fetch single order with items
+// Fetch single order with items. Goes through /api/orders because guests
+// can't read orders directly (RLS); the order's UUID acts as the key, like
+// the link customers get after checkout.
 export const useOrder = (orderId: string) => {
   return useQuery({
     queryKey: ['order', orderId],
     queryFn: async () => {
-      // Fetch order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('id', orderId)
-        .single();
-      
-      if (orderError) throw orderError;
-      
-      // Fetch order items
-      const { data: items, error: itemsError } = await supabase
-        .from('order_items')
-        .select('*')
-        .eq('order_id', orderId);
-      
-      if (itemsError) throw itemsError;
-      
-      // Map and return
+      const res = await fetch(`/api/orders?id=${encodeURIComponent(orderId)}`);
+      if (!res.ok) throw new Error(`order_${res.status}`);
+      const { order, items } = (await res.json()) as { order: DbOrder; items: DbOrderItem[] };
       return {
         ...mapDbOrderToOrder(order),
         items: items.map(mapDbOrderItemToOrderItem)
       } as OrderWithItems;
     },
-    enabled: !!orderId
+    enabled: !!orderId,
+    retry: false
   });
 };
 
@@ -110,10 +98,11 @@ export const useCreateOrder = () => {
 
       const total_bani = subtotal_bani + shippingCost + vatCost;
       
-      // Create order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
+      // Create order. The id is generated here and nothing is read back:
+      // guests have no SELECT access to orders (their order page loads
+      // through /api/orders), so `.select()` after insert would fail.
+      const order = {
+          id: crypto.randomUUID(),
           user_id: input.user_id || null,
           status: 'pending',
           currency: 'MDL',
@@ -124,10 +113,9 @@ export const useCreateOrder = () => {
           shipping_address: input.shipping_address as any, // Cast to Json
           shipping_bani: shippingCost,
           subtotal_bani: subtotal_bani,
-          total_bani: total_bani
-        })
-        .select()
-        .single();
+          total_bani: total_bani,
+      };
+      const { error: orderError } = await supabase.from('orders').insert(order);
       
       if (orderError) {
         console.error('Error creating order:', orderError);
@@ -351,28 +339,27 @@ export const useCreateOrder = () => {
             throw new Error(`Unknown cart item type: ${item.type}`);
           }
           
-          const { data, error } = await supabase
-            .from('order_items')
-            .insert({
-              order_id: order.id,
-              item_type: itemType,
-              sku_id,
-              config_id,
-              quantity: item.quantity,
-              unit_price_bani,
-              line_total_bani,
-              snapshot: snapshot as any
-            })
-            .select()
-            .single();
+          const row = {
+            id: crypto.randomUUID(),
+            order_id: order.id,
+            item_type: itemType,
+            sku_id,
+            config_id,
+            quantity: item.quantity,
+            unit_price_bani,
+            line_total_bani,
+            snapshot: snapshot as any
+          };
+          const { error } = await supabase.from('order_items').insert(row);
           
           if (error) throw error;
-          return mapDbOrderItemToOrderItem(data);
+          return mapDbOrderItemToOrderItem({ ...row, created_at: new Date().toISOString() } as DbOrderItem);
         })
       );
       
+      const now = new Date().toISOString();
       return {
-        ...mapDbOrderToOrder(order),
+        ...mapDbOrderToOrder({ ...order, created_at: now, updated_at: now } as DbOrder),
         items: orderItems
       };
     },
