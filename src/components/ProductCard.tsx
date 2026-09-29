@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { useSKUs } from "@/hooks/useSKUs";
 import { formatProductPrice } from "@/utils/formatPrice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import { useButtonAnimation } from "@/hooks/useButtonAnimation";
@@ -115,7 +115,9 @@ const ProductCard = ({ product, featured = false, skus: skusProp }: ProductCardP
           {product.brand}
         </div>
         <h3 className="text-body line-clamp-2 h-[2.6rem] leading-snug mt-1 transition-colors duration-instant group-hover:text-mocha">
-          {product.name}
+          <Link to={href(productPath(product))} onClick={(e) => e.stopPropagation()} className="hover:underline-offset-2">
+            {product.name}
+          </Link>
         </h3>
 
         {/* Size selector slot — fixed 36px row, reserved even before SKUs

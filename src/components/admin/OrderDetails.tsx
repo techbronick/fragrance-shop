@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Package, User, MapPin, DollarSign, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { OrderWithItems, OrderItemSnapshot } from '@/types/orders';
 import { MaibPaymentCard } from '@/components/admin/MaibPaymentCard';
+import { useLocalizedHref } from '@/hooks/useLocalizedHref';
 
 // Renders a bundle's contents with a fallback to a live DB lookup when the snapshot
 // is missing items or has incomplete product info (e.g., older orders or RLS issues
@@ -123,6 +124,7 @@ const BundleContents = ({ item, snapshot }: { item: any; snapshot: OrderItemSnap
 const OrderDetails = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
+  const href = useLocalizedHref();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [shippingCost, setShippingCost] = useState<number | null>(null);
@@ -257,7 +259,7 @@ const OrderDetails = () => {
           <div className="flex-1">
             <div className="font-semibold">{snapshot?.product_name || 'Product'}</div>
             <div className="text-sm text-muted-foreground">
-              {snapshot?.brand} • {snapshot?.size_ml}ml • {snapshot?.size_label}
+              {[snapshot?.brand, snapshot?.size_label || (snapshot?.size_ml ? `${snapshot.size_ml}ml` : null)].filter(Boolean).join(' • ')}
             </div>
           </div>
           <div className="text-right">
@@ -299,7 +301,7 @@ const OrderDetails = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="max-w-7xl mx-auto m-4 sm:m-8">
         <CardContent className="py-8">
           <div className="text-center text-muted-foreground">Loading order details...</div>
         </CardContent>
@@ -309,7 +311,7 @@ const OrderDetails = () => {
 
   if (!order) {
     return (
-      <Card>
+      <Card className="max-w-7xl mx-auto m-4 sm:m-8">
         <CardContent className="py-8">
           <div className="text-center text-muted-foreground">Order not found</div>
         </CardContent>
@@ -320,9 +322,9 @@ const OrderDetails = () => {
   const shippingAddress = order.shipping_address as any;
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={() => navigate('/admin?tab=orders')}>
+        <Button variant="ghost" onClick={() => navigate(href('/admin?tab=orders'))}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Orders
         </Button>

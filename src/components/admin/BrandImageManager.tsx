@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, X, Image as ImageIcon, Search } from 'lucide-react';
 import OptimizedImage from '@/components/ui/optimized-image';
 import { matchesSearch } from '@/utils/stringUtils';
+import { brandImageFileName } from '@/utils/brandImageKey';
 import {
   Pagination,
   PaginationContent,
@@ -79,33 +80,25 @@ const BrandImageManager: React.FC = () => {
             .map(([name, count]) => ({ name, productCount: count }))
             .sort((a, b) => a.name.localeCompare(b.name));
 
-          // Fetch existing images from storage for each brand
-          const brandsWithImages: BrandWithImage[] = await Promise.all(
-            uniqueBrands.map(async (brand) => {
-              // Try to get image from storage using the expected naming pattern
-              const fileName = `${brand.name}.webp`;
-              const { data: urlData } = supabase.storage
-                .from('brand-images')
-                .getPublicUrl(fileName);
+          // One listing call instead of a HEAD request per brand (275+),
+          // using the same ASCII-folded key as upload and the storefront.
+          const existing = new Set<string>();
+          for (let offset = 0; ; offset += 1000) {
+            const { data: files, error: listError } = await supabase.storage
+              .from('brand-images')
+              .list('', { limit: 1000, offset });
+            if (listError) throw listError;
+            files?.forEach((f) => existing.add(f.name));
+            if (!files || files.length < 1000) break;
+          }
 
-              // Check if file actually exists by trying to fetch it
-              let imageUrl: string | null = null;
-              try {
-                const response = await fetch(urlData.publicUrl, { method: 'HEAD' });
-                if (response.ok) {
-                  imageUrl = urlData.publicUrl;
-                }
-              } catch (e) {
-                // File doesn't exist, imageUrl stays null
-              }
-
-              return {
-                name: brand.name,
-                imageUrl,
-                productCount: brand.productCount
-              };
-            })
-          );
+          const brandsWithImages: BrandWithImage[] = uniqueBrands.map((brand) => {
+            const fileName = brandImageFileName(brand.name);
+            const imageUrl = existing.has(fileName)
+              ? supabase.storage.from('brand-images').getPublicUrl(fileName).data.publicUrl
+              : null;
+            return { name: brand.name, imageUrl, productCount: brand.productCount };
+          });
 
           setBrands(brandsWithImages);
           

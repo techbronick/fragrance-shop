@@ -235,20 +235,22 @@ const OrdersList = () => {
               </SelectContent>
             </Select>
 
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2 min-w-0">
               <Input
                 type="date"
                 placeholder="From"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="flex-1"
+                aria-label="From date"
+                className="min-w-0"
               />
               <Input
                 type="date"
                 placeholder="To"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="flex-1"
+                aria-label="To date"
+                className="min-w-0"
               />
             </div>
           </div>

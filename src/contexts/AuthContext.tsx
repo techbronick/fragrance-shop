@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -19,63 +19,64 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const checkAdminStatus = async (userId: string | undefined) => {
-    if (!userId) {
-      setIsAdmin(false);
-      return;
-    }
+  // Admin status is cached per user id so token refreshes and duplicate auth
+  // events don't re-query admin_users.
+  const adminCache = useRef<{ userId: string; isAdmin: boolean } | null>(null);
+  const latest = useRef(0);
 
+  const resolveAdmin = async (userId: string): Promise<boolean> => {
+    if (adminCache.current?.userId === userId) return adminCache.current.isAdmin;
     try {
       const { data, error } = await supabase
         .from('admin_users')
         .select('user_id')
         .eq('user_id', userId)
-        .single();
-
-      setIsAdmin(!error && !!data);
+        .maybeSingle();
+      const result = !error && !!data;
+      adminCache.current = { userId, isAdmin: result };
+      return result;
     } catch (error) {
       console.error('Error checking admin status:', error);
-      setIsAdmin(false);
+      return false;
     }
   };
 
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      if (currentUser) {
-        checkAdminStatus(currentUser.id);
-      } else {
-        setIsAdmin(false);
-      }
-      setLoading(false);
-    });
+  // `loading` stays true until admin status is known. Flipping it earlier let
+  // Admin.tsx see { user, isAdmin: false } for a moment and bounce real admins
+  // to the home page ("Access Denied"), intermittently.
+  const applySession = async (next: Session | null) => {
+    const run = ++latest.current;
+    const nextUser = next?.user ?? null;
+    const admin = nextUser ? await resolveAdmin(nextUser.id) : false;
+    if (run !== latest.current) return; // a newer auth event superseded this one
+    setSession(next);
+    setUser(nextUser);
+    setIsAdmin(admin);
+    setLoading(false);
+  };
 
-    // Listen for auth changes
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => applySession(session));
+
+    // Supabase warns against awaiting other supabase calls inside this
+    // callback (it can deadlock), so defer the work.
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      if (currentUser) {
-        checkAdminStatus(currentUser.id);
-      } else {
-        setIsAdmin(false);
-      }
-      setLoading(false);
+      setTimeout(() => applySession(session), 0);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    // Resolve admin status before returning so the caller can navigate
+    // straight to a protected route.
+    if (!error) await applySession(data.session);
     return { error };
   };
 
