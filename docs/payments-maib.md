@@ -18,7 +18,12 @@ Card payments go through maib's hosted checkout page. The browser never sees the
 
 **1. Database: ✅ done 2026-09-29** (via the Management API). `012_maib_payments.sql` added `orders.payment_method` (the 23 existing orders became `offline`) and the `payments` table (RLS on, admins read-only). It also replaced the **six** permissive INSERT policies found on `orders`, all `WITH CHECK true` and some misnamed `*_order_items`, with one rule: `status = 'pending' OR is_admin()`. Verified as `anon` in rolled-back transactions: inserting a `paid` order is rejected, inserting a `pending` card order works, and `payments` is invisible.
 
-> ⚠️ **Existing privacy issue (not changed):** the SELECT policy on `orders` is `auth.uid() = user_id OR is_admin() OR user_id IS NULL`, and `order_items` mirrors it. So anyone holding the public anon key (it's in the site's JS) can list **every guest order** with names, emails, phones and addresses. The order confirmation page relies on this. Fix: serve guest order lookups through a server endpoint (like `/api/maib/status`) and drop `OR user_id IS NULL`. Recommended soon, as a separate change.
+> ✅ **Guest-order privacy fixed 2026-09-29** ([PR #2](https://github.com/techbronick/fragrance-shop/pull/2) + migration `013_guest_order_privacy.sql`). Before, the public anon key could list every guest order (23 at the time), with names, emails, phones and addresses. Now:
+> - checkout inserts without reading back
+> - guests load their order via `GET /api/orders?id=<uuid>`
+> - the SELECT policies are owner/admin only
+>
+> Verified on production: the anon key sees **0** orders/items; a random logged-in user sees 0; an admin sees all; a real guest checkout and its confirmation page work (tested before and after the migration, and the test orders were deleted).
 
 **2. Vercel env vars: ✅ done 2026-09-29** for Production + Preview, all marked sensitive: `MAIB_API_BASE` (sandbox), `MAIB_CLIENT_ID`, `MAIB_CLIENT_SECRET`, `MAIB_SIGNATURE_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`. **None may start with `VITE_`**, because that would ship them to the browser. `PUBLIC_SITE_URL` is optional; when unset, return/callback URLs use the domain the customer is on.
 
