@@ -1,8 +1,11 @@
+export type PaymentMethod = 'offline' | 'card';
+
   export interface Order {
     id: string;
     user_id: string | null;
     status: 'draft' | 'placed' | 'paid' | 'shipped' | 'delivered' | 'canceled' | 'refunded' | 'pending' | 'confirmed' | 'processing' | 'cancelled';
     currency: string;
+    payment_method: PaymentMethod;
     customer_email: string | null;
     customer_phone: string | null;
     customer_name: string | null;
@@ -77,5 +80,6 @@
     customer_name: string;
     shipping_address: ShippingAddressJson;
     shipping_method_id: string;
+    payment_method: PaymentMethod;
     newsletter_opt_in?: boolean;
   }

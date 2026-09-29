@@ -14,7 +14,8 @@ const mapDbOrderToOrder = (dbOrder: DbOrder): Order => {
     return {
       ...dbOrder,
       shipping_address: dbOrder.shipping_address as unknown as ShippingAddressJson | null,
-      status: dbOrder.status as Order['status']
+      status: dbOrder.status as Order['status'],
+      payment_method: (dbOrder.payment_method ?? 'offline') as Order['payment_method']
     };
   };
 
@@ -116,6 +117,7 @@ export const useCreateOrder = () => {
           user_id: input.user_id || null,
           status: 'pending',
           currency: 'MDL',
+          payment_method: input.payment_method,
           customer_email: input.customer_email,
           customer_phone: input.customer_phone,
           customer_name: input.customer_name,

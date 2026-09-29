@@ -14,6 +14,7 @@ import { formatPrice } from '@/utils/formatPrice';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Package, User, MapPin, DollarSign, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { OrderWithItems, OrderItemSnapshot } from '@/types/orders';
+import { MaibPaymentCard } from '@/components/admin/MaibPaymentCard';
 
 // Renders a bundle's contents with a fallback to a live DB lookup when the snapshot
 // is missing items or has incomplete product info (e.g., older orders or RLS issues
@@ -482,6 +483,8 @@ const OrderDetails = () => {
               </div>
             </CardContent>
           </Card>
+
+          {order.payment_method === 'card' && <MaibPaymentCard orderId={order.id} />}
 
           {/* Status & Actions */}
           <Card>

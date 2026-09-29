@@ -48,5 +48,23 @@
     "backorder": "La comandă: {{min}}–{{max}} zile lucrătoare"
   },
   "submit": "Plasează comanda",
-  "submitting": "Se procesează..."
+  "submitting": "Se procesează...",
+  "submitCard": "Plătește cu cardul",
+  "payment": {
+    "section": "Plată",
+    "card": {
+      "title": "Card bancar online",
+      "description": "Visa sau Mastercard, prin pagina securizată maib.",
+      "shippingNote": "Achiți acum produsele. Costul livrării în afara Chișinăului se confirmă și se achită separat, pe WhatsApp."
+    },
+    "offline": {
+      "title": "Plată la confirmare",
+      "description": "Plasezi comanda acum, iar noi te contactăm pe WhatsApp pentru confirmare și plată."
+    },
+    "errors": {
+      "initTitle": "Plata nu a putut fi inițiată",
+      "init": "Comanda a fost salvată. Poți încerca plata din nou de pe pagina comenzii.",
+      "priceMismatch": "Prețurile din coș s-au schimbat. Comanda a fost salvată; te vom contacta pe WhatsApp."
+    }
+  }
 }

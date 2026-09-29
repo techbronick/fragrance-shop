@@ -50,5 +50,16 @@
     "canceled": "Anulată",
     "cancelled": "Anulată",
     "refunded": "Rambursată"
+  },
+  "payment": {
+    "checking": "Se verifică plata…",
+    "pending": "Se confirmă plata…",
+    "paid": "Plata a fost efectuată. Mulțumim!",
+    "refunded": "Plata a fost rambursată.",
+    "failed": "Plata nu a reușit.",
+    "notPaid": "Comanda nu este achitată încă.",
+    "retry": "Încearcă plata din nou",
+    "redirecting": "Se deschide pagina de plată…",
+    "retryFailed": "Nu am putut deschide pagina de plată. Încearcă din nou."
   }
 }

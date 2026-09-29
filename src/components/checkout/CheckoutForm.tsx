@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { ShippingAddress } from "@/types/checkout";
+import type { PaymentMethod } from "@/types/orders";
+import { cn } from "@/lib/utils";
 import { getLocalizedCountryOptions } from "@/utils/countries";
 
 type Errors = Partial<Record<keyof ShippingAddress, string>>;
@@ -17,6 +19,9 @@ type Props = {
   onSubmit: () => void;
   isSubmitting: boolean;
   cartIsEmpty: boolean;
+  paymentMethod: PaymentMethod;
+  onPaymentMethodChange: (method: PaymentMethod) => void;
+  shippingTbd: boolean;
 };
 
 function Field({
@@ -51,6 +56,9 @@ export function CheckoutForm({
   onSubmit,
   isSubmitting,
   cartIsEmpty,
+  paymentMethod,
+  onPaymentMethodChange,
+  shippingTbd,
 }: Props) {
   const { t: tc } = useTranslation("checkout");
   const { t } = useTranslation("common");
@@ -175,6 +183,40 @@ export function CheckoutForm({
         </div>
       </section>
 
+      {/* Payment */}
+      <section className="space-y-4">
+        <p className="text-caption uppercase tracking-[0.06em] text-text-muted">
+          {tc('payment.section')}
+        </p>
+        <div role="radiogroup" aria-label={tc('payment.section')} className="space-y-3">
+          {(['card', 'offline'] as const).map((method) => (
+            <label
+              key={method}
+              className={cn(
+                'flex items-start gap-3 border rounded-md p-4 cursor-pointer transition-colors',
+                paymentMethod === method ? 'border-text-strong' : 'border-border hover:border-text-muted',
+              )}
+            >
+              <input
+                type="radio"
+                name="paymentMethod"
+                value={method}
+                checked={paymentMethod === method}
+                onChange={() => onPaymentMethodChange(method)}
+                className="mt-1 accent-current"
+              />
+              <span className="space-y-1">
+                <span className="block text-body text-text-strong">{tc(`payment.${method}.title`)}</span>
+                <span className="block text-caption text-text-muted">{tc(`payment.${method}.description`)}</span>
+              </span>
+            </label>
+          ))}
+        </div>
+        {paymentMethod === 'card' && shippingTbd && (
+          <p className="text-caption text-text-muted">{tc('payment.card.shippingNote')}</p>
+        )}
+      </section>
+
       {/* Submit (desktop only) */}
       <Button
         variant="primary"
@@ -183,7 +225,7 @@ export function CheckoutForm({
         type="submit"
         disabled={isSubmitting || cartIsEmpty}
       >
-        {isSubmitting ? tc('submitting') : tc('submit')}
+        {isSubmitting ? tc('submitting') : tc(paymentMethod === 'card' ? 'submitCard' : 'submit')}
       </Button>
     </form>
   );
