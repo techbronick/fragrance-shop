@@ -12,8 +12,8 @@ Card payments go through maib's hosted checkout page. The browser never sees the
 
 ## Go-live checklist
 
-**0. Blockers found on 2026-09-29, unrelated to payments but they stop the live store:**
-- **The Supabase project `wbfdlftndrmjlqudegml` does not resolve in DNS.** It is probably paused or deleted. Restore or unpause it in the Supabase dashboard, or point the env vars at the current project. Confirmed in a browser: https://modestshops.vercel.app/ro/shop shows "Catalogul este momentan gol" (0 produse) because every Supabase request fails with `ERR_NAME_NOT_RESOLVED`. Customers currently see an empty store and can't order. Note: `SUPABASE_ACCESS_TOKEN` in `fragrance-shop-main/.env` is actually the project's `anon` key, not an account token, so it can't be used to check or restore the project. A personal access token (`sbp_…`, from supabase.com/dashboard/account/tokens) is needed for that.
+**0. Found on 2026-09-29, unrelated to payments:**
+- ~~Supabase project `wbfdlftndrmjlqudegml` unreachable~~ **Resolved 2026-09-29 14:48.** The project was restored with all its data (4,264 products, 23,506 SKUs, 23 orders); the live shop lists products again. Note: `SUPABASE_ACCESS_TOKEN` in `fragrance-shop-main/.env` is really the `anon` key, not an account token.
 - **`modestshop.md` points to Netlify, not Vercel.** Netlify serves a `*.netlify.app` certificate, so browsers show a certificate error, and `modestshop.netlify.app` returns 404. The working Vercel deployment is https://modestshops.vercel.app (team `startduck`, project `modest.shops`). To serve the domain from Vercel, add `modestshop.md` + `www` under Vercel → Project → Domains and update the DNS records at your registrar as Vercel instructs.
 
 **1. Database:** paste `supabase/migrations/012_maib_payments.sql` into the Supabase SQL Editor and run it. It adds `orders.payment_method`, the `payments` table, and only lets guests insert orders with status `pending`.
