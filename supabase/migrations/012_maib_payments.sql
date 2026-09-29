@@ -20,7 +20,20 @@ ALTER TABLE orders DROP CONSTRAINT IF EXISTS orders_payment_method_check;
 ALTER TABLE orders
   ADD CONSTRAINT orders_payment_method_check CHECK (payment_method IN ('offline', 'card'));
 
-DROP POLICY IF EXISTS "Anyone can create orders" ON orders;
+-- The live DB accumulated six permissive INSERT policies on orders (all WITH
+-- CHECK true, some misleadingly named *_order_items). Permissive policies are
+-- OR-ed, so every one must go for the 'pending' rule to have any effect.
+DO $$
+DECLARE p record;
+BEGIN
+  FOR p IN
+    SELECT policyname FROM pg_policies
+    WHERE schemaname = 'public' AND tablename = 'orders' AND cmd = 'INSERT'
+  LOOP
+    EXECUTE format('DROP POLICY %I ON public.orders', p.policyname);
+  END LOOP;
+END $$;
+
 CREATE POLICY "Anyone can create orders"
 ON orders
 FOR INSERT
