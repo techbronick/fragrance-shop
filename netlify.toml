@@ -6,6 +6,13 @@
   command = "npm run build"
   publish = "dist"
 
+# Server-side code (maib payments, guest order lookup). Each file in
+# netlify/functions wraps the same handler Vercel runs from /api, and claims
+# its /api/... path via `export const config`, ahead of the SPA fallback.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # ----------------------------------------------------------------------------
 # Default-language redirects: bare paths (no /:lang prefix) → Romanian.
 # `force = false` means these only fire if the destination doesn't exist as
