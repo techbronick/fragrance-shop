@@ -37,3 +37,6 @@ fragrantica-enrichment-report.txt
 /scripts/
 supabase/.temp/
 .vercel
+
+# Local Netlify folder
+.netlify
